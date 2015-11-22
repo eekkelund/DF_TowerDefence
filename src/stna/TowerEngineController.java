@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package stna;
+import java.awt.*;
 
 /**
  *

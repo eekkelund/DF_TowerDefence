@@ -5,23 +5,26 @@
  */
 package stna;
 
+//import java.awt.Color;
+//import java.awt.Graphics;
+
 /**
  *
  * @author eetz1
  */
-public class ModelEnemy extends ModelBlock{
+public class ModelGround extends ModelBlock{
     private int x;
     private int y;
-    private int damage;
     private String id;
+    private String img; 
     
-    private int speed;
-    
-    public ModelEnemy(int x, int y, String id) {
+    public ModelGround (int x, int y, String id) {
         this.x=x;
         this.y=y;
-        this.id=id;
+        this.id = id;
+        
     }
+    public ModelGround(){}
     
     public int getX() {
         return x;
@@ -39,27 +42,20 @@ public class ModelEnemy extends ModelBlock{
         this.y = y;
     }
     
-    public int getDamage() {
-        return damage;
-    }
-    
-    public void setDamage(int damage) {
-        this.damage = damage;
-    }
     public String getid() {
         return id;
     }
     
+    @Override
     public void setid(String id) {
         this.id = id;
     }
-    public int getSpeed() {
-        return speed;
-    }
     
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
     
+    
+    /*public void paintComponent(Graphics g) {
+        g.setColor(Color.yellow);
+        g.fillRect(x, y, 32, 32);
+    }*/
 }
 
