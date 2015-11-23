@@ -12,4 +12,7 @@ import java.awt.*;
  */
 public class TowerEngineController {
     
+    public movable(){
+        
+    }
 }

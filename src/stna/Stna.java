@@ -21,8 +21,9 @@ public class Stna extends JFrame{
     private Arena arena;
     private JLabel selite;
     private JButton kasvatusp, nollausp;
-
+    public boolean first = false;
     public Stna () {
+       
         try {
             UIManager.setLookAndFeel(
                     UIManager.getSystemLookAndFeelClassName());
@@ -31,6 +32,7 @@ public class Stna extends JFrame{
         }
 
         alusta();
+       
     }
 
     public void alusta() {
@@ -64,9 +66,8 @@ public class Stna extends JFrame{
                 arena = new Arena();
         ModelBlock[][] grid = arena.getArena();
         super.paint(g);
-        //int w =32;
-        //int h=32;
-        
+
+        if (!first){
         for (int x=0;x<grid.length; x++){
             int w =x;
             w =w*32;
@@ -81,13 +82,33 @@ public class Stna extends JFrame{
                     g.setColor(Color.GRAY);
                     g.fillRect(h, w, 32, 32);
             }
-                
-                
+             else if(grid[x][y].getid().equals("start")){
+                    g.setColor(Color.BLACK);
+                    g.fillRect(h, w, 32, 32);
+            }   
+                else if(grid[x][y].getid().equals("finish")){
+                    g.setColor(Color.PINK);
+                    g.fillRect(h, w, 32, 32);
+            }
         }
     
     }
-    
+        }
+   for (int x=0;x<grid.length; x++){
+            int w =x;
+            w =w*32;
+            for(int y=0; y<grid[0].length;y++){
+                int h =y;
+            h =h*32;
+                if(grid[x][y].getid().equals("start")){
+                    arena.setEnemy(x,y,"enemy");
+                    g.setColor(Color.blue);
+                    g.fillRect(h, w, 20, 20);
+                }
 }
+   }
+   
+    }
     public static void main(String args[]){
         new Stna();
     }

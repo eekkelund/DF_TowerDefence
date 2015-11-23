@@ -22,9 +22,9 @@ public class ModelGround extends ModelBlock{
         this.x=x;
         this.y=y;
         this.id = id;
+        init();
         
     }
-    public ModelGround(){}
     
     public int getX() {
         return x;
@@ -45,17 +45,35 @@ public class ModelGround extends ModelBlock{
     public String getid() {
         return id;
     }
+    public String getImg(){
+        return img;
+    }
     
-    @Override
     public void setid(String id) {
         this.id = id;
     }
     
-    
+    public void init(){
+        switch(id){
+            case "ground":
+                img = "path/to/file";
+                break;
+            case "road":
+                img = "path/to/file";
+                break;
+            case "finish":
+                img = "path/to/file";
+                break;
+            case "start":
+                img = "path/to/file";
+                break;
+        
+    }
     
     /*public void paintComponent(Graphics g) {
         g.setColor(Color.yellow);
         g.fillRect(x, y, 32, 32);
     }*/
+}
 }
 

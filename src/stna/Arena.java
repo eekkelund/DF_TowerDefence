@@ -23,7 +23,9 @@ public class Arena {
     private ArrayList<ModelGround> blocks = new ArrayList();
     private ArrayList<ModelEnemy> enemies = new ArrayList();
     private ArrayList<ModelTower> towers = new ArrayList();
-    ModelGround ground;
+    private ModelGround ground;
+    private ModelTower tower;
+    private ModelEnemy enemy;
     private Map map;
     static int[][] grid;
 
@@ -36,26 +38,24 @@ public class Arena {
             for (int j = 0; j < grid[i].length; j++) {
                 switch (grid[i][j]) {
                     case 0:
-                        /*ground = new ModelGround();
-                        ground.setX(i);
-                        ground.setY(j);
-                        ground.setid("grass");*/
-                        objGrid[i][j] = new ModelGround(i,j,"grass");
+                        ground = new ModelGround(i, j, "grass");
+                        objGrid[i][j] = ground;
+                        blocks.add(ground);
                         break;
                     case 1:
-                        ground = new ModelGround();
-                        ground.setX(i);
-                        ground.setY(j);
-                        ground.setid("road");
+                        ground = new ModelGround(i, j, "road");
                         objGrid[i][j] = ground;
+                        blocks.add(ground);
                         break;
                     case 2:
-                        ground = new ModelGround(i,j,"finish");
-                        /*ground.setX(i);
-                        ground.setY(j);
-                        ground.setid("finish");*/
+                        ground = new ModelGround(i, j, "start");
                         objGrid[i][j] = ground;
-                        System.out.print(objGrid[i][j].getid());
+                        blocks.add(ground);
+                        break;
+                    case 3:
+                        ground = new ModelGround(i, j, "finnish");
+                        objGrid[i][j] = ground;
+                        blocks.add(ground);
                         break;
 
                 }
@@ -64,26 +64,56 @@ public class Arena {
 
     }
 
-    public static void setTower(int x, int y) {
-        ModelTower tower = new ModelTower(x,y,"lazerT");
+    public void setTower(int x, int y, String id) {
+        tower = new ModelTower(x, y, id);
         objGrid[x][y] = tower;
-        tower.setX(x);
-        tower.setY(y);
-        tower.setid("lazerT");
+        towers.add(tower);
     }
-    public static ModelBlock[][] getArena() {
+
+    public void setEnemy(int x, int y, String id) {
+        enemy = new ModelEnemy(x, y, id);
+        objGrid[x][y] = enemy;
+        enemies.add(enemy);
+    }
+
+    public ModelBlock[][] getArena() {
         return objGrid;
     }
-   /* public static void main(String args[]) {
-        //Map map = new Map();
-        Arena arena = new Arena();
 
-        setTower(3,5);
-         for (int x = 0; x < objGrid.length; x++) {
-         System.out.println("");
-         for (int y = 0; y < objGrid[0].length; y++) {
-         System.out.print(objGrid[x][y].getid());
-         }
-         }
-    }*/
+    public void spawnEnemy() {
+        for (int x = 0; x < objGrid.length; x++) {
+            for (int y = 0; y < objGrid[0].length; y++) {
+                if (objGrid[x][y].getid().equals("start")) {
+                    enemy = new ModelEnemy(x, y, "enemy");
+                    objGrid[x][y] = enemy;
+                    enemies.add(enemy);
+
+                }
+            }
+        }
+    }
+    
+    public List<ModelEnemy> getEnemies(){
+        return enemies;
+    }
+    public List<ModelTower> getTowers(){
+        return towers;
+    }
+    
+    public List<ModelGround> getBlocks(){
+        return blocks;
+    }
+    //public getEnemy() {}
+    /* public static void main(String args[]) {
+     //Map map = new Map();
+     Arena arena = new Arena();
+
+     setTower(3,5);
+     for (int x = 0; x < objGrid.length; x++) {
+     System.out.println("");
+     for (int y = 0; y < objGrid[0].length; y++) {
+     System.out.print(objGrid[x][y].getid());
+     }
+     }
+     }*/
 }

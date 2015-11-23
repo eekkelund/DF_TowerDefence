@@ -14,6 +14,7 @@ public class ModelEnemy extends ModelBlock{
     private int y;
     private int damage;
     private String id;
+    private String img;
     
     private int speed;
     
@@ -21,6 +22,7 @@ public class ModelEnemy extends ModelBlock{
         this.x=x;
         this.y=y;
         this.id=id;
+        init();
     }
     
     public int getX() {
@@ -59,6 +61,19 @@ public class ModelEnemy extends ModelBlock{
     
     public void setSpeed(int speed) {
         this.speed = speed;
+    }
+    public String getImg(){
+        return img;
+    }
+    
+    public void init(){
+        switch(id){
+            case "enemy":
+                img = "path/to/file";
+                speed = 2;
+                damage = 1;
+        
+    }
     }
     
 }
