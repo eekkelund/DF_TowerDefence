@@ -33,7 +33,6 @@ public class Stna extends JFrame{
     private JButton button;
     private JPanel panel;
     public boolean first = false;
-    private int kerroin;
     public Stna () {
        
         try {
@@ -75,17 +74,9 @@ public class Stna extends JFrame{
         }
     }
     public void move(){
-        
-        kerroin=2;
-        int i=1;
-        while(kerroin<32){
-            
-        repaint();
-        kerroin =kerroin +2;
-        
-        }
-        
         contr.movable();
+        repaint();
+        
     }
     public void paint(Graphics g) {
                 
@@ -125,11 +116,10 @@ public class Stna extends JFrame{
         BufferedImage img; 
                     try {
                         img = ImageIO.read(new File("images/img.png"));
-                        System.out.print(kerroin);
                         for(ModelEnemy enemy : arena.getEnemies()){
-                            g.drawImage(img, enemy.getX()*kerroin, enemy.getY()*kerroin, this);
+                            g.drawImage(img, enemy.getX()*32, enemy.getY()*32, this);
                         }
-                    } catch (Exception ex) {
+                    } catch (IOException ex) {
                         System.out.print(ex);
                     }
 
