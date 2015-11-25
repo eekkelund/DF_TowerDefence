@@ -6,6 +6,7 @@
 package stna;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -25,9 +26,12 @@ import javax.swing.UIManager;
  */
 public class Stna extends JFrame{
     private Arena arena = new Arena();
-    private TowerEngineController contr = new TowerEngineController(arena); 
+    private TowerEngineController contr = new TowerEngineController(arena);
     private JLabel selite;
     private JButton kasvatusp, nollausp;
+    private ActionListener actionL;
+    private JButton button;
+    private JPanel panel;
     public boolean first = false;
     public Stna () {
        
@@ -37,43 +41,41 @@ public class Stna extends JFrame{
         } catch (Exception e) {
             System.err.println("Look and feel -asetus epäonnistui.");
         }
-
+ 
         alusta();
         arena.spawnEnemy();
        move();
        
     }
-
+ 
     public void alusta() {
         setTitle("Karta");
-        setSize(800, 800);
+        setSize(800, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        JPanel sisältöpaneeli = new JPanel();
-        selite = new JLabel();
-        sisältöpaneeli.add(selite);
-        
-        setContentPane(sisältöpaneeli);
-
-        
-            
+        panel = new JPanel();
+        //selite = new JLabel();
+        actionL = new ButtonListener();
+        button = new JButton("move");
        
-        
+        //setContentPane(panel);
+        panel.add(button);
+        button.addActionListener(actionL);
+       
+        add(panel, BorderLayout.SOUTH);
+       
         setVisible(true);
-    
-        
-        
-    
-    /*public void start() {
-        new Thread(this).start();
     }
-    
-     
-    public void run() {*/
-        
-       
+   
+        private class ButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource()==button) {
+                move();
+            }
+        }
     }
     public void move(){
         contr.movable();
+        repaint();
         
     }
     public void paint(Graphics g) {
@@ -89,22 +91,24 @@ public class Stna extends JFrame{
             for(int y=0; y<grid[0].length;y++){
                 int h =y;
             h =h*32;
-                if(grid[x][y].getid().equals("grass")){
-                    g.setColor(Color.GREEN);
-                    g.fillRect(h, w, 32, 32);
+                switch (grid[x][y].getid()) {
+                    case "grass":
+                        g.setColor(Color.GREEN);
+                        g.fillRect(h, w, 32, 32);
+                        break;
+                    case "road":
+                        g.setColor(Color.GRAY);
+                        g.fillRect(h, w, 32, 32);
+                        break;
+                    case "start":
+                        g.setColor(Color.BLACK);
+                        g.fillRect(h, w, 32, 32);
+                        break;
+                    case "finish":
+                        g.setColor(Color.PINK);
+                        g.fillRect(h, w, 32, 32);
+                        break;
                 }
-                else if(grid[x][y].getid().equals("road")){
-                    g.setColor(Color.GRAY);
-                    g.fillRect(h, w, 32, 32);
-            }
-             else if(grid[x][y].getid().equals("start")){
-                    g.setColor(Color.BLACK);
-                    g.fillRect(h, w, 32, 32);
-            }   
-                else if(grid[x][y].getid().equals("finish")){
-                    g.setColor(Color.PINK); 
-                    g.fillRect(h, w, 32, 32);
-            }
         }
     
     }
@@ -118,7 +122,7 @@ public class Stna extends JFrame{
                     } catch (IOException ex) {
                         System.out.print(ex);
                     }
-move();
+
         }
         
         

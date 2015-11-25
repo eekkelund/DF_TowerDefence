@@ -18,11 +18,11 @@ public class TowerEngineController {
     private Arena arena;
     private List enemies;
 //    private List towers = arena.getTowers();
+    public final int up = 1, down = 2, right = 3, left = 4;
     private int direction;
-    public final int up = 0, down = 1, right = 2, left = 3;
-    
-    public TowerEngineController(Arena a){
-        this.arena =a;
+
+    public TowerEngineController(Arena a) {
+        this.arena = a;
     }
 
     public void shoot(List enemies, List towers) {
@@ -43,7 +43,7 @@ public class TowerEngineController {
     }
 
     public void isDead() {
-                enemies = arena.getEnemies();
+        enemies = arena.getEnemies();
 
         for (int j = 0; j < enemies.size(); j++) {
             enemy = (ModelEnemy) enemies.get(j);
@@ -58,32 +58,14 @@ public class TowerEngineController {
     public void movable() {
         //enemies = arena.getEnemies();
         //arena = new Arena();
-        
+
         ModelBlock[][] grid = arena.getArena();
         //for (ModelEnemy enemy : arena.getEnemies()) {
-            for(ModelEnemy enemy2 : arena.getEnemies()){
+        for (ModelEnemy enemy2 : arena.getEnemies()) {
             //enemy = (ModelEnemy) enemie;
-            
+
             int xcoord = enemy2.getX();
             int ycoord = enemy2.getY();
-            try {
-                
-                if ("road".equals(grid[ycoord + 1][xcoord].getid())) {
-                    direction = down;
-                    System.out.print("alas");
-                } else if ("road".equals(grid[ycoord - 1][xcoord].getid())) {
-                    direction = up;
-                    System.out.print("ylös");
-                } else if ("road".equals(grid[ycoord][xcoord + 1].getid())) {
-                    direction = right;
-                    System.out.print("oikeel");
-                } else if ("road".equals(grid[ycoord][xcoord - 1].getid())) {
-                    direction = left;
-                    System.out.print("vasen");
-                }
-            } catch (Exception e) {
-                System.out.print(e);
-            }
             if (direction == up) {
                 ycoord--;
                 enemy2.setY(ycoord);
@@ -98,6 +80,42 @@ public class TowerEngineController {
                 xcoord--;
                 enemy2.setX(xcoord);
             }
+            try {
+                if (direction != down && direction != up) {
+                    if ("road".equals(grid[ycoord + 1][xcoord].getid())) {
+                        direction = down;
+                    } else if ("road".equals(grid[ycoord - 1][xcoord].getid())) {
+                        direction = up;
+                    }
+                } else if (direction != right && direction != left) {
+                    if ("road".equals(grid[ycoord][xcoord + 1].getid())) {
+                        direction = right;
+                    } else if ("road".equals(grid[ycoord][xcoord - 1].getid())) {
+                        direction = left;
+                    }
+                }
+            } catch (Exception e) {
+                System.out.print(e);
+            }
+
+            /*try {
+                
+             if ("road".equals(grid[ycoord + 1][xcoord].getid())) {
+             direction = down;
+             System.out.print("alas");
+             } else if ("road".equals(grid[ycoord - 1][xcoord].getid())) {
+             direction = up;
+             System.out.print("ylös");
+             } else if ("road".equals(grid[ycoord][xcoord + 1].getid())) {
+             direction = right;
+             System.out.print("oikeel");
+             } else if ("road".equals(grid[ycoord][xcoord - 1].getid())) {
+             direction = left;
+             System.out.print("vasen");
+             } 
+             } catch (Exception e) {
+             System.out.print(e);
+             }*/
         }
     }
 
