@@ -25,7 +25,7 @@ import javax.swing.UIManager;
  */
 public class Stna extends JFrame{
     private Arena arena = new Arena();
-    private TowerEngineController contr = new TowerEngineController(); 
+    private TowerEngineController contr = new TowerEngineController(arena); 
     private JLabel selite;
     private JButton kasvatusp, nollausp;
     public boolean first = false;
@@ -97,10 +97,10 @@ public class Stna extends JFrame{
                     g.setColor(Color.GRAY);
                     g.fillRect(h, w, 32, 32);
             }
-             //else if(grid[x][y].getid().equals("start")){
-                    //g.setColor(Color.BLACK);
-                    //g.fillRect(h, w, 32, 32);
-            //}   
+             else if(grid[x][y].getid().equals("start")){
+                    g.setColor(Color.BLACK);
+                    g.fillRect(h, w, 32, 32);
+            }   
                 else if(grid[x][y].getid().equals("finish")){
                     g.setColor(Color.PINK); 
                     g.fillRect(h, w, 32, 32);

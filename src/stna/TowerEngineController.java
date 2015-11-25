@@ -20,6 +20,10 @@ public class TowerEngineController {
 //    private List towers = arena.getTowers();
     private int direction;
     public final int up = 0, down = 1, right = 2, left = 3;
+    
+    public TowerEngineController(Arena a){
+        this.arena =a;
+    }
 
     public void shoot(List enemies, List towers) {
         enemies = arena.getEnemies();
@@ -53,26 +57,29 @@ public class TowerEngineController {
 
     public void movable() {
         //enemies = arena.getEnemies();
-        arena = new Arena();
-        System.out.print("movable");
+        //arena = new Arena();
+        
         ModelBlock[][] grid = arena.getArena();
         //for (ModelEnemy enemy : arena.getEnemies()) {
             for(ModelEnemy enemy2 : arena.getEnemies()){
             //enemy = (ModelEnemy) enemie;
-            System.out.print("oikeel");
+            
             int xcoord = enemy2.getX();
             int ycoord = enemy2.getY();
             try {
-                System.out.print("try");
+                
                 if ("road".equals(grid[ycoord + 1][xcoord].getid())) {
                     direction = down;
+                    System.out.print("alas");
                 } else if ("road".equals(grid[ycoord - 1][xcoord].getid())) {
                     direction = up;
+                    System.out.print("ylös");
                 } else if ("road".equals(grid[ycoord][xcoord + 1].getid())) {
                     direction = right;
                     System.out.print("oikeel");
                 } else if ("road".equals(grid[ycoord][xcoord - 1].getid())) {
                     direction = left;
+                    System.out.print("vasen");
                 }
             } catch (Exception e) {
                 System.out.print(e);
