@@ -20,14 +20,15 @@ public class Arena {
     public static final int width = 480 / 32;
     public static final int height = 320 / 32;
     static private ModelBlock[][] objGrid;
-    private ArrayList<ModelGround> blocks = new ArrayList();
-    private ArrayList<ModelEnemy> enemies = new ArrayList();
-    private ArrayList<ModelTower> towers = new ArrayList();
+    private List<ModelGround> blocks = new ArrayList<ModelGround>();
+    private List<ModelEnemy> enemies = new ArrayList<ModelEnemy>();
+    private List<ModelTower> towers = new ArrayList<ModelTower>();
     private ModelGround ground;
     private ModelTower tower;
     private ModelEnemy enemy;
     private Map map;
     static int[][] grid;
+    private TowerEngineController controller;
 
     public Arena() {
         map = new Map();
@@ -81,11 +82,12 @@ public class Arena {
     }
 
     public void spawnEnemy() {
+        
         for (int x = 0; x < objGrid.length; x++) {
             for (int y = 0; y < objGrid[0].length; y++) {
                 if (objGrid[x][y].getid().equals("start")) {
                     enemy = new ModelEnemy(x, y, "enemy");
-                    objGrid[x][y] = enemy;
+                    //objGrid[x][y] = enemy;
                     enemies.add(enemy);
 
                 }
@@ -94,6 +96,7 @@ public class Arena {
     }
     
     public List<ModelEnemy> getEnemies(){
+        
         return enemies;
     }
     public List<ModelTower> getTowers(){

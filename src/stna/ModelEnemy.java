@@ -15,6 +15,8 @@ public class ModelEnemy extends ModelBlock{
     private int damage;
     private String id;
     private String img;
+    private int healt;
+    private boolean alive;
     
     private int speed;
     
@@ -64,6 +66,19 @@ public class ModelEnemy extends ModelBlock{
     }
     public String getImg(){
         return img;
+    }
+    public int getHealt() {
+        return healt;
+    }
+    public boolean isAlive(){
+        return alive;
+    }
+    
+    public void setHealt(int damage) {
+        healt = healt - damage;
+        if (healt <= 0){
+            alive=false;
+        }
     }
     
     public void init(){
