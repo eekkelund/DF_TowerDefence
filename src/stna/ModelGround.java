@@ -18,7 +18,7 @@ public class ModelGround extends ModelBlock{
     private String id;
     private String img; 
     
-    public ModelGround (int x, int y, String id) {
+    public ModelGround (int y, int x, String id) {
         this.x=x;
         this.y=y;
         this.id = id;

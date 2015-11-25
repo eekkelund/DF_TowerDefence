@@ -19,7 +19,7 @@ public class TowerEngineController {
     private List enemies;
 //    private List towers = arena.getTowers();
     public final int up = 1, down = 2, right = 3, left = 4;
-    private int direction;
+    private int direction = right;
 
     public TowerEngineController(Arena a) {
         this.arena = a;
@@ -80,17 +80,55 @@ public class TowerEngineController {
                 xcoord--;
                 enemy2.setX(xcoord);
             }
+            //           System.out.print(xcoord+""+ycoord);
+            System.out.print(grid[ycoord][xcoord].getid());
+
             try {
-                if (direction != down && direction != up) {
+                
+             if (direction != down && direction != up) {
+             if ("road".equals(grid[ycoord + 1][xcoord].getid())) {
+             direction = down;
+                        
+             System.out.print("alaspls");
+             } else if ("road".equals(grid[ycoord - 1][xcoord].getid())) {
+             direction = up;
+             System.out.print("whynotup");
+             }
+             } else if (direction != right && direction != left) {
+             if ("road".equals(grid[ycoord][xcoord + 1].getid())) {
+             direction = right;
+             System.out.print("oikeepls");
+             } else if ("road".equals(grid[ycoord][xcoord - 1].getid())) {
+             direction = left;
+             }
+             }
+             } catch (Exception e) {
+             System.out.print(e);
+             }
+            
+            
+            
+            
+            /*VARIANT3 try { 
+
+                if (direction != down) {
                     if ("road".equals(grid[ycoord + 1][xcoord].getid())) {
                         direction = down;
-                    } else if ("road".equals(grid[ycoord - 1][xcoord].getid())) {
-                        direction = up;
+
+                        System.out.print("alaspls");
                     }
-                } else if (direction != right && direction != left) {
+                } else if (direction != up) {
+                    if ("road".equals(grid[ycoord - 1][xcoord].getid())) {
+                        direction = up;
+                        System.out.print("whynotup");
+                    }
+                } else if (direction != right) {
                     if ("road".equals(grid[ycoord][xcoord + 1].getid())) {
                         direction = right;
-                    } else if ("road".equals(grid[ycoord][xcoord - 1].getid())) {
+                        System.out.print("oikeepls");
+                    }
+                } else if (direction != left) {
+                    if ("road".equals(grid[ycoord][xcoord - 1].getid())) {
                         direction = left;
                     }
                 }
@@ -98,7 +136,7 @@ public class TowerEngineController {
                 System.out.print(e);
             }
 
-            /*try {
+            /*VARIANT2try {
                 
              if ("road".equals(grid[ycoord + 1][xcoord].getid())) {
              direction = down;

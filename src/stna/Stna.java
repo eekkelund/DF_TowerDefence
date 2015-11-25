@@ -33,6 +33,7 @@ public class Stna extends JFrame{
     private JButton button;
     private JPanel panel;
     public boolean first = false;
+    private int kerroin;
     public Stna () {
        
         try {
@@ -44,7 +45,7 @@ public class Stna extends JFrame{
  
         alusta();
         arena.spawnEnemy();
-       move();
+       
        
     }
  
@@ -74,9 +75,17 @@ public class Stna extends JFrame{
         }
     }
     public void move(){
-        contr.movable();
-        repaint();
         
+        kerroin=2;
+        int i=1;
+        while(kerroin<32){
+            
+        repaint();
+        kerroin =kerroin +2;
+        
+        }
+        
+        contr.movable();
     }
     public void paint(Graphics g) {
                 
@@ -85,28 +94,28 @@ public class Stna extends JFrame{
 
         if (!first){
             //first=true;
-        for (int x=0;x<grid.length; x++){
-            int w =x;
-            w =w*32;
-            for(int y=0; y<grid[0].length;y++){
-                int h =y;
+        for (int y=0;y<grid.length; y++){
+            int h =y;
             h =h*32;
-                switch (grid[x][y].getid()) {
+            for(int x=0; x<grid[0].length;x++){
+                int w =x;
+            w =w*32;
+                switch (grid[y][x].getid()) {
                     case "grass":
                         g.setColor(Color.GREEN);
-                        g.fillRect(h, w, 32, 32);
+                        g.fillRect(w, h, 32, 32);
                         break;
                     case "road":
                         g.setColor(Color.GRAY);
-                        g.fillRect(h, w, 32, 32);
+                        g.fillRect(w, h, 32, 32);
                         break;
                     case "start":
                         g.setColor(Color.BLACK);
-                        g.fillRect(h, w, 32, 32);
+                        g.fillRect(w, h, 32, 32);
                         break;
                     case "finish":
                         g.setColor(Color.PINK);
-                        g.fillRect(h, w, 32, 32);
+                        g.fillRect(w, h, 32, 32);
                         break;
                 }
         }
@@ -116,10 +125,11 @@ public class Stna extends JFrame{
         BufferedImage img; 
                     try {
                         img = ImageIO.read(new File("images/img.png"));
+                        System.out.print(kerroin);
                         for(ModelEnemy enemy : arena.getEnemies()){
-                            g.drawImage(img, enemy.getY()*32, enemy.getX()*32, this);
+                            g.drawImage(img, enemy.getX()*kerroin, enemy.getY()*kerroin, this);
                         }
-                    } catch (IOException ex) {
+                    } catch (Exception ex) {
                         System.out.print(ex);
                     }
 

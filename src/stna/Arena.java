@@ -54,7 +54,7 @@ public class Arena {
                         blocks.add(ground);
                         break;
                     case 3:
-                        ground = new ModelGround(i, j, "finnish");
+                        ground = new ModelGround(i, j, "finish");
                         objGrid[i][j] = ground;
                         blocks.add(ground);
                         break;
@@ -83,10 +83,10 @@ public class Arena {
 
     public void spawnEnemy() {
         
-        for (int x = 0; x < objGrid.length; x++) {
-            for (int y = 0; y < objGrid[0].length; y++) {
-                if (objGrid[x][y].getid().equals("start")) {
-                    enemy = new ModelEnemy(x, y, "enemy");
+        for (int y = 0; y < objGrid.length; y++) {
+            for (int x = 0; x < objGrid[0].length; x++) {
+                if (objGrid[y][x].getid().equals("start")) {
+                    enemy = new ModelEnemy(y, x, "enemy");
                     //objGrid[x][y] = enemy;
                     enemies.add(enemy);
 

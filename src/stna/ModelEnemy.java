@@ -20,7 +20,7 @@ public class ModelEnemy extends ModelBlock{
     
     private int speed;
     
-    public ModelEnemy(int x, int y, String id) {
+    public ModelEnemy(int y, int x, String id) {
         this.x=x;
         this.y=y;
         this.id=id;

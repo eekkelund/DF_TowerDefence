@@ -19,7 +19,7 @@ public class ModelTower extends ModelBlock {
     private String id;
     private int speed;
 
-    public ModelTower(int x, int y, String id) {
+    public ModelTower(int y, int x, String id) {
         this.x = x;
         this.y = y;
         this.id = id;
