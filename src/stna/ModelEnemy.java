@@ -86,7 +86,7 @@ public class ModelEnemy extends ModelBlock{
             case "enemy":
                 img = "path/to/file";
                 speed = 2;
-                damage = 1;
+                healt=10;
         
     }
     }

@@ -33,6 +33,7 @@ public class Stna extends JFrame{
     private JButton button;
     private JPanel panel;
     public boolean first = false;
+    private int bsize = 32;
     public Stna () {
        
         try {
@@ -44,6 +45,7 @@ public class Stna extends JFrame{
  
         alusta();
         arena.spawnEnemy();
+        arena.setTower(5, 5, "tower");
        
        
     }
@@ -85,39 +87,51 @@ public class Stna extends JFrame{
 
         if (!first){
             //first=true;
-        for (int y=0;y<grid.length; y++){
+        for (int y=0;y<grid.length; y++){//DRAWS MAP
             int h =y;
-            h =h*32;
+            h =h*bsize;
             for(int x=0; x<grid[0].length;x++){
                 int w =x;
-            w =w*32;
+            w =w*bsize;
                 switch (grid[y][x].getid()) {
                     case "grass":
                         g.setColor(Color.GREEN);
-                        g.fillRect(w, h, 32, 32);
+                        g.fillRect(w, h, bsize, bsize);
                         break;
                     case "road":
                         g.setColor(Color.GRAY);
-                        g.fillRect(w, h, 32, 32);
+                        g.fillRect(w, h, bsize, bsize);
                         break;
                     case "start":
                         g.setColor(Color.BLACK);
-                        g.fillRect(w, h, 32, 32);
+                        g.fillRect(w, h, bsize, bsize);
                         break;
                     case "finish":
                         g.setColor(Color.PINK);
-                        g.fillRect(w, h, 32, 32);
+                        g.fillRect(w, h, bsize, bsize);
                         break;
                 }
         }
     
     }
+        if (contr.shoot()){//shooting??
+            for(ModelEnemy enemy : arena.getEnemies()){
+                for(ModelTower tower : arena.getTowers()){
+            g.setColor(new Color(255, 255, 0));
+            g.drawLine(tower.getX()*bsize+(bsize/2), tower.getY()*bsize+(bsize/2), enemy.getX()*bsize+(bsize/2), enemy.getY()*bsize+(bsize/2));
+        }
+            }
+        }
         }
         BufferedImage img; 
-                    try {
+                    try {//DRAWS ENEMYS AND TOWERS
                         img = ImageIO.read(new File("images/img.png"));
                         for(ModelEnemy enemy : arena.getEnemies()){
                             g.drawImage(img, enemy.getX()*32, enemy.getY()*32, this);
+                        }
+                        img = ImageIO.read(new File("images/img2.png"));
+                        for(ModelTower tower : arena.getTowers()){
+                            g.drawImage(img, tower.getX()*32, tower.getY()*32, this);
                         }
                     } catch (IOException ex) {
                         System.out.print(ex);
