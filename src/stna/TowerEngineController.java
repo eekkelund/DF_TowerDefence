@@ -76,9 +76,10 @@ public class TowerEngineController {
             int y = enemy2.getMoveY();
             int xcoord = enemy2.getX();
             int ycoord = enemy2.getY();
-System.out.print(grid[ycoord][xcoord].getid());
+//System.out.print(grid[ycoord][xcoord].getid());
             if ("finish".equals(grid[ycoord][xcoord].getid())) {
-                enemy2.setHealt(1000);
+                System.out.print("kuole");
+                enemy2.setHealt(10000000);
                 if (isDead()) {
                     System.out.print("kuole");
 
