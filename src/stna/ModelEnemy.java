@@ -101,9 +101,9 @@ public class ModelEnemy extends ModelBlock{
     public void init(){
         switch(id){
             case "enemy":
-                img = "path/to/file";
+                img = "images/img.png";
                 speed = 2;
-                healt=1000000;
+                healt=100;
                 damage = 10;
                 prize = 5;
         

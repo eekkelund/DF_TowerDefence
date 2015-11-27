@@ -13,6 +13,7 @@ public class ModelPlayer {
     private int healt;
     private int money;
     private boolean alive =true;
+    private int level;
     
     public ModelPlayer(){
         
@@ -21,10 +22,20 @@ public class ModelPlayer {
     public void init(){
     healt = 100;
     money = 10;
+    level =2;
     }
      public int getHealt() {
         return healt;
     }
+     public int getLevel() {
+        return level;
+        
+    } 
+     public void setLevel(int level) {
+        this.level=level;
+    }
+    
+     
     
     public boolean isAlive(){
         return alive;

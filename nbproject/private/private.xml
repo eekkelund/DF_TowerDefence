@@ -3,14 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/eetz1/NetBeansProjects/Stna/src/stna/ModelBlock.java</file>
-            <file>file:/home/eetz1/NetBeansProjects/Stna/src/stna/ModelTower.java</file>
-            <file>file:/home/eetz1/NetBeansProjects/Stna/src/stna/Map.java</file>
-            <file>file:/home/eetz1/NetBeansProjects/Stna/src/stna/TowerEngineController.java</file>
-            <file>file:/home/eetz1/NetBeansProjects/Stna/src/stna/ModelEnemy.java</file>
-            <file>file:/home/eetz1/NetBeansProjects/Stna/src/stna/Arena.java</file>
-            <file>file:/home/eetz1/NetBeansProjects/Stna/src/stna/Stna.java</file>
-            <file>file:/home/eetz1/NetBeansProjects/Stna/src/stna/ModelGround.java</file>
+            <file>file:/home/eetz1/NetBeansProjects/stna2/src/stna/TowerEngineController.java</file>
+            <file>file:/home/eetz1/NetBeansProjects/stna2/src/stna/Stna.java</file>
         </group>
     </open-files>
 </project-private>

@@ -65,11 +65,14 @@ public class ModelTower extends ModelBlock {
     public void setRange(int range) {
         this.range = range;
     }
+    public String getImg(){
+        return img;
+    }
 
     public void init() {
         switch (id) {
             case "tower":
-                img = "path/to/file";
+                img = "images/img2.png";
                 speed = 2;
                 damage = 1;
                 range = 3;

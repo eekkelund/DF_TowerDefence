@@ -16,12 +16,12 @@ public class TowerEngineController {
     private ModelEnemy enemy2;
     private ModelTower tower;
     private ModelPlayer player;
-    private Arena arena;
+    private final Arena arena;
     private List enemies;
 //    private List towers = arena.getTowers();
     public final int up = 1, down = 2, right = 3, left = 4;
     private int direction = right;
-    private int bsize = 32, movecounter;
+    private int bsize, movecounter;
     boolean move = false;
 
     public TowerEngineController(Arena a) {
@@ -64,9 +64,8 @@ public class TowerEngineController {
     }
 
     public void move() {
-        //enemies = arena.getEnemies();
-        //arena = new Arena();
 
+        bsize = arena.getBsize();
         ModelBlock[][] grid = arena.getArena();
         for (int i = 0; i < arena.getEnemies().size(); i++) {
 
@@ -76,7 +75,7 @@ public class TowerEngineController {
             int y = enemy2.getMoveY();
             int xcoord = enemy2.getX();
             int ycoord = enemy2.getY();
-//System.out.print(grid[ycoord][xcoord].getid());
+
             if ("finish".equals(grid[ycoord][xcoord].getid())) {
                 enemy2.setHealt(10000000);
                 if (isDead()) {
