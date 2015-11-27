@@ -103,7 +103,7 @@ public class ModelEnemy extends ModelBlock{
             case "enemy":
                 img = "path/to/file";
                 speed = 2;
-                healt=10;
+                healt=1000000;
                 damage = 10;
                 prize = 5;
         

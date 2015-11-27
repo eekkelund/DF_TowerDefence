@@ -22,6 +22,7 @@ public class TowerEngineController {
     public final int up = 1, down = 2, right = 3, left = 4;
     private int direction = right;
     private int bsize = 32, movecounter;
+    boolean move = false;
 
     public TowerEngineController(Arena a) {
         this.arena = a;
@@ -62,30 +63,32 @@ public class TowerEngineController {
 
     }
 
-    public void movable() {
+    public void move() {
         //enemies = arena.getEnemies();
         //arena = new Arena();
 
         ModelBlock[][] grid = arena.getArena();
         for (int i = 0; i < arena.getEnemies().size(); i++) {
-            //for (Iterator<ModelEnemy> iterator = arena.getEnemies().iterator(); iterator.hasNext();) {
-            //ModelEnemy enemy2 = iterator.next();
-            //for (ModelEnemy enemy2 : arena.getEnemies()) {
+
             enemy2 = arena.getEnemies().get(i);
-            //enemy = (ModelEnemy) enemie;
 
             int x = enemy2.getMoveX();
             int y = enemy2.getMoveY();
             int xcoord = enemy2.getX();
             int ycoord = enemy2.getY();
-
+System.out.print(grid[ycoord][xcoord].getid());
             if ("finish".equals(grid[ycoord][xcoord].getid())) {
                 enemy2.setHealt(1000);
-                isDead();
-                player = arena.getPlayer();
-                player.setHealt(enemy2.getDamage());
-                System.out.print(player.getHealt());
+                if (isDead()) {
+                    System.out.print("kuole");
+
+                    player = arena.getPlayer();
+                    player.setHealt(enemy2.getDamage());
+                    System.out.print(player.getHealt());
+                    move = false;
+                }
             }
+            if (!move) {
                 if (direction == up) {
                     y--;
                     enemy2.setMoveY(y);
@@ -94,6 +97,8 @@ public class TowerEngineController {
                         ycoord--;
                         enemy2.setY(ycoord);
                         movecounter = 0;
+                        move = true;
+
                     }
                 } else if (direction == down) {
                     y++;
@@ -103,6 +108,7 @@ public class TowerEngineController {
                         ycoord++;
                         enemy2.setY(ycoord);
                         movecounter = 0;
+                        move = true;
                     }
                 } else if (direction == right) {
                     x++;
@@ -112,6 +118,7 @@ public class TowerEngineController {
                         xcoord++;
                         enemy2.setX(xcoord);
                         movecounter = 0;
+                        move = true;
                     }
                 } else if (direction == left) {
                     x--;
@@ -121,34 +128,51 @@ public class TowerEngineController {
                         xcoord--;
                         enemy2.setX(xcoord);
                         movecounter = 0;
+                        move = true;
                     }
                 }
-            //           System.out.print(xcoord+""+ycoord);
-                //System.out.print(grid[ycoord][xcoord].getid());
-
-                try {
-
-                    if (direction != down && direction != up) {
-                        if ("road".equals(grid[ycoord + 1][xcoord].getid())) {
-                            direction = down;
-
-                        } else if ("road".equals(grid[ycoord - 1][xcoord].getid())) {
-                            direction = up;
-                        }
-                    } else if (direction != right && direction != left) {
-                        if ("road".equals(grid[ycoord][xcoord + 1].getid())) {
-                            direction = right;
-                        } else if ("road".equals(grid[ycoord][xcoord - 1].getid())) {
-                            direction = left;
-                        }
-                    }
-
-                } catch (Exception e) {
-                    System.out.print(e);
-                }
+            } else if (move) {
+                direction = movable();
+                move = false;
             }
-            //shoot();
         }
+    }
+    //           System.out.print(xcoord+""+ycoord);
+    //System.out.print(grid[ycoord][xcoord].getid());
 
+    public int movable() {
+        ModelBlock[][] grid = arena.getArena();
+        for (ModelEnemy enemy : arena.getEnemies()) {
+            int xcoord = enemy.getX();
+            int ycoord = enemy.getY();
+
+            try {
+
+                if (direction != down && direction != up) {
+                    if ("road".equals(grid[ycoord + 1][xcoord].getid())) {
+                        direction = down;
+                        return direction;
+
+                    } else if ("road".equals(grid[ycoord - 1][xcoord].getid())) {
+                        direction = up;
+                        return direction;
+                    }
+                } else if (direction != right && direction != left) {
+                    if ("road".equals(grid[ycoord][xcoord + 1].getid())) {
+                        direction = right;
+                        return direction;
+                    } else if ("road".equals(grid[ycoord][xcoord - 1].getid())) {
+                        direction = left;
+                        return direction;
+                    }
+                }
+
+            } catch (Exception e) {
+                System.out.print(e);
+            }
+        }
+        //shoot();
+        return direction;
     }
 
+}

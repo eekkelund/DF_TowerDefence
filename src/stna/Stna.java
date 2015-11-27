@@ -80,12 +80,12 @@ public class Stna extends JFrame implements ActionListener{
         
     
     public void move(){
-        contr.movable();
+        contr.move();
         repaint();
         
     }
     public void start(){
-        timer = new Timer(20, this);
+        timer = new Timer(10, this);
         timer.start();
     }
     
