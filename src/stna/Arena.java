@@ -71,12 +71,6 @@ public class Arena {
         towers.add(tower);
     }
 
-    public void setEnemy(int x, int y, String id) {
-        enemy = new ModelEnemy(x, y, id);
-        objGrid[x][y] = enemy;
-        enemies.add(enemy);
-    }
-
     public ModelBlock[][] getArena() {
         return objGrid;
     }

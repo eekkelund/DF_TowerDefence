@@ -13,7 +13,7 @@ import java.util.*;
  */
 public class TowerEngineController {
 
-    private ModelEnemy enemy;
+    private ModelEnemy enemy2;
     private ModelTower tower;
     private Arena arena;
     private List enemies;
@@ -43,13 +43,11 @@ public class TowerEngineController {
     }
 
     public void isDead() {
-        for (ModelEnemy enemy : arena.getEnemies()) {
+        for (Iterator<ModelEnemy> iterator = arena.getEnemies().iterator(); iterator.hasNext();) {
+            ModelEnemy enemy = iterator.next();
             if (!enemy.isAlive()) {
-                enemy = new ModelEnemy(0,0,null);
-                enemy = null;
+                iterator.remove();
                 System.out.print("ded");
-                //delete from screen
-                //add moneys
             }
         }
 
@@ -60,12 +58,21 @@ public class TowerEngineController {
         //arena = new Arena();
         
         ModelBlock[][] grid = arena.getArena();
-        //for (ModelEnemy enemy : arena.getEnemies()) {
-        for (ModelEnemy enemy2 : arena.getEnemies()) {
+        for(int i =0; i<arena.getEnemies().size();i++){
+        //for (Iterator<ModelEnemy> iterator = arena.getEnemies().iterator(); iterator.hasNext();) {
+            //ModelEnemy enemy2 = iterator.next();
+        //for (ModelEnemy enemy2 : arena.getEnemies()) {
+        enemy2 = arena.getEnemies().get(i);
             //enemy = (ModelEnemy) enemie;
 
             int xcoord = enemy2.getX();
             int ycoord = enemy2.getY();
+            
+            if ("finish".equals(grid[ycoord][xcoord].getid())){
+                    enemy2.setHealt(1000);
+                    isDead();
+                    //REMOVE PLAYERS HEALT
+                }
             if (direction == up) {
                 ycoord--;
                 enemy2.setY(ycoord);
@@ -80,7 +87,7 @@ public class TowerEngineController {
                 enemy2.setX(xcoord);
             }
             //           System.out.print(xcoord+""+ycoord);
-            System.out.print(grid[ycoord][xcoord].getid());
+            //System.out.print(grid[ycoord][xcoord].getid());
 
             try {
 
@@ -98,10 +105,11 @@ public class TowerEngineController {
                         direction = left;
                     }
                 }
+                
             } catch (Exception e) {
                 System.out.print(e);
             }
-
+            
             /*VARIANT3 try { 
 
              if (direction != down) {
@@ -148,7 +156,7 @@ public class TowerEngineController {
              System.out.print(e);
              }*/
         }
-        shoot();
+        //shoot();
     }
 
 }

@@ -127,11 +127,11 @@ public class Stna extends JFrame{
                     try {//DRAWS ENEMYS AND TOWERS
                         img = ImageIO.read(new File("images/img.png"));
                         for(ModelEnemy enemy : arena.getEnemies()){
-                            g.drawImage(img, enemy.getX()*32, enemy.getY()*32, this);
+                            g.drawImage(img, enemy.getX()*bsize, enemy.getY()*bsize, this);
                         }
                         img = ImageIO.read(new File("images/img2.png"));
                         for(ModelTower tower : arena.getTowers()){
-                            g.drawImage(img, tower.getX()*32, tower.getY()*32, this);
+                            g.drawImage(img, tower.getX()*bsize, tower.getY()*bsize, this);
                         }
                     } catch (IOException ex) {
                         System.out.print(ex);

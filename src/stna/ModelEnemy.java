@@ -16,7 +16,7 @@ public class ModelEnemy extends ModelBlock{
     private String id;
     private String img;
     private int healt;
-    private boolean alive;
+    private boolean alive=true;
     
     private int speed;
     
