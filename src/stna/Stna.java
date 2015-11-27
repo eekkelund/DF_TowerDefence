@@ -128,7 +128,7 @@ public class Stna extends JFrame implements ActionListener{
             for(ModelEnemy enemy : arena.getEnemies()){
                 for(ModelTower tower : arena.getTowers()){
             g.setColor(new Color(255, 255, 0));
-            g.drawLine(tower.getX()*bsize+(bsize/2), tower.getY()*bsize+(bsize/2), enemy.getX()*bsize+(bsize/2), enemy.getY()*bsize+(bsize/2));
+            g.drawLine(tower.getX()*bsize+(bsize/2), tower.getY()*bsize+(bsize/2), enemy.getMoveX()+(bsize/2), enemy.getMoveY()+(bsize/2));
         }
             }
         }
