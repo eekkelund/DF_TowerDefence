@@ -20,11 +20,12 @@ import javax.swing.*;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
+
 /**
  *
  * @author eetz1
  */
-public class Stna extends JFrame{
+public class Stna extends JFrame implements ActionListener{
     private Arena arena = new Arena();
     private TowerEngineController contr = new TowerEngineController(arena);
     private JLabel selite;
@@ -34,6 +35,7 @@ public class Stna extends JFrame{
     private JPanel panel;
     public boolean first = false;
     private int bsize = 32;
+    private Timer timer;
     public Stna () {
        
         try {
@@ -46,6 +48,7 @@ public class Stna extends JFrame{
         alusta();
         arena.spawnEnemy();
         arena.setTower(5, 5, "tower");
+        start();
        
        
     }
@@ -56,35 +59,42 @@ public class Stna extends JFrame{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         panel = new JPanel();
         //selite = new JLabel();
-        actionL = new ButtonListener();
+        //actionL = new ButtonListener();
         button = new JButton("move");
        
         //setContentPane(panel);
         panel.add(button);
-        button.addActionListener(actionL);
+        //button.addActionListener(actionL);
        
         add(panel, BorderLayout.SOUTH);
        
         setVisible(true);
     }
    
-        private class ButtonListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            if (e.getSource()==button) {
+      //  private class ButtonListener implements ActionListener {
+       
+    public void actionPerformed(ActionEvent e) {
+            //if (e.getSource()==button) {
                 move();
             }
-        }
-    }
+        
+    
     public void move(){
         contr.movable();
         repaint();
         
     }
-    public void paint(Graphics g) {
-                
+    public void start(){
+        timer = new Timer(20, this);
+        timer.start();
+    }
+    
+    
+     public void paint(Graphics g) {
+               
         ModelBlock[][] grid = arena.getArena();
         super.paint(g);
-
+ 
         if (!first){
             //first=true;
         for (int y=0;y<grid.length; y++){//DRAWS MAP
@@ -112,7 +122,7 @@ public class Stna extends JFrame{
                         break;
                 }
         }
-    
+   
     }
         if (contr.shoot()){//shooting??
             for(ModelEnemy enemy : arena.getEnemies()){
@@ -123,21 +133,32 @@ public class Stna extends JFrame{
             }
         }
         }
-        BufferedImage img; 
-                    try {//DRAWS ENEMYS AND TOWERS
+        drawEnemy(g);
+        drawTower(g);
+    }
+    public void drawEnemy(Graphics g) {
+   
+        BufferedImage img;
+                    try {//DRAWS ENEMYS
                         img = ImageIO.read(new File("images/img.png"));
                         for(ModelEnemy enemy : arena.getEnemies()){
-                            g.drawImage(img, enemy.getX()*bsize, enemy.getY()*bsize, this);
-                        }
-                        img = ImageIO.read(new File("images/img2.png"));
-                        for(ModelTower tower : arena.getTowers()){
-                            g.drawImage(img, tower.getX()*bsize, tower.getY()*bsize, this);
+                            g.drawImage(img, enemy.getMoveX(), enemy.getMoveY(), this);
                         }
                     } catch (IOException ex) {
                         System.out.print(ex);
                     }
-
-        }
+           
+    }
+    public void drawTower(Graphics g) {
+        BufferedImage img;
+                    try {img = ImageIO.read(new File("images/img2.png"));
+                        for(ModelTower tower : arena.getTowers()){
+                            g.drawImage(img, tower.getX()*32, tower.getY()*32, this);
+                        }
+                    }catch (IOException ex) {
+                        System.out.print(ex);
+                    }
+    }
         
         
         

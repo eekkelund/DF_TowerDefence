@@ -30,6 +30,7 @@ public class Arena {
     private Map map;
     static int[][] grid;
     private TowerEngineController controller;
+    private int bsize=32;
 
     public Arena() {
         player =new ModelPlayer();
@@ -82,7 +83,7 @@ public class Arena {
         for (int y = 0; y < objGrid.length; y++) {
             for (int x = 0; x < objGrid[0].length; x++) {
                 if (objGrid[y][x].getid().equals("start")) {
-                    enemy = new ModelEnemy(y, x, "enemy");
+                    enemy = new ModelEnemy(y, x, y*bsize, x*bsize, "enemy");
                     //objGrid[x][y] = enemy;
                     enemies.add(enemy);
 

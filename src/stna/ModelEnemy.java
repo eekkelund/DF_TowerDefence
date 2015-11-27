@@ -10,8 +10,8 @@ package stna;
  * @author eetz1
  */
 public class ModelEnemy extends ModelBlock{
-    private int x;
-    private int y;
+    private int x, MOVEx;
+    private int y, MOVEy;
     private int damage;
     private String id;
     private String img;
@@ -20,27 +20,41 @@ public class ModelEnemy extends ModelBlock{
     private int prize;
     private int speed;
     
-    public ModelEnemy(int y, int x, String id) {
+      public ModelEnemy(int y, int x, int MOVEy, int MOVEx, String id) {
         this.x=x;
         this.y=y;
+        this.MOVEx=MOVEx;
+        this.MOVEy=MOVEy;
         this.id=id;
         init();
     }
-    
+   
     public int getX() {
         return x;
     }
-    
+    public int getMoveX() {
+        return MOVEx;
+    }
+   
     public void setX(int x) {
         this.x = x;
     }
-    
+    public void setMoveX(int x) {
+        this.MOVEx = x;
+    }
+   
     public int getY() {
         return y;
     }
-    
+    public int getMoveY() {
+        return MOVEy;
+    }
+   
     public void setY(int y) {
         this.y = y;
+    }
+    public void setMoveY(int y) {
+        this.MOVEy = y;
     }
     
     public int getDamage() {
@@ -89,7 +103,7 @@ public class ModelEnemy extends ModelBlock{
             case "enemy":
                 img = "path/to/file";
                 speed = 2;
-                healt=3;
+                healt=10;
                 damage = 10;
                 prize = 5;
         
