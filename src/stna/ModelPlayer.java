@@ -14,9 +14,8 @@ public class ModelPlayer {
     private int money;
     private boolean alive =true;
     
-    public ModelPlayer(int healt, int money){
-        this.healt=healt;
-        this.money=money;
+    public ModelPlayer(){
+        
         init();
     }
     public void init(){
@@ -42,9 +41,12 @@ public class ModelPlayer {
         return money;
     }
     
-    public void setMoney(int cost) {
+    public void reduceMoney(int cost) {
         if (money>=cost){
         money = money-cost;
         }
+    }
+    public void addMoney(int prize) {
+        money = money+prize;
     }
 }

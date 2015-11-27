@@ -26,11 +26,13 @@ public class Arena {
     private ModelGround ground;
     private ModelTower tower;
     private ModelEnemy enemy;
+    private ModelPlayer player;
     private Map map;
     static int[][] grid;
     private TowerEngineController controller;
 
     public Arena() {
+        player =new ModelPlayer();
         map = new Map();
         grid = map.getMap();
         //System.out.print(grid.length+""+grid[0].length);
@@ -99,6 +101,9 @@ public class Arena {
     
     public List<ModelGround> getBlocks(){
         return blocks;
+    }
+    public ModelPlayer getPlayer(){
+        return player;
     }
     //public getEnemy() {}
     /* public static void main(String args[]) {

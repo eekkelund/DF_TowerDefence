@@ -17,7 +17,7 @@ public class ModelEnemy extends ModelBlock{
     private String img;
     private int healt;
     private boolean alive=true;
-    
+    private int prize;
     private int speed;
     
     public ModelEnemy(int y, int x, String id) {
@@ -60,6 +60,9 @@ public class ModelEnemy extends ModelBlock{
     public int getSpeed() {
         return speed;
     }
+    public int getPrize() {
+        return prize;
+    }
     
     public void setSpeed(int speed) {
         this.speed = speed;
@@ -86,7 +89,9 @@ public class ModelEnemy extends ModelBlock{
             case "enemy":
                 img = "path/to/file";
                 speed = 2;
-                healt=10;
+                healt=3;
+                damage = 10;
+                prize = 5;
         
     }
     }
