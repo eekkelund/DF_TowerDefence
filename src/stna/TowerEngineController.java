@@ -28,7 +28,7 @@ public class TowerEngineController {
         this.arena = a;
     }
 
-    public ModelEnemy shoot() {
+    public ModelBlock[] shoot() {
         //enemies = arena.getEnemies();
 
         for (ModelTower tower : arena.getTowers()) {
@@ -40,7 +40,11 @@ public class TowerEngineController {
                         player.addMoney(enemy.getPrize());
                         System.out.print(player.getMoney());
                     }
-                    return (enemy);
+                    ModelBlock[] enemy_tower = new ModelBlock[2]; 
+                    enemy_tower[0]=enemy;
+                    enemy_tower[1]=tower;
+                    return enemy_tower;
+                    
                 }
             }
         }
