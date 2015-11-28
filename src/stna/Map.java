@@ -43,13 +43,7 @@ int[][] map2 =
 public Map(ModelPlayer player){
     this.player=player;
 }
-/*    
-    for (int x = 0; x < map.length; x++) {
-        System.out.println("");
-        for (int y = 0; y < map[x].length; y++) {
-            System.out.print(map[x][y]);
-        }
-}*///print map just try
+
 
 public void setMap(int[][] map1, int[][] map2){
     this.map1=map1;

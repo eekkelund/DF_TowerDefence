@@ -19,6 +19,9 @@ public class ModelEnemy extends ModelBlock{
     private boolean alive=true;
     private int prize;
     private int speed;
+    private int direction;
+    private int movecounter=0;
+    
     
       public ModelEnemy(int y, int x, int MOVEy, int MOVEx, String id) {
         this.x=x;
@@ -26,6 +29,7 @@ public class ModelEnemy extends ModelBlock{
         this.MOVEx=MOVEx;
         this.MOVEy=MOVEy;
         this.id=id;
+        direction=3;
         init();
     }
    
@@ -98,12 +102,27 @@ public class ModelEnemy extends ModelBlock{
         }
     }
     
+    public int getDirection() {
+        return direction;
+    }
+    
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
+    public int getMCounter() {
+        return movecounter;
+    }
+    
+    public void setMCounter(int movecounter) {
+        this.movecounter = movecounter;
+    }
+    
     public void init(){
         switch(id){
             case "enemy":
                 img = "images/img.png";
                 speed = 2;
-                healt=100;
+                healt=10000;
                 damage = 10;
                 prize = 5;
         
