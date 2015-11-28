@@ -29,7 +29,7 @@ public class TowerEngineController {
     }
 
     public ModelEnemy shoot() {
-        enemies = arena.getEnemies();
+        //enemies = arena.getEnemies();
 
         for (ModelTower tower : arena.getTowers()) {
             for (ModelEnemy enemy : arena.getEnemies()) {
@@ -94,11 +94,7 @@ public class TowerEngineController {
                 direction=enemy2.getDirection();
                 
             }*/
-            if (move) {
-                movable(enemy2);
-                direction = enemy2.getDirection();
-                move = false;
-            } 
+             
             else if (!move) {
                  direction=enemy2.getDirection();
                  int movecounter = enemy2.getMCounter();
@@ -153,6 +149,11 @@ public class TowerEngineController {
                 }
               
             }
+            if (move) {
+                movable(enemy2);
+                direction = enemy2.getDirection();
+                move = false;
+            } 
             
         }
     //}

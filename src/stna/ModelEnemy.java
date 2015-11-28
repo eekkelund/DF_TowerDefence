@@ -20,7 +20,7 @@ public class ModelEnemy extends ModelBlock{
     private int prize;
     private int speed;
     private int direction;
-    private int movecounter=0;
+    private int movecounter;
     
     
       public ModelEnemy(int y, int x, int MOVEy, int MOVEx, String id) {
@@ -122,7 +122,7 @@ public class ModelEnemy extends ModelBlock{
             case "enemy":
                 img = "images/img.png";
                 speed = 2;
-                healt=10000;
+                healt=1000;
                 damage = 10;
                 prize = 5;
         
