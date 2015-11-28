@@ -55,6 +55,7 @@ public class Stna extends JFrame implements ActionListener {
 
         
         arena.setTower(5, 5, "tower");
+        arena.setTower(4, 3, "tower");
         arena.setTower(2, 10, "tower");
         //arena.spawnEnemy();
         //start();
@@ -123,7 +124,7 @@ public class Stna extends JFrame implements ActionListener {
                 // Update 60 times a second
                 while (delta >= 1) {
                     //update();
-
+//                    if()
                     updates++;
 
                     enemySpawner();
@@ -192,10 +193,13 @@ public class Stna extends JFrame implements ActionListener {
         }
         //if (contr.shoot()) {//shooting??
             //for (ModelEnemy enemy : arena.getEnemies()) {
+        for (ModelTower tower : arena.getTowers()) {
         try{
-             ModelEnemy enemy = (ModelEnemy) contr.shoot()[0];
-             ModelTower tower = (ModelTower) contr.shoot()[1];
-
+             //ModelEnemy enemy = (ModelEnemy) contr.shoot()[0];
+             //ModelTower tower = (ModelTower) contr.shoot()[1];
+            //ModelTower tower;
+            ModelEnemy enemy;
+             enemy=contr.shoot(tower);
              //ModelTower tower = en_to[0];
                 //for (ModelTower tower : arena.getTowers()) {
                     g.setColor(new Color(255, 255, 0));
@@ -205,7 +209,7 @@ public class Stna extends JFrame implements ActionListener {
                 //}
         }catch(Exception e){
             System.out.print(e);
-        }
+        }}
             
         //}
         drawEnemy(g);
