@@ -98,8 +98,8 @@ public class TowerEngineController {
                 direction=enemy2.getDirection();
                 
             }*/
-             
-            else if (!move) {
+            for (int i=0;i<enemy2.getSpeed();i++){
+            if (!move) {
                  direction=enemy2.getDirection();
                  int movecounter = enemy2.getMCounter();
                 if (direction == up) {
@@ -159,7 +159,7 @@ public class TowerEngineController {
                 move = false;
             } 
             
-        }
+        }}
     //}
     //           System.out.print(xcoord+""+ycoord);
     //System.out.print(grid[ycoord][xcoord].getid());

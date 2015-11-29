@@ -121,8 +121,8 @@ public class ModelEnemy extends ModelBlock{
         switch(id){
             case "enemy":
                 img = "images/img.png";
-                speed = 2;
-                healt=400;
+                speed = 1;
+                healt=700;
                 damage = 10;
                 prize = 5;
                 break;

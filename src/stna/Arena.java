@@ -87,7 +87,7 @@ public class Arena {
                 break;
 
             case 2:
-                spawn_wave = 10;
+                spawn_wave = 15;
                 break;
             case 3:
                 spawn_wave = 15;
