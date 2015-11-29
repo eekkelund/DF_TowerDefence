@@ -17,7 +17,6 @@ import java.util.Scanner;
  */
 public class Arena {
 
-
     static private ModelBlock[][] objGrid;
     private List<ModelGround> blocks = new ArrayList<ModelGround>();
     private List<ModelEnemy> enemies = new ArrayList<ModelEnemy>();
@@ -29,11 +28,13 @@ public class Arena {
     private Map map;
     static int[][] grid;
     private TowerEngineController controller;
-    private int bsize=32;
+    private int bsize = 32;
+    private int spawn_wave;
+    private int ecounter;
 
     public Arena() {
-        player =new ModelPlayer();
-        
+        player = new ModelPlayer();
+
         map = new Map(player);
         grid = map.getMap();
         //System.out.print(grid.length+""+grid[0].length);
@@ -77,54 +78,75 @@ public class Arena {
     public ModelBlock[][] getArena() {
         return objGrid;
     }
-    
-    public void spawnEnemyLevel(){
-        switch(player.getLevel()){
-        case 1:
-            for (int e=0;e<5;e++)
-                spawnEnemy();
-            
-            break;
-        case 2:
-            for (int e=0;e<10;e++)
-                spawnEnemy();
-            break;
-   
+
+    public int getSpawnWave() {
+        switch (player.getLevel()) {
+            case 1:
+                spawn_wave = 5;
+
+                break;
+
+            case 2:
+                spawn_wave = 10;
+                break;
+            case 3:
+                spawn_wave = 15;
+                break;
         }
+        return spawn_wave;
     }
 
     public void spawnEnemy() {//SPAWNS ONE ENEMY
-        
+
         for (int y = 0; y < objGrid.length; y++) {
             for (int x = 0; x < objGrid[0].length; x++) {
                 if (objGrid[y][x].getid().equals("start")) {
-                    enemy = new ModelEnemy(y, x, y*bsize, x*bsize, "enemy");
-                    enemies.add(enemy);
-                   
-
+                    switch (player.getLevel()) {
+                        case 1:
+                            enemy = new ModelEnemy(y, x, y * bsize, x * bsize, "enemy");
+                            enemies.add(enemy);
+                            break;
+                        case 2:
+                            enemy = new ModelEnemy(y, x, y * bsize, x * bsize, "enemy");
+                            enemies.add(enemy);
+                        case 3:
+                            if (ecounter < 5){
+                            enemy = new ModelEnemy(y, x, y*bsize, x*bsize, "enemy2");
+                            enemies.add(enemy);
+                            ecounter++;
+                            }
+                            else {
+                                enemy = new ModelEnemy(y, x, y*bsize, x*bsize, "enemy");
+                            enemies.add(enemy);
+                            }
+                    }
                 }
             }
         }
     }
     
-    public List<ModelEnemy> getEnemies(){
-        
+
+    public List<ModelEnemy> getEnemies() {
+
         return enemies;
     }
-    public List<ModelTower> getTowers(){
+
+    public List<ModelTower> getTowers() {
         return towers;
     }
-    
-    public List<ModelGround> getBlocks(){
+
+    public List<ModelGround> getBlocks() {
         return blocks;
     }
-    public ModelPlayer getPlayer(){
+
+    public ModelPlayer getPlayer() {
         return player;
     }
-    public int getBsize(){
+
+    public int getBsize() {
         return bsize;
     }
-   
+
     //public getEnemy() {}
     /* public static void main(String args[]) {
      //Map map = new Map();
@@ -138,6 +160,4 @@ public class Arena {
      }
      }
      }*/
-
-    
 }

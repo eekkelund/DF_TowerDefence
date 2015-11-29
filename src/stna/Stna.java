@@ -96,12 +96,19 @@ public class Stna extends JFrame implements ActionListener {
             //repaint();
         }
     }
-    public double spawnTime = 1 * (double) (fps), spawnFrame = spawnTime - fps;
-
+    private double spawnTime = 1 * (double) (fps), spawnFrame = spawnTime - fps;
+    private int spawnCounter=0;
+    private boolean isFirst = true;
+    
     public void enemySpawner() {
-        if (spawnFrame >= spawnTime) {
+        
+        if (spawnFrame >= spawnTime&&spawnCounter < arena.getSpawnWave()) {
+            
             arena.spawnEnemy();
             spawnFrame = 1;//-= spawnTime;
+            spawnCounter++;
+            isFirst=false;
+            
         } else {
             spawnFrame++;
         }
@@ -116,7 +123,7 @@ public class Stna extends JFrame implements ActionListener {
             int updates = 0, frames = 0;
 
             while (true) {
-
+                
                 long now = System.nanoTime();
                 delta += (now - lastTime) / ns;
                 lastTime = now;
@@ -124,13 +131,18 @@ public class Stna extends JFrame implements ActionListener {
                 // Update 60 times a second
                 while (delta >= 1) {
                     //update();
-//                    if()
+                    
+                    if(arena.getEnemies().isEmpty()&&!isFirst){
+                        System.out.println("wave end");
+                        game.stop();
+                    }
                     updates++;
-
+                    
                     enemySpawner();
                     
                     move();
                     delta--;
+                   
 
                 }
                 repaint();

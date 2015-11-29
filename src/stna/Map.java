@@ -57,9 +57,9 @@ public int[][] getMap(){
         case 1:
         return map1;
         case 2:
-        return map2;
+        //return map2;
     }
-    return null;
+    return map1;
 }
 //    public static void main(String args[]) {
   //      Map map= new Map();
