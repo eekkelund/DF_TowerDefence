@@ -53,6 +53,10 @@ public class TowerEngineController {
         return null;
 
     }
+    
+    public void shootable(){
+        
+    }
 
     public boolean isDead() {
         player = arena.getPlayer();
@@ -191,30 +195,9 @@ public class TowerEngineController {
                         enemy.setDirection(direction);
                     }
                 }
-                /*if (direction != right &&direction != left &&direction != up &&direction != down){
-                    System.out.print("asd");
-                    if ("road".equals(grid[ycoord][xcoord + 1].getid())) {
-                        direction = right;
-                        enemy.setDirection(direction);
-                    } else if ("road".equals(grid[ycoord][xcoord - 1].getid())) {
-                        direction = left;
-                        enemy.setDirection(direction);
-                    }
-                    else if ("road".equals(grid[ycoord + 1][xcoord].getid())) {
-                        direction = down;
-                        enemy.setDirection(direction);
-
-                    } else if ("road".equals(grid[ycoord - 1][xcoord].getid())) {
-                        direction = up;
-                        enemy.setDirection(direction);
-                    }
-                }*/
+                
             } catch (Exception e) {
                 System.out.print(e);
             }
-        }
-        //shoot();
-        
+        }        
     }
-
-//}

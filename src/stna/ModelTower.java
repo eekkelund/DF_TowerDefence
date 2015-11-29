@@ -65,7 +65,8 @@ public class ModelTower extends ModelBlock {
     public void setRange(int range) {
         this.range = range;
     }
-    public String getImg(){
+
+    public String getImg() {
         return img;
     }
 
@@ -76,7 +77,13 @@ public class ModelTower extends ModelBlock {
                 speed = 2;
                 damage = 1;
                 range = 3;
-
+                break;
+            case "tower2":
+                img = "images/img1.png";
+                speed = 2;
+                damage = 2;
+                range = 4;
+                break;
         }
     }
 
