@@ -28,10 +28,10 @@ public class TowerEngineController {
         this.arena = a;
     }
 
-    public ModelBlock[] shoot() {
+    public ModelEnemy shoot(ModelTower tower) {
         //enemies = arena.getEnemies();
 
-        for (ModelTower tower : arena.getTowers()) {
+        //for (ModelTower tower : arena.getTowers()) {
             for (ModelEnemy enemy : arena.getEnemies()) {
                 int range = tower.getRange();
                 if (Math.abs(enemy.getX() - tower.getX()) < range && Math.abs(enemy.getY() - tower.getY()) < range) {
@@ -40,14 +40,14 @@ public class TowerEngineController {
                         player.addMoney(enemy.getPrize());
                         System.out.print(player.getMoney());
                     }
-                    ModelBlock[] enemy_tower = new ModelBlock[2]; 
-                    enemy_tower[0]=enemy;
-                    enemy_tower[1]=tower;
-                    return enemy_tower;
+                    //ModelBlock[] enemy_tower = new ModelBlock[2]; 
+                    //enemy_tower[0]=enemy;
+                    //enemy_tower[1]=tower;
+                    return enemy;
                     
                 }
             }
-        }
+        //}
 
         //return false;
         return null;
