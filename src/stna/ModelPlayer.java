@@ -22,7 +22,7 @@ public class ModelPlayer {
     public void init(){
     healt = 100;
     money = 10;
-    level =2;
+    level =3;
     }
      public int getHealt() {
         return healt;

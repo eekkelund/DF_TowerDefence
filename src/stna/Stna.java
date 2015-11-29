@@ -53,7 +53,6 @@ public class Stna extends JFrame implements ActionListener {
 
         alusta();
 
-        
         arena.setTower(5, 5, "tower");
         arena.setTower(4, 3, "tower");
         arena.setTower(2, 10, "tower");
@@ -97,18 +96,18 @@ public class Stna extends JFrame implements ActionListener {
         }
     }
     private double spawnTime = 1 * (double) (fps), spawnFrame = spawnTime - fps;
-    private int spawnCounter=0;
+    private int spawnCounter = 0;
     private boolean isFirst = true;
-    
+
     public void enemySpawner() {
-        
-        if (spawnFrame >= spawnTime&&spawnCounter < arena.getSpawnWave()) {
-            
+
+        if (spawnFrame >= spawnTime && spawnCounter < arena.getSpawnWave()) {
+
             arena.spawnEnemy();
             spawnFrame = 1;//-= spawnTime;
             spawnCounter++;
-            isFirst=false;
-            
+            isFirst = false;
+
         } else {
             spawnFrame++;
         }
@@ -123,7 +122,7 @@ public class Stna extends JFrame implements ActionListener {
             int updates = 0, frames = 0;
 
             while (true) {
-                
+
                 long now = System.nanoTime();
                 delta += (now - lastTime) / ns;
                 lastTime = now;
@@ -131,18 +130,17 @@ public class Stna extends JFrame implements ActionListener {
                 // Update 60 times a second
                 while (delta >= 1) {
                     //update();
-                    
-                    if(arena.getEnemies().isEmpty()&&!isFirst){
+
+                    if (arena.getEnemies().isEmpty() && !isFirst) {
                         System.out.println("wave end");
                         game.stop();
                     }
                     updates++;
-                    
+
                     enemySpawner();
-                    
+
                     move();
                     delta--;
-                   
 
                 }
                 repaint();
@@ -157,10 +155,9 @@ public class Stna extends JFrame implements ActionListener {
     });
 
     /*public void start() {
-        timer = new Timer(10, this);
-        timer.start();
-    }*/
-
+     timer = new Timer(10, this);
+     timer.start();
+     }*/
     public void paint(Graphics g) {
         dbImage = createImage(width, height);
         buffer = dbImage.getGraphics();
@@ -204,25 +201,26 @@ public class Stna extends JFrame implements ActionListener {
 
         }
         //if (contr.shoot()) {//shooting??
-            //for (ModelEnemy enemy : arena.getEnemies()) {
+        //for (ModelEnemy enemy : arena.getEnemies()) {
         for (ModelTower tower : arena.getTowers()) {
-        try{
+            try {
              //ModelEnemy enemy = (ModelEnemy) contr.shoot()[0];
-             //ModelTower tower = (ModelTower) contr.shoot()[1];
-            //ModelTower tower;
-            ModelEnemy enemy;
-             enemy=contr.shoot(tower);
-             //ModelTower tower = en_to[0];
+                //ModelTower tower = (ModelTower) contr.shoot()[1];
+                //ModelTower tower;
+                ModelEnemy enemy;
+                enemy = contr.shoot(tower);
+                //ModelTower tower = en_to[0];
                 //for (ModelTower tower : arena.getTowers()) {
-                    g.setColor(new Color(255, 255, 0));
-                    g.drawLine(tower.getX() * bsize + (bsize / 2), tower.getY() * bsize + (bsize / 2), enemy.getMoveX() + (bsize / 2), enemy.getMoveY() + (bsize / 2));
+                g.setColor(new Color(255, 255, 0));
+                g.drawLine(tower.getX() * bsize + (bsize / 2), tower.getY() * bsize + (bsize / 2), enemy.getMoveX() + (bsize / 2), enemy.getMoveY() + (bsize / 2));
                 //}
-            //}
                 //}
-        }catch(Exception e){
-            System.out.print(e);
-        }}
-            
+                //}
+            } catch (Exception e) {
+                System.out.print(e);
+            }
+        }
+
         //}
         drawEnemy(g);
         drawTower(g);
@@ -233,8 +231,8 @@ public class Stna extends JFrame implements ActionListener {
         BufferedImage img;
         try {//DRAWS ENEMYS
 
-           for (int i = 0; i < arena.getEnemies().size(); i++) {
-            ModelEnemy enemy = arena.getEnemies().get(i);
+            for (int i = 0; i < arena.getEnemies().size(); i++) {
+                ModelEnemy enemy = arena.getEnemies().get(i);
                 img = ImageIO.read(new File(enemy.getImg()));
                 g.drawImage(img, enemy.getMoveX(), enemy.getMoveY(), this);
             }
