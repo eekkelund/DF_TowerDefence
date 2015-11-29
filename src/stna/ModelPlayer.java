@@ -22,7 +22,7 @@ public class ModelPlayer {
     public void init(){
     healt = 100;
     money = 10;
-    level =3;
+    level =1;
     }
      public int getHealt() {
         return healt;
@@ -31,8 +31,8 @@ public class ModelPlayer {
         return level;
         
     } 
-     public void setLevel(int level) {
-        this.level=level;
+     public void setLevel() {
+        level = level+1;
     }
     
      

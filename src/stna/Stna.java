@@ -132,8 +132,10 @@ public class Stna extends JFrame implements ActionListener {
                     //update();
 
                     if (arena.getEnemies().isEmpty() && !isFirst) {
+                        arena.setLevel();
                         System.out.println("wave end");
-                        game.stop();
+                        spawnCounter =0;
+                        
                     }
                     updates++;
 

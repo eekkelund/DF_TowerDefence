@@ -109,14 +109,17 @@ public class Arena {
                         case 2:
                             enemy = new ModelEnemy(y, x, y * bsize, x * bsize, "enemy");
                             enemies.add(enemy);
+                            break;
                         case 3:
                             if (ecounter < 5) {
                                 enemy = new ModelEnemy(y, x, y * bsize, x * bsize, "enemy2");
                                 enemies.add(enemy);
                                 ecounter++;
+                                break;
                             } else {
                                 enemy = new ModelEnemy(y, x, y * bsize, x * bsize, "enemy");
                                 enemies.add(enemy);
+                                break;
                             }
                     }
                 }
@@ -144,7 +147,12 @@ public class Arena {
     public int getBsize() {
         return bsize;
     }
-
+ public int getLevel() {
+        return player.getLevel();
+    }
+ public void setLevel(){
+     player.setLevel();
+ }
     //public getEnemy() {}
     /* public static void main(String args[]) {
      //Map map = new Map();
