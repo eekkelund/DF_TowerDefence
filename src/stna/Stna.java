@@ -54,7 +54,7 @@ public class Stna extends JFrame implements ActionListener {
         alusta();
 
         arena.setTower(5, 5, "tower");
-        arena.setTower(4, 3, "tower");
+        arena.setTower(4, 3, "tower2");
         arena.setTower(2, 10, "tower");
         //arena.spawnEnemy();
         //start();
@@ -175,29 +175,36 @@ public class Stna extends JFrame implements ActionListener {
 
         //if (!first){
         //first=true;
+        BufferedImage img;
         for (int y = 0; y < grid.length; y++) {//DRAWS MAP
             int h = y;
             h = h * bsize;
             for (int x = 0; x < grid[0].length; x++) {
-                int w = x;
-                w = w * bsize;
-                switch (grid[y][x].getid()) {
+                try {
+                    int w = x;
+                    w = w * bsize;
+                    img = ImageIO.read(new File(grid[y][x].getImg()));
+                    g.drawImage(img, w, h, bsize, bsize, this);
+                    /*switch (grid[y][x].getid()) {
                     case "grass":
-                        g.setColor(Color.GREEN);
-                        g.fillRect(w, h, bsize, bsize);
-                        break;
+                    g.setColor(Color.GREEN);
+                    g.fillRect(w, h, bsize, bsize);
+                    break;
                     case "road":
-                        g.setColor(Color.GRAY);
-                        g.fillRect(w, h, bsize, bsize);
-                        break;
+                    g.setColor(Color.GRAY);
+                    g.fillRect(w, h, bsize, bsize);
+                    break;
                     case "start":
-                        g.setColor(Color.BLACK);
-                        g.fillRect(w, h, bsize, bsize);
-                        break;
+                    g.setColor(Color.BLACK);
+                    g.fillRect(w, h, bsize, bsize);
+                    break;
                     case "finish":
-                        g.setColor(Color.PINK);
-                        g.fillRect(w, h, bsize, bsize);
-                        break;
+                    g.setColor(Color.PINK);
+                    g.fillRect(w, h, bsize, bsize);
+                    break;
+                    }*/
+                } catch (IOException ex) {
+                    System.out.println("ASD" + ex);
                 }
             }
 
@@ -208,26 +215,27 @@ public class Stna extends JFrame implements ActionListener {
             try {
              //ModelEnemy enemy = (ModelEnemy) contr.shoot()[0];
                 //ModelTower tower = (ModelTower) contr.shoot()[1];
-                //ModelTower tower;
+                //ModelTower tower = contr.shootable();
                 ModelEnemy enemy;
                 enemy = contr.shoot(tower);
                 //ModelTower tower = en_to[0];
                 //for (ModelTower tower : arena.getTowers()) {
                 g.setColor(new Color(255, 255, 0));
                 g.drawLine(tower.getX() * bsize + (bsize / 2), tower.getY() * bsize + (bsize / 2), enemy.getMoveX() + (bsize / 2), enemy.getMoveY() + (bsize / 2));
+                
                 //}
                 //}
                 //}
             } catch (Exception e) {
                 System.out.print(e);
-            }
+            //}
         }
 
         //}
         drawEnemy(g);
         drawTower(g);
     }
-
+    }
     public void drawEnemy(Graphics g) {
 
         BufferedImage img;
@@ -236,7 +244,7 @@ public class Stna extends JFrame implements ActionListener {
             for (int i = 0; i < arena.getEnemies().size(); i++) {
                 ModelEnemy enemy = arena.getEnemies().get(i);
                 img = ImageIO.read(new File(enemy.getImg()));
-                g.drawImage(img, enemy.getMoveX(), enemy.getMoveY(), this);
+                g.drawImage(img, enemy.getMoveX(), enemy.getMoveY(), bsize, bsize, this);
             }
         } catch (IOException ex) {
             System.out.print(ex);
@@ -249,7 +257,7 @@ public class Stna extends JFrame implements ActionListener {
         try {
             for (ModelTower tower : arena.getTowers()) {
                 img = ImageIO.read(new File(tower.getImg()));
-                g.drawImage(img, tower.getX() * bsize, tower.getY() * bsize, this);
+                g.drawImage(img, tower.getX() * bsize, tower.getY() * bsize, bsize, bsize, this);
             }
         } catch (IOException ex) {
             System.out.print(ex);

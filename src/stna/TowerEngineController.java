@@ -54,8 +54,13 @@ public class TowerEngineController {
 
     }
     
-    public void shootable(){
-        
+    public ModelTower shootable(){
+        for (ModelTower tower : arena.getTowers()) {
+            ModelEnemy enemy;
+                enemy = shoot(tower);
+                return tower;
+        }
+        return null;
     }
 
     public boolean isDead() {

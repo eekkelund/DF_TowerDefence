@@ -73,13 +73,13 @@ public class ModelTower extends ModelBlock {
     public void init() {
         switch (id) {
             case "tower":
-                img = "images/img2.png";
+                img = "images/tower.png";
                 speed = 2;
                 damage = 1;
                 range = 3;
                 break;
             case "tower2":
-                img = "images/img1.png";
+                img = "images/tower2.png";
                 speed = 2;
                 damage = 2;
                 range = 4;

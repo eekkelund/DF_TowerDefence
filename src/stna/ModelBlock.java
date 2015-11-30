@@ -47,4 +47,7 @@ public class ModelBlock {
     public void setid(String id) {
         this.id = id;
     }
+     public String getImg(){
+        return img;
+     }
 }

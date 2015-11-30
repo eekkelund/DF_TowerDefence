@@ -120,14 +120,14 @@ public class ModelEnemy extends ModelBlock{
     public void init(){
         switch(id){
             case "enemy":
-                img = "images/img.png";
+                img = "images/duck.png";
                 speed = 1;
                 healt=700;
                 damage = 10;
                 prize = 5;
                 break;
             case "enemy2":
-                img = "images/img3.png";
+                img = "images/duck2.png";
                 speed = 2;
                 healt=700;
                 damage = 15;

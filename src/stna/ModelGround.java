@@ -55,17 +55,17 @@ public class ModelGround extends ModelBlock{
     
     public void init(){
         switch(id){
-            case "ground":
-                img = "path/to/file";
+            case "grass":
+                img = "images/grass2.png";
                 break;
             case "road":
-                img = "path/to/file";
+                img = "images/water2.png";
                 break;
             case "finish":
-                img = "path/to/file";
+                img = "images/finish.png";
                 break;
             case "start":
-                img = "path/to/file";
+                img = "images/start.png";
                 break;
         
     }
