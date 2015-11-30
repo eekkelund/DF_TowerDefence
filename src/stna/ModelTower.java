@@ -5,6 +5,9 @@
  */
 package stna;
 
+import java.awt.Color;
+import static java.awt.Color.*;
+
 /**
  *
  * @author eetz1
@@ -18,6 +21,7 @@ public class ModelTower extends ModelBlock {
     private String img;
     private String id;
     private int speed;
+    private Color clr;
 
     public ModelTower(int y, int x, String id) {
         this.x = x;
@@ -33,6 +37,13 @@ public class ModelTower extends ModelBlock {
     public void setX(int x) {
         this.x = x;
     }
+    public Color getClr() {
+        return clr;
+    }
+
+    //public void setX(Color clr) {
+        //this.clr = clr;
+   // }
 
     public int getY() {
         return y;
@@ -77,12 +88,14 @@ public class ModelTower extends ModelBlock {
                 speed = 2;
                 damage = 1;
                 range = 3;
+                clr = YELLOW;
                 break;
             case "tower2":
                 img = "images/tower2.png";
                 speed = 2;
                 damage = 2;
                 range = 4;
+                clr=BLUE;
                 break;
         }
     }
