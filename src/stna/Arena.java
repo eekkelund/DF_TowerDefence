@@ -94,6 +94,7 @@ public class Arena {
                 break;
             default:
                 spawn_wave = spawn_wave*2;
+                break;
         }
         return spawn_wave;
     }
