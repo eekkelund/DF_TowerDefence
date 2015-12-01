@@ -40,16 +40,12 @@ public class TowerEngineController {
                         player.addMoney(enemy.getPrize());
                         System.out.print(player.getMoney());
                     }
-                    //ModelBlock[] enemy_tower = new ModelBlock[2]; 
-                    //enemy_tower[0]=enemy;
-                    //enemy_tower[1]=tower;
+
                     return enemy;
                     
                 }
             }
-        //}
 
-        //return false;
         return null;
 
     }
@@ -82,9 +78,7 @@ public class TowerEngineController {
         bsize = arena.getBsize();
         
         ModelBlock[][] grid = arena.getArena();
-        //for (int i = 0; i < arena.getEnemies().size(); i++) {
 
-            //ModelEnemy enemy2 = arena.getEnemies().get(i);
             
             
             int x = enemy2.getMoveX();
@@ -102,11 +96,7 @@ public class TowerEngineController {
                     move = false;
                 }
             }
-            /*if ("start".equals(grid[ycoord][xcoord].getid())) {
-                movable(enemy2);
-                direction=enemy2.getDirection();
-                
-            }*/
+
             for (int i=0;i<enemy2.getSpeed();i++){
             if (!move) {
                  direction=enemy2.getDirection();
@@ -169,13 +159,9 @@ public class TowerEngineController {
             } 
             
         }}
-    //}
-    //           System.out.print(xcoord+""+ycoord);
-    //System.out.print(grid[ycoord][xcoord].getid());
 
     public void movable(ModelEnemy enemy) {
         ModelBlock[][] grid = arena.getArena();
-        //for (ModelEnemy enemy : arena.getEnemies()) {
             int xcoord = enemy.getX();
             int ycoord = enemy.getY();
             direction = enemy.getDirection();

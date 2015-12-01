@@ -20,7 +20,7 @@ public class ModelTower extends ModelBlock {
     private int range;
     private String img;
     private String id;
-    private int speed;
+    private int fireRate;
     private Color clr;
 
     public ModelTower(int y, int x, String id) {
@@ -80,19 +80,22 @@ public class ModelTower extends ModelBlock {
     public String getImg() {
         return img;
     }
+    public int getfRate() {
+        return fireRate;
+    }
 
     public void init() {
         switch (id) {
             case "tower":
                 img = "images/tower.png";
-                speed = 2;
+                fireRate = 2;
                 damage = 1;
                 range = 3;
                 clr = YELLOW;
                 break;
             case "tower2":
                 img = "images/tower2.png";
-                speed = 2;
+                fireRate = 5;
                 damage = 2;
                 range = 4;
                 clr=BLUE;

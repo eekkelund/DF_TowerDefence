@@ -29,19 +29,24 @@ public class Stna extends JFrame implements ActionListener {
     private Arena arena = new Arena();
     private TowerEngineController contr = new TowerEngineController(arena);
     private JLabel selite;
-    private JButton kasvatusp, nollausp;
-    private ActionListener actionL;
     private JButton button;
     private JPanel panel;
-    public boolean first = false;
-    private int bsize;
-    private int width = 700;
-    private int height = 400;
-    private Timer timer;
-    private Graphics buffer;
-    private Image dbImage;
-    private static double fps = 60.0;
-    private int pSec = 15;
+    private int bsize;//BLOCK SIZE
+    private int width = 700;//SCREEN WIDTH
+    private int height = 400;//SCREEN HEIGHT
+    private Graphics buffer;//THIS IS NEEDED FOR DOUBLE BUFFERING
+    private Image dbImage;//THIS IMAGE STORES DOUBLEBUFFERED IMAGE, THAT SCREEN WONT FLICKER
+    private static double fps = 60.0;//FRAMES PER SECOND
+    private int pSec = 15;//PAUSETIME IN SEC, HOW LONG PAUSE IS BETWEEN WAVES
+    private double spawnTime = 1 * (double) (fps);//
+    private double spawnFrame = spawnTime - fps;
+    private int spawnCounter = 0;
+    private boolean isFirst = true;
+    private boolean sPause = false;
+    private double pauseFrame = 1;
+    private double pauseTime = pSec * (double) (fps);
+    private double shootFrame = fps;
+    private double shootTime = 1 * (int) fps / 3;
 
     public Stna() {
 
@@ -57,8 +62,7 @@ public class Stna extends JFrame implements ActionListener {
         arena.setTower(5, 5, "tower");
         arena.setTower(4, 3, "tower2");
         arena.setTower(2, 10, "tower");
-        //arena.spawnEnemy();
-        //start();
+
         game.run();
 
     }
@@ -96,15 +100,6 @@ public class Stna extends JFrame implements ActionListener {
             //repaint();
         }
     }
-    private double spawnTime = 1 * (double) (fps);
-    private double spawnFrame = spawnTime - fps;
-    private int spawnCounter = 0;
-    private boolean isFirst = true;
-   
-    private boolean sPause = false;
-    private double pauseFrame = 1;
-    private double pauseTime = pSec * (double) (fps);
-    
 
     public void enemySpawner() {
 
@@ -120,9 +115,7 @@ public class Stna extends JFrame implements ActionListener {
         }
 
     }
-    
 
-    
     Thread game = new Thread(new Runnable() {
         public void run() {
             long lastTime = System.nanoTime();
@@ -139,41 +132,37 @@ public class Stna extends JFrame implements ActionListener {
 
                 // Update 60 times a second
                 while (delta >= 1) {
-                    
+
                     //update();
-                    if(!sPause){
+                    if (!sPause) {
                         enemySpawner();
-                        
+
                     }
-                    if (arena.getEnemies().isEmpty() && !isFirst) {                        
-                        if(pauseFrame >=pauseTime){
+                    if (arena.getEnemies().isEmpty() && !isFirst) {
+                        if (pauseFrame >= pauseTime) {
                             arena.setLevel();
                             spawnCounter = 0;
-                            pauseFrame=1;
-                            sPause=false;
-                        }else{
+                            pauseFrame = 1;
+                            sPause = false;
+                        } else {
                             pauseFrame++;
-                            sPause =true;
+                            sPause = true;
                         }
 
                     }
-                    
 
                     updates++;
-
-                    
 
                     move();
                     delta--;
 
                 }
-                
 
                 repaint();
                 frames++;
                 if (System.currentTimeMillis() - timer >= 1000) {
                     timer += 1000;
-                    setTitle(" | ups: " + updates + " | fps: " + frames + "| Time: "+Math.round(Math.abs((pauseFrame/fps)-pSec)));
+                    setTitle(" | ups: " + updates + " | fps: " + frames + "| Time: " + Math.round(Math.abs((pauseFrame / fps) - pSec)));
                     updates = 0;
                     frames = 0;
                 }
@@ -181,10 +170,6 @@ public class Stna extends JFrame implements ActionListener {
         }
     });
 
-    /*public void start() {
-     timer = new Timer(10, this);
-     timer.start();
-     }*/
     public void paint(Graphics g) {
         dbImage = createImage(width, height);
         buffer = dbImage.getGraphics();
@@ -192,14 +177,12 @@ public class Stna extends JFrame implements ActionListener {
         g.drawImage(dbImage, 0, 0, this);
 
     }
-        private double shootFrame = fps;
-        private double shootTime = 1* (int) fps/3;
 
     public void paintComponent(Graphics g) {
 
         ModelBlock[][] grid = arena.getArena();
         super.paint(g);
-        
+
         BufferedImage img;
         for (int y = 0; y < grid.length; y++) {//DRAWS MAP
             int h = y;
@@ -222,35 +205,26 @@ public class Stna extends JFrame implements ActionListener {
             try {
 
                 ModelEnemy enemy;//enemy what to shoot
-                if("tower".equals(tower.getid())){//if  1. level tower is shooting tower
-                    if(shootFrame>=shootTime){//it has to cool down 
-                        
-                        if(shootFrame<=shootTime*2){
-                            shootFrame++;
-                            enemy = contr.shoot(tower);
-                            
-                        }else{
-                            shootFrame=1;
-                            enemy=null;
-                        }
-                    }else{
-                        shootFrame++;
-                        enemy=null;
-                    }
-                }else {
-                    enemy = contr.shoot(tower);
-                }
 
+                if (shootFrame >= shootTime) {//tower has to cool down aka load weapons
+
+                    if (shootFrame <= shootTime * tower.getfRate()) {//this is the time how long tower shoots enemy
+                        shootFrame++;
+                        enemy = contr.shoot(tower);
+
+                    } else {
+                        shootFrame = 1;
+                        enemy = null;
+                    }
+                } else {
+                    shootFrame++;
+                    enemy = null;
+                }
 
                 g.setColor(tower.getClr());
                 g.drawLine(tower.getX() * bsize + (bsize / 2), tower.getY() * bsize + (bsize / 2), enemy.getMoveX() + (bsize / 2), enemy.getMoveY() + (bsize / 2));
-                
-            } catch (Exception e) {
-                //System.out.print(e);
-                //}
-            }
 
-            //}
+            } catch (Exception e) {}
             drawEnemy(g);
             drawTower(g);
         }
@@ -284,28 +258,6 @@ public class Stna extends JFrame implements ActionListener {
         }
     }
 
-    /*for (int x=0;x<grid.length; x++){
-     int w =x;
-     w =w*32;
-     for(int y=0; y<grid[0].length;y++){
-     int h =y;
-     h =h*32;
-     if(grid[x][y].getid().equals("start")){
-     arena.setEnemy(x,y,"enemy");
-     //g.setColor(Color.blue);
-     //g.fillRect(h, w, 20, 20);
-     BufferedImage img; 
-     try {
-     img = ImageIO.read(new File("images/img.png"));
-     g.drawImage(img, h, w, this);
-     } catch (IOException ex) {
-     System.out.print(ex);
-     }
-                    
-                            
-     }
-     }
-     }*/
     public static void main(String args[]) {
         new Stna();
 

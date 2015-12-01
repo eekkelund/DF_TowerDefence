@@ -92,6 +92,8 @@ public class Arena {
             case 3:
                 spawn_wave = 15;
                 break;
+            default:
+                spawn_wave = spawn_wave*2;
         }
         return spawn_wave;
     }
@@ -117,6 +119,17 @@ public class Arena {
                                 ecounter++;
                                 break;
                             } else {
+                                enemy = new ModelEnemy(y, x, y * bsize, x * bsize, "enemy");
+                                enemies.add(enemy);
+                                break;
+                            }
+                        default:
+                            if(Math.random()>=0.75){
+                                enemy = new ModelEnemy(y, x, y * bsize, x * bsize, "enemy2");
+                                enemies.add(enemy);
+                                break;
+                            }
+                            else{
                                 enemy = new ModelEnemy(y, x, y * bsize, x * bsize, "enemy");
                                 enemies.add(enemy);
                                 break;
@@ -153,17 +166,5 @@ public class Arena {
  public void setLevel(){
      player.setLevel();
  }
-    //public getEnemy() {}
-    /* public static void main(String args[]) {
-     //Map map = new Map();
-     Arena arena = new Arena();
 
-     setTower(3,5);
-     for (int x = 0; x < objGrid.length; x++) {
-     System.out.println("");
-     for (int y = 0; y < objGrid[0].length; y++) {
-     System.out.print(objGrid[x][y].getid());
-     }
-     }
-     }*/
 }
