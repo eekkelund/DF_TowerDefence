@@ -143,12 +143,9 @@ public class Stna extends JFrame implements ActionListener {
                     //update();
                     if(!sPause){
                         enemySpawner();
+                        
                     }
-                    if (arena.getEnemies().isEmpty() && !isFirst) {
-                        
-                        
-                        //System.out.println("wave end");
-                        
+                    if (arena.getEnemies().isEmpty() && !isFirst) {                        
                         if(pauseFrame >=pauseTime){
                             arena.setLevel();
                             spawnCounter = 0;
@@ -158,10 +155,6 @@ public class Stna extends JFrame implements ActionListener {
                             pauseFrame++;
                             sPause =true;
                         }
-                        //spawnPause = 2.5 * (double) (fps);
-                        //sPause = true;
-                        //pTime = System.currentTimeMillis() + 5000;
-                        //break;
 
                     }
                     
@@ -177,6 +170,7 @@ public class Stna extends JFrame implements ActionListener {
                 
 
                 repaint();
+                frames++;
                 if (System.currentTimeMillis() - timer >= 1000) {
                     timer += 1000;
                     setTitle(" | ups: " + updates + " | fps: " + frames + "| Time: "+Math.round(Math.abs((pauseFrame/fps)-pSec)));
@@ -198,14 +192,14 @@ public class Stna extends JFrame implements ActionListener {
         g.drawImage(dbImage, 0, 0, this);
 
     }
+        private double shootFrame = fps;
+        private double shootTime = 1* (int) fps/3;
 
     public void paintComponent(Graphics g) {
 
         ModelBlock[][] grid = arena.getArena();
         super.paint(g);
-
-        //if (!first){
-        //first=true;
+        
         BufferedImage img;
         for (int y = 0; y < grid.length; y++) {//DRAWS MAP
             int h = y;
@@ -216,48 +210,41 @@ public class Stna extends JFrame implements ActionListener {
                     w = w * bsize;
                     img = ImageIO.read(new File(grid[y][x].getImg()));
                     g.drawImage(img, w, h, bsize, bsize, this);
-                    /*switch (grid[y][x].getid()) {
-                     case "grass":
-                     g.setColor(Color.GREEN);
-                     g.fillRect(w, h, bsize, bsize);
-                     break;
-                     case "road":
-                     g.setColor(Color.GRAY);
-                     g.fillRect(w, h, bsize, bsize);
-                     break;
-                     case "start":
-                     g.setColor(Color.BLACK);
-                     g.fillRect(w, h, bsize, bsize);
-                     break;
-                     case "finish":
-                     g.setColor(Color.PINK);
-                     g.fillRect(w, h, bsize, bsize);
-                     break;
-                     }*/
+
                 } catch (IOException ex) {
-                    System.out.println("ASD" + ex);
+                    System.out.println(ex);
                 }
             }
 
         }
-        //if (contr.shoot()) {//shooting??
-        //for (ModelEnemy enemy : arena.getEnemies()) {
-        for (ModelTower tower : arena.getTowers()) {
+
+        for (ModelTower tower : arena.getTowers()) {//For each tower dis is gonna check if there is enemy to shoot
             try {
-                //ModelEnemy enemy = (ModelEnemy) contr.shoot()[0];
-                //ModelTower tower = (ModelTower) contr.shoot()[1];
-                //ModelTower tower = contr.shootable();
-                ModelEnemy enemy;
-                enemy = contr.shoot(tower);
-                //ModelTower tower = en_to[0];
-                //for (ModelTower tower : arena.getTowers()) {
+
+                ModelEnemy enemy;//enemy what to shoot
+                if("tower".equals(tower.getid())){//if  1. level tower is shooting tower
+                    if(shootFrame>=shootTime){//it has to cool down 
+                        
+                        if(shootFrame<=shootTime*2){
+                            shootFrame++;
+                            enemy = contr.shoot(tower);
+                            
+                        }else{
+                            shootFrame=1;
+                            enemy=null;
+                        }
+                    }else{
+                        shootFrame++;
+                        enemy=null;
+                    }
+                }else {
+                    enemy = contr.shoot(tower);
+                }
+
 
                 g.setColor(tower.getClr());
                 g.drawLine(tower.getX() * bsize + (bsize / 2), tower.getY() * bsize + (bsize / 2), enemy.getMoveX() + (bsize / 2), enemy.getMoveY() + (bsize / 2));
-
-                //}
-                //}
-                //}
+                
             } catch (Exception e) {
                 //System.out.print(e);
                 //}
