@@ -28,7 +28,7 @@ public class Arena {
     private Map map;
     static int[][] grid;
     private TowerEngineController controller;
-    private int bsize = 40;
+    private int bsize = 32;
     private int spawn_wave;
     private int ecounter;
 
