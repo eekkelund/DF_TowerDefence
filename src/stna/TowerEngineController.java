@@ -14,14 +14,14 @@ import java.util.*;
 public class TowerEngineController {
 
     //private ModelEnemy enemy2;
-    private ModelTower tower2;
+    private ModelTower tower;
     private ModelPlayer player;
     private final Arena arena;
     private List enemies;
 //    private List towers = arena.getTowers();
     public final int up = 1, down = 2, right = 3, left = 4;
     private int direction;
-    private int bsize;
+    private int bsize, price=5;
     boolean move = true;
 
     public TowerEngineController(Arena a) {
@@ -70,7 +70,28 @@ public class TowerEngineController {
             }
         }
         return false;
+    }
+    
+     public void newTowerPos(int y, int x, String towerid) {
+        ModelBlock[][] grid = arena.getArena();
 
+        x /= bsize;
+        y /= bsize;
+        switch (towerid) {
+            case "tower":
+                
+                if ("grass".equals(grid[y][x].getid())) {
+                    if (player.getMoney() >= price) {
+                        arena.setTower(y, x, "tower");
+                        player.reduceMoney(price);
+                    } else {
+                        System.out.print("no mani no hani");
+                    }
+            
+                }else {
+                    System.out.print("Wrong palace");
+                }
+        }
     }
 
     public void move(ModelEnemy enemy2) {

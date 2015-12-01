@@ -8,6 +8,8 @@ package stna;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -24,13 +26,14 @@ import javax.swing.UIManager;
  *
  * @author eetz1
  */
-public class Stna extends JFrame implements ActionListener {
+public class Stna extends JFrame {
 
     private Arena arena = new Arena();
     private TowerEngineController contr = new TowerEngineController(arena);
     private JLabel selite;
-    private JButton button;
+    private JButton tower, tower2;
     private JPanel panel;
+    private ActionListener actionL;
     private int bsize;//BLOCK SIZE
     private int width = 700;//SCREEN WIDTH
     private int height = 400;//SCREEN HEIGHT
@@ -42,7 +45,9 @@ public class Stna extends JFrame implements ActionListener {
     private double spawnFrame = spawnTime - fps;
     private int spawnCounter = 0;
     private boolean isFirst = true;
+    private boolean btnPress;
     private boolean sPause = false;
+    private String towerid;
     private double pauseFrame = 1;
     private double pauseTime = pSec * (double) (fps);
     private double shootFrame = fps;
@@ -71,14 +76,14 @@ public class Stna extends JFrame implements ActionListener {
         setTitle("Karta");
         setSize(width, height);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        actionL = new ButtonListener();
         panel = new JPanel();
-        //selite = new JLabel();
-        //actionL = new ButtonListener();
-        button = new JButton("move");
 
-        //setContentPane(panel);
-        panel.add(button);
-        //button.addActionListener(actionL);
+        tower = new JButton("tower");
+
+        panel.add(tower);
+        tower.addActionListener(actionL);
+        addMouseListener(new MouseListener());
 
         add(panel, BorderLayout.SOUTH);
 
@@ -86,11 +91,25 @@ public class Stna extends JFrame implements ActionListener {
         bsize = arena.getBsize();
     }
 
-    //  private class ButtonListener implements ActionListener {
+    private class ButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
-        //if (e.getSource()==button) {
-        move();
-
+        if (e.getSource()==tower) {
+            btnPress = true;
+            towerid = "tower";
+        }
+        if (e.getSource()==tower2) {
+            btnPress = true;
+            towerid = "tower2";
+        }
+            
+    }
+    }
+    private class MouseListener extends MouseAdapter {
+        public void mousePressed(MouseEvent e) {
+            if (btnPress) {
+                contr.newTowerPos(e.getY(), e.getX(), towerid);
+            }   
+        }
     }
 
     public void move() {

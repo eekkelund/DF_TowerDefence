@@ -69,9 +69,9 @@ public class Arena {
 
     }
 
-    public void setTower(int x, int y, String id) {
-        tower = new ModelTower(x, y, id);
-        objGrid[x][y] = tower;
+    public void setTower(int y, int x, String id) {
+        tower = new ModelTower(y, x, id);
+        objGrid[y][x] = tower;
         towers.add(tower);
     }
 
