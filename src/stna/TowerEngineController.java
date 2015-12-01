@@ -23,6 +23,7 @@ public class TowerEngineController {
     private int direction;
     private int bsize, price=5;
     boolean move = true;
+    private int[] shootList;
 
     public TowerEngineController(Arena a) {
         this.arena = a;
@@ -50,13 +51,26 @@ public class TowerEngineController {
 
     }
     
-    public ModelTower shootable(){
-        for (ModelTower tower : arena.getTowers()) {
+    public int[] shootable(ModelTower tower){
+        
             ModelEnemy enemy;
                 enemy = shoot(tower);
-                return tower;
-        }
-        return null;
+                int[] shootList = new int[5];
+                int clr = tower.getClr().getRGB();
+                shootList[0]=clr;
+                shootList[1]=tower.getX();
+                shootList[2]=tower.getY();
+                shootList[3]=enemy.getMoveX();
+                shootList[4]=enemy.getMoveY();
+                return shootList;
+                
+                
+                
+                
+                
+                
+        
+        
     }
 
     public boolean isDead() {

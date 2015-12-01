@@ -64,8 +64,8 @@ public class Stna extends JFrame {
 
         alusta();
 
-        arena.setTower(5, 5, "tower");
         arena.setTower(4, 3, "tower2");
+        arena.setTower(5, 5, "tower");
         arena.setTower(2, 10, "tower");
 
         game.run();
@@ -92,23 +92,26 @@ public class Stna extends JFrame {
     }
 
     private class ButtonListener implements ActionListener {
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==tower) {
-            btnPress = true;
-            towerid = "tower";
+
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == tower) {
+                btnPress = true;
+                towerid = "tower";
+            }
+            if (e.getSource() == tower2) {
+                btnPress = true;
+                towerid = "tower2";
+            }
+
         }
-        if (e.getSource()==tower2) {
-            btnPress = true;
-            towerid = "tower2";
-        }
-            
     }
-    }
+
     private class MouseListener extends MouseAdapter {
+
         public void mousePressed(MouseEvent e) {
             if (btnPress) {
                 contr.newTowerPos(e.getY(), e.getX(), towerid);
-            }   
+            }
         }
     }
 
@@ -220,32 +223,57 @@ public class Stna extends JFrame {
 
         }
 
+        /*for (ModelTower tower : arena.getTowers()) {//For each tower dis is gonna check if there is enemy to shoot
+         try {
+
+         ModelEnemy enemy;//enemy what to shoot
+
+         if (shootFrame >= shootTime) {//tower has to cool down aka load weapons
+
+         if (shootFrame <= shootTime * tower.getfRate()) {//this is the time how long tower shoots enemy
+         shootFrame++;
+         enemy = contr.shoot(tower);
+
+         } else {
+         shootFrame = 1;
+         enemy = null;
+         }
+         } else {
+         shootFrame++;
+         enemy = null;
+         }
+
+         g.setColor(tower.getClr());
+         System.out.println(tower.getClr().getRGB());
+         g.drawLine(tower.getX() * bsize + (bsize / 2), tower.getY() * bsize + (bsize / 2), enemy.getMoveX() + (bsize / 2), enemy.getMoveY() + (bsize / 2));
+
+         } catch (Exception e) {}*/
+        drawShoot(g);
+        drawEnemy(g);
+        drawTower(g);
+
+        //}
+    }
+
+    public void drawShoot(Graphics g) {
         for (ModelTower tower : arena.getTowers()) {//For each tower dis is gonna check if there is enemy to shoot
             try {
-
-                ModelEnemy enemy;//enemy what to shoot
-
                 if (shootFrame >= shootTime) {//tower has to cool down aka load weapons
 
                     if (shootFrame <= shootTime * tower.getfRate()) {//this is the time how long tower shoots enemy
                         shootFrame++;
-                        enemy = contr.shoot(tower);
+                        int[] shootList = contr.shootable(tower);
+                        Color c = new Color(shootList[0]);
+                        g.setColor(c);
+                        g.drawLine((shootList[1] * bsize + (bsize / 2)), (shootList[2] * bsize + (bsize / 2)), (shootList[3] + (bsize / 2)), (shootList[4] + (bsize / 2)));
 
                     } else {
                         shootFrame = 1;
-                        enemy = null;
                     }
                 } else {
                     shootFrame++;
-                    enemy = null;
                 }
-
-                g.setColor(tower.getClr());
-                g.drawLine(tower.getX() * bsize + (bsize / 2), tower.getY() * bsize + (bsize / 2), enemy.getMoveX() + (bsize / 2), enemy.getMoveY() + (bsize / 2));
-
             } catch (Exception e) {}
-            drawEnemy(g);
-            drawTower(g);
         }
     }
 
