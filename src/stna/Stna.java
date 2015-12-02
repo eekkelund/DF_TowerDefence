@@ -31,7 +31,7 @@ public class Stna extends JFrame {
     private Arena arena = new Arena();
     private TowerEngineController contr = new TowerEngineController(arena);
     private JLabel selite;
-    private JButton tower, tower2;
+    private JButton tower, tower2, tower3;
     private JPanel panel;
     private ActionListener actionL;
     private int bsize;//BLOCK SIZE
@@ -40,7 +40,7 @@ public class Stna extends JFrame {
     private Graphics buffer;//THIS IS NEEDED FOR DOUBLE BUFFERING
     private Image dbImage;//THIS IMAGE STORES DOUBLEBUFFERED IMAGE, THAT SCREEN WONT FLICKER
     private static double fps = 60.0;//FRAMES PER SECOND
-    private int pSec = 15;//PAUSETIME IN SEC, HOW LONG PAUSE IS BETWEEN WAVES
+    private int pSec = 5;//PAUSETIME IN SEC, HOW LONG PAUSE IS BETWEEN WAVES
     private double spawnTime = 1 * (double) (fps);//
     private double spawnFrame = spawnTime - fps;
     private int spawnCounter = 0;
@@ -63,9 +63,10 @@ public class Stna extends JFrame {
         }
 
         alusta();
-        arena.setTower(2, 3, "tower2");
-        arena.setTower(3, 2, "tower2");
-        arena.setTower(3, 3, "tower");
+        //arena.setTower(2, 3, "tower2");
+        //arena.setTower(5, 3, "tower2");
+        arena.setTower(3, 2, "tower3");
+        //arena.setTower(4, 2, "tower");
 
         game.run();
 
@@ -101,7 +102,10 @@ public class Stna extends JFrame {
                 btnPress = true;
                 towerid = "tower2";
             }
-
+            if (e.getSource() == tower3) {
+                btnPress = true;
+                towerid = "tower3";
+            }
         }
     }
 
@@ -159,7 +163,7 @@ public class Stna extends JFrame {
                         enemySpawner();
 
                     }
-                    if (arena.getEnemies().isEmpty() && !isFirst&&spawnCounter==arena.getSpawnWave()) {
+                    if (arena.getEnemies().isEmpty() && !isFirst && spawnCounter == arena.getSpawnWave()) {
                         if (pauseFrame >= pauseTime) {
                             arena.setLevel();
                             spawnCounter = 0;
@@ -256,24 +260,38 @@ public class Stna extends JFrame {
 
     public void drawShoot(Graphics g) {
         for (ModelTower tower : arena.getTowers()) {//For each tower dis is gonna check if there is enemy to shoot
-            try {
-                if (shootFrame >= shootTime) {//tower has to cool down aka load weapons
+            //try {
+                if (shootFrame >= shootTime * 4) {//tower has to cool down aka load weapons
 
-                    if (shootFrame <= shootTime * tower.getfRate()) {//this is the time how long tower shoots enemy
+                    if (shootFrame <= shootTime * 5) {//this is the time how long tower shoots enemy
                         shootFrame++;
-                        int[] shootList = contr.shootable(tower);
-                        Color c = new Color(shootList[0]);
-                        g.setColor(c);
-                        g.drawLine((shootList[1] * bsize + (bsize / 2)), (shootList[2] * bsize + (bsize / 2)), (shootList[3] + (bsize / 2)), (shootList[4] + (bsize / 2)));
 
+                        if ("tower3".equals(tower.getid())) {
+                            //for (ModelTower tower : arena.getTowers()) {
+                            for (ModelEnemy enemy : arena.getEnemies()) {
+                                if (contr.shoottest(tower, enemy)) {
+                                    Color c = (tower.getClr());
+                                    g.setColor(c);
+                                    g.drawOval((tower.getX() * bsize - tower.getRange() * bsize + bsize / 2), (tower.getY() * bsize - tower.getRange() * bsize + bsize / 2), tower.getRange() * bsize * 2, tower.getRange() * bsize * 2);
+                                }
+                            }
+                        } else {
+                            int[] shootList = contr.shootable(tower);
+                            Color c = new Color(shootList[0]);
+                            g.setColor(c);
+                            g.drawLine((shootList[1] * bsize + (bsize / 2)), (shootList[2] * bsize + (bsize / 2)), (shootList[3] + (bsize / 2)), (shootList[4] + (bsize / 2)));
+                        }
                     } else {
                         shootFrame = 1;
                     }
+
                 } else {
                     shootFrame++;
                 }
-            } catch (Exception e) {}
+            //} catch (Exception e) {
+            //}
         }
+
     }
 
     public void drawEnemy(Graphics g) {
