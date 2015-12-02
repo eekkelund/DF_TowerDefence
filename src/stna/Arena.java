@@ -28,7 +28,7 @@ public class Arena {
     private Map map;
     static int[][] grid;
     private TowerEngineController controller;
-    private int bsize = 32;
+    private int bsize = 32, price = 5;
     private int spawn_wave;
     private int ecounter;
 
@@ -70,9 +70,32 @@ public class Arena {
     }
 
     public void setTower(int y, int x, String id) {
-        tower = new ModelTower(y, x, id);
+        switch (id) {
+            case "tower":
+                tower = new LazerTower(y, x, id);
+                break;
+            case "tower2":
+                tower = new BLazerTower(y, x, id);
+                break;
+        }
         objGrid[y][x] = tower;
         towers.add(tower);
+    }
+
+    public void newTowerPos(int y, int x, String towerid) {
+
+        x /= bsize;
+        y /= bsize;
+        if ("grass".equals(objGrid[y][x].getid())) {
+            if (player.getMoney() >= price) {
+                setTower(y, x, towerid);
+                player.reduceMoney(price);
+            } else {
+                System.out.print("no mani no hani");
+            }
+        } else {
+            System.out.print("Wrong palace");
+        }
     }
 
     public ModelBlock[][] getArena() {
@@ -93,7 +116,7 @@ public class Arena {
                 spawn_wave = 15;
                 break;
             default:
-                spawn_wave = spawn_wave*2;
+                spawn_wave = spawn_wave * 2;
                 break;
         }
         return spawn_wave;
@@ -125,12 +148,11 @@ public class Arena {
                                 break;
                             }
                         default:
-                            if(Math.random()>=0.75){
+                            if (Math.random() >= 0.75) {
                                 enemy = new ModelEnemy(y, x, y * bsize, x * bsize, "enemy2");
                                 enemies.add(enemy);
                                 break;
-                            }
-                            else{
+                            } else {
                                 enemy = new ModelEnemy(y, x, y * bsize, x * bsize, "enemy");
                                 enemies.add(enemy);
                                 break;
@@ -161,11 +183,13 @@ public class Arena {
     public int getBsize() {
         return bsize;
     }
- public int getLevel() {
+
+    public int getLevel() {
         return player.getLevel();
     }
- public void setLevel(){
-     player.setLevel();
- }
+
+    public void setLevel() {
+        player.setLevel();
+    }
 
 }

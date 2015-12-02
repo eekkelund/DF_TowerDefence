@@ -14,20 +14,19 @@ import static java.awt.Color.*;
  */
 public class ModelTower extends ModelBlock {
 
-    private int x;
-    private int y;
-    private int damage;
-    private int range;
-    private String img;
-    private String id;
-    private int fireRate;
-    private Color clr;
+    protected int x;
+    protected int y;
+    protected int damage;
+    protected int range;
+    protected String img;
+    protected String id;
+    protected int fireRate;
+    protected Color clr;
 
     public ModelTower(int y, int x, String id) {
         this.x = x;
         this.y = y;
         this.id = id;
-        init();
     }
 
     public int getX() {
@@ -84,23 +83,7 @@ public class ModelTower extends ModelBlock {
         return fireRate;
     }
 
-    public void init() {
-        switch (id) {
-            case "tower":
-                img = "images/tower.png";
-                fireRate = 2;
-                damage = 1;
-                range = 3;
-                clr = YELLOW;
-                break;
-            case "tower2":
-                img = "images/tower2.png";
-                fireRate = 5;
-                damage = 2;
-                range = 4;
-                clr=BLUE;
-                break;
-        }
-    }
+    
+    
 
 }

@@ -63,10 +63,9 @@ public class Stna extends JFrame {
         }
 
         alusta();
-
-        arena.setTower(4, 3, "tower2");
-        arena.setTower(5, 5, "tower");
-        arena.setTower(2, 10, "tower");
+        arena.setTower(2, 3, "tower2");
+        arena.setTower(3, 2, "tower2");
+        arena.setTower(3, 3, "tower");
 
         game.run();
 
@@ -110,7 +109,7 @@ public class Stna extends JFrame {
 
         public void mousePressed(MouseEvent e) {
             if (btnPress) {
-                contr.newTowerPos(e.getY(), e.getX(), towerid);
+                arena.newTowerPos(e.getY(), e.getX(), towerid);
             }
         }
     }
@@ -160,7 +159,7 @@ public class Stna extends JFrame {
                         enemySpawner();
 
                     }
-                    if (arena.getEnemies().isEmpty() && !isFirst) {
+                    if (arena.getEnemies().isEmpty() && !isFirst&&spawnCounter==arena.getSpawnWave()) {
                         if (pauseFrame >= pauseTime) {
                             arena.setLevel();
                             spawnCounter = 0;

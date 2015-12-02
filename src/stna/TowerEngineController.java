@@ -21,12 +21,13 @@ public class TowerEngineController {
 //    private List towers = arena.getTowers();
     public final int up = 1, down = 2, right = 3, left = 4;
     private int direction;
-    private int bsize, price=5;
+    private int bsize;
     boolean move = true;
     private int[] shootList;
 
     public TowerEngineController(Arena a) {
         this.arena = a;
+        player = arena.getPlayer();
     }
 
     public ModelEnemy shoot(ModelTower tower) {
@@ -74,7 +75,6 @@ public class TowerEngineController {
     }
 
     public boolean isDead() {
-        player = arena.getPlayer();
         for (Iterator<ModelEnemy> iterator = arena.getEnemies().iterator(); iterator.hasNext();) {
             ModelEnemy enemy = iterator.next();
             if (!enemy.isAlive()) {
@@ -86,27 +86,7 @@ public class TowerEngineController {
         return false;
     }
     
-     public void newTowerPos(int y, int x, String towerid) {
-        ModelBlock[][] grid = arena.getArena();
-
-        x /= bsize;
-        y /= bsize;
-        switch (towerid) {
-            case "tower":
-                
-                if ("grass".equals(grid[y][x].getid())) {
-                    if (player.getMoney() >= price) {
-                        arena.setTower(y, x, "tower");
-                        player.reduceMoney(price);
-                    } else {
-                        System.out.print("no mani no hani");
-                    }
-            
-                }else {
-                    System.out.print("Wrong palace");
-                }
-        }
-    }
+     
 
     public void move(ModelEnemy enemy2) {
         
