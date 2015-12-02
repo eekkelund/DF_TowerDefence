@@ -77,6 +77,9 @@ public class Arena {
             case "tower2":
                 tower = new BLazerTower(y, x, id);
                 break;
+            case "tower3":
+                tower = new RoundTower(y, x, id);
+                break;
         }
         objGrid[y][x] = tower;
         towers.add(tower);

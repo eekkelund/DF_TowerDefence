@@ -1,5 +1,5 @@
 /*
- * eetz1s License such cool so wow
+ * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -11,18 +11,19 @@ import static java.awt.Color.*;
  *
  * @author eetz1
  */
-public class LazerTower extends ModelTower{
+public class RoundTower extends ModelTower{
 
-    public LazerTower(int y, int x, String id) {
+    public RoundTower(int y, int x, String id) {
         super(y, x, id);
         init();
     }
     public void init() {
 
-                img = "images/tower.png";
+                img = "images/tower3.png";
                 fireRate = 10;
-                damage = 1;
-                range = 3;
-                clr = YELLOW;
+                damage = 5;
+                range = 2;
+                clr = RED;
         }
     }
+

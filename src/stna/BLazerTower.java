@@ -20,7 +20,7 @@ public class BLazerTower extends ModelTower{
     public void init() {
 
                 img = "images/tower2.png";
-                fireRate = 5;
+                fireRate = 1000;
                 damage = 2;
                 range = 4;
                 clr=BLUE;
