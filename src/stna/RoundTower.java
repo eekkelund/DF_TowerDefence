@@ -20,7 +20,7 @@ public class RoundTower extends ModelTower{
     public void init() {
 
                 img = "images/tower3.png";
-                fireRate = 10;
+                fireRate = 1.2;
                 damage = 5;
                 range = 2;
                 clr = RED;

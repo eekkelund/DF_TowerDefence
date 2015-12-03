@@ -19,7 +19,7 @@ public class TowerEngineController {
     private final Arena arena;
     private List enemies;
 //    private List towers = arena.getTowers();
-    public final int up = 1, down = 2, right = 3, left = 4;
+    public final int up = 1, down = 2, right = 3, left = 4;//just for easier direction management
     private int direction;
     private int bsize;
     boolean move = true;
@@ -108,6 +108,13 @@ public class TowerEngineController {
             }
         }
         return false;
+    }
+    public void moving() {
+        for (int i = 0; i < arena.getEnemies().size(); i++) {
+            ModelEnemy enemy = arena.getEnemies().get(i);
+            move(enemy);
+            //repaint();
+        }
     }
 
     public void move(ModelEnemy enemy2) {

@@ -41,17 +41,17 @@ public class Stna extends JFrame {
     private Image dbImage;//THIS IMAGE STORES DOUBLEBUFFERED IMAGE, THAT SCREEN WONT FLICKER
     private static double fps = 60.0;//FRAMES PER SECOND
     private int pSec = 5;//PAUSETIME IN SEC, HOW LONG PAUSE IS BETWEEN WAVES
-    private double spawnTime = 1 * (double) (fps);//
-    private double spawnFrame = spawnTime - fps;
-    private int spawnCounter = 0;
-    private boolean isFirst = true;
+    private double spawnTime = 1 * (double) (fps);//HOW MANYTIMES PERSEC ENEMIES SPAWN
+    private double spawnFrame = spawnTime - fps;//COUNTER TO CHECK UPPER ^
+    private int spawnCounter = 0;//COUNTER TO CHECK IF ALL ENEMIES OF WAVE HAVE SPAWNED
+    private boolean isFirst = true;//IF ITS FIRST TIME THAT THREAD IS RUN
     private boolean btnPress;
-    private boolean sPause = false;
-    private String towerid;
-    private double pauseFrame = 1;
-    private double pauseTime = pSec * (double) (fps);
-    private double shootFrame = fps;
-    private double shootTime = 1 * (int) fps / 3;
+    private boolean sPause = true;//BOOLEAN TO CHECK IF THERE IS PAUSE BETWEEN WAVES
+    private String towerid;//JUST TO STORE TOWERID
+    private double pauseFrame = 1;//COUNTER FOR PAUSE BETWEEN WAVES
+    private double pauseTime = pSec * (double) (fps);//TIME IN FPS BETWEEN WAVES
+    private double shootTime = 0.5 * (int) fps;//TIME BETWEEN SHOOTING
+    private double shootFrame = shootTime ;//COUNTER FOR PAUSE BETWEEN SHOOTING
 
     public Stna() {
 
@@ -117,17 +117,11 @@ public class Stna extends JFrame {
             }
         }
     }
-
-    public void move() {
-        for (int i = 0; i < arena.getEnemies().size(); i++) {
-            ModelEnemy enemy = arena.getEnemies().get(i);
-            contr.move(enemy);
-            //repaint();
-        }
-    }
-
+    
+    
+    //this method spawns enemies
     public void enemySpawner() {
-
+        //spawns enemy every 1sec(after 60frames) and if spawncounter is not too much. also if spawnpause is true spawning is not happening
         if (spawnFrame >= spawnTime && spawnCounter < arena.getSpawnWave() && !sPause) {
 
             arena.spawnEnemy();
@@ -140,7 +134,7 @@ public class Stna extends JFrame {
         }
 
     }
-
+//game happens here!
     Thread game = new Thread(new Runnable() {
         public void run() {
             long lastTime = System.nanoTime();
@@ -159,10 +153,26 @@ public class Stna extends JFrame {
                 while (delta >= 1) {
 
                     //update();
-                    if (!sPause) {
+                    if(!arena.getPlayer().isAlive()){//if player is ded game waits until...
+                        try {
+                            game.wait();
+                        } catch (InterruptedException ex) {
+                        }
+                    }
+                    else if (!sPause) {//if game is not paused aka cooldown between waves, this is true
                         enemySpawner();
 
                     }
+                    else if (sPause&&isFirst){//in the beginning of the game wait pSec
+                        if (pauseFrame >= pauseTime) {
+                            pauseFrame = 1;
+                            sPause = false;
+                        } else {
+                            pauseFrame++;
+                            sPause = true;
+                        }
+                    }
+                    //if there is no enemies on the arena and enemyspawner has spawned all the enemies and its not first run, there will be spawnpause and new level
                     if (arena.getEnemies().isEmpty() && !isFirst && spawnCounter == arena.getSpawnWave()) {
                         if (pauseFrame >= pauseTime) {
                             arena.setLevel();
@@ -178,7 +188,7 @@ public class Stna extends JFrame {
 
                     updates++;
 
-                    move();
+                    contr.moving();
                     delta--;
 
                 }
@@ -194,7 +204,7 @@ public class Stna extends JFrame {
             }
         }
     });
-
+    //this is needed for doublebuffering it makes image of the game while paintComponent draws new. it happens so quickly that u cant see it.
     public void paint(Graphics g) {
         dbImage = createImage(width, height);
         buffer = dbImage.getGraphics();
@@ -257,16 +267,19 @@ public class Stna extends JFrame {
 
         //}
     }
+ //private double spawnTime = 1 * (double) (fps);//
+   // private double spawnFrame = spawnTime - fps;
+    
 
     public void drawShoot(Graphics g) {
         for (ModelTower tower : arena.getTowers()) {//For each tower dis is gonna check if there is enemy to shoot
-            //try {
-                if (shootFrame >= shootTime * 4) {//tower has to cool down aka load weapons
+            try {
+                if (shootFrame >= shootTime) {//tower has to cool down aka load weapons
 
-                    if (shootFrame <= shootTime * 5) {//this is the time how long tower shoots enemy
+                    if (shootFrame <=  shootTime*tower.getfRate()) {//this is the time how long tower shoots enemy
                         shootFrame++;
 
-                        if ("tower3".equals(tower.getid())) {
+                        if ("tower3".equals(tower.getid())) {//for roundtoweer there  is different kind of shooting..
                             //for (ModelTower tower : arena.getTowers()) {
                             for (ModelEnemy enemy : arena.getEnemies()) {
                                 if (contr.shoottest(tower, enemy)) {
@@ -288,8 +301,8 @@ public class Stna extends JFrame {
                 } else {
                     shootFrame++;
                 }
-            //} catch (Exception e) {
-            //}
+            } catch (Exception e) {
+            }
         }
 
     }

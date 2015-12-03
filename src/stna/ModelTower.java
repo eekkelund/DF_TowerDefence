@@ -20,7 +20,7 @@ public class ModelTower extends ModelBlock {
     protected int range;
     protected String img;
     protected String id;
-    protected int fireRate;
+    protected double fireRate;
     protected Color clr;
 
     public ModelTower(int y, int x, String id) {
@@ -79,7 +79,7 @@ public class ModelTower extends ModelBlock {
     public String getImg() {
         return img;
     }
-    public int getfRate() {
+    public double getfRate() {
         return fireRate;
     }
 
