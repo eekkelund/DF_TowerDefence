@@ -24,6 +24,7 @@ public class RoundTower extends ModelTower{
                 damage = 5;
                 range = 2;
                 clr = RED;
+                price = 10;
         }
     }
 

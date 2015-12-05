@@ -24,5 +24,6 @@ public class BLazerTower extends ModelTower{
                 damage = 2;
                 range = 4;
                 clr=BLUE;
+                price = 15;
         }
     }

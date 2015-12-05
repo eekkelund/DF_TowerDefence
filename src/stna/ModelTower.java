@@ -22,6 +22,8 @@ public class ModelTower extends ModelBlock {
     protected String id;
     protected double fireRate;
     protected Color clr;
+    protected int level=1;
+    protected int price;
 
     public ModelTower(int y, int x, String id) {
         this.x = x;
@@ -40,9 +42,12 @@ public class ModelTower extends ModelBlock {
         return clr;
     }
 
-    //public void setX(Color clr) {
-        //this.clr = clr;
-   // }
+    public void setLevel() {
+        level = level+1;
+    }
+     public int getLevel() {
+        return level;
+    }
 
     public int getY() {
         return y;
@@ -82,7 +87,11 @@ public class ModelTower extends ModelBlock {
     public double getfRate() {
         return fireRate;
     }
+    public int getPrice() {
+        return level;
+    }
 
+  
     
     
 

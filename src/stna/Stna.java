@@ -28,15 +28,15 @@ import javax.swing.UIManager;
  */
 public class Stna extends JFrame {
 
-    private Arena arena = new Arena();
-    private TowerEngineController contr = new TowerEngineController(arena);
+    private Arena arena;
+    private TowerEngineController contr;
     private JLabel selite;
     private JButton tower, tower2, tower3;
     private JPanel panel;
     private ActionListener actionL;
     private int bsize;//BLOCK SIZE
-    private int width = 700;//SCREEN WIDTH
-    private int height = 400;//SCREEN HEIGHT
+    private int width = 720;//SCREEN WIDTH
+    private int height = 480;//SCREEN HEIGHT
     private Graphics buffer;//THIS IS NEEDED FOR DOUBLE BUFFERING
     private Image dbImage;//THIS IMAGE STORES DOUBLEBUFFERED IMAGE, THAT SCREEN WONT FLICKER
     private static double fps = 60.0;//FRAMES PER SECOND
@@ -51,7 +51,8 @@ public class Stna extends JFrame {
     private double pauseFrame = 1;//COUNTER FOR PAUSE BETWEEN WAVES
     private double pauseTime = pSec * (double) (fps);//TIME IN FPS BETWEEN WAVES
     private double shootTime = 0.5 * (int) fps;//TIME BETWEEN SHOOTING
-    private double shootFrame = shootTime ;//COUNTER FOR PAUSE BETWEEN SHOOTING
+    private double shootFrame = shootTime;//COUNTER FOR PAUSE BETWEEN SHOOTING
+    private boolean startFrame = true;
 
     public Stna() {
 
@@ -61,18 +62,55 @@ public class Stna extends JFrame {
         } catch (Exception e) {
             System.err.println("Look and feel -asetus epäonnistui.");
         }
-
+        //if (startFrame) {
+        //  alusta2();
+        //}
         alusta();
         //arena.setTower(2, 3, "tower2");
         //arena.setTower(5, 3, "tower2");
-        arena.setTower(3, 2, "tower3");
+        //arena.setTower(3, 2, "tower3");
         //arena.setTower(4, 2, "tower");
-
-        game.run();
 
     }
 
+    public void alusta2() {
+
+        setTitle("Karta");
+        setSize(width, height);
+        actionL = new ButtonListener();
+        panel = new JPanel();
+        JButton b1;
+        JLabel l1;
+        setLayout(new BorderLayout());
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new File("images/bg.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Image dimg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        ImageIcon imageIcon = new ImageIcon(dimg);
+        setContentPane(new JLabel(imageIcon));
+        setLayout(new FlowLayout());
+        b1 = new JButton();
+        try {
+            img = ImageIO.read(new File("images/startb.png"));
+            
+        } catch (IOException ex) {
+        }
+        dimg = img.getScaledInstance(64*2, 32*2, Image.SCALE_SMOOTH);
+        b1.setIcon(new ImageIcon(dimg));
+        b1.setPreferredSize(new Dimension(64*2, 32*2));
+        b1.setBorder(null);
+        add(b1);
+
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setVisible(true);
+    }
+
     public void alusta() {
+        arena = new Arena();
+        contr = new TowerEngineController(arena);
         setTitle("Karta");
         setSize(width, height);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -80,15 +118,20 @@ public class Stna extends JFrame {
         panel = new JPanel();
 
         tower = new JButton("tower");
+        tower2 = new JButton("tower2");
 
         panel.add(tower);
+        panel.add(tower2);
         tower.addActionListener(actionL);
+        tower2.addActionListener(actionL);
         addMouseListener(new MouseListener());
 
         add(panel, BorderLayout.SOUTH);
 
         setVisible(true);
         bsize = arena.getBsize();
+
+        game.run();
     }
 
     private class ButtonListener implements ActionListener {
@@ -117,8 +160,7 @@ public class Stna extends JFrame {
             }
         }
     }
-    
-    
+
     //this method spawns enemies
     public void enemySpawner() {
         //spawns enemy every 1sec(after 60frames) and if spawncounter is not too much. also if spawnpause is true spawning is not happening
@@ -153,17 +195,19 @@ public class Stna extends JFrame {
                 while (delta >= 1) {
 
                     //update();
-                    if(!arena.getPlayer().isAlive()){//if player is ded game waits until...
+                    if (!arena.getPlayer().isAlive()) {//if player is ded game waits until...
                         try {
                             game.wait();
+                            JLabel labell = new JLabel("Game over");
+                            add(labell);
+
+                            
                         } catch (InterruptedException ex) {
                         }
-                    }
-                    else if (!sPause) {//if game is not paused aka cooldown between waves, this is true
+                    } else if (!sPause) {//if game is not paused aka cooldown between waves, this is true
                         enemySpawner();
 
-                    }
-                    else if (sPause&&isFirst){//in the beginning of the game wait pSec
+                    } else if (sPause && isFirst) {//in the beginning of the game wait pSec
                         if (pauseFrame >= pauseTime) {
                             pauseFrame = 1;
                             sPause = false;
@@ -204,6 +248,7 @@ public class Stna extends JFrame {
             }
         }
     });
+
     //this is needed for doublebuffering it makes image of the game while paintComponent draws new. it happens so quickly that u cant see it.
     public void paint(Graphics g) {
         dbImage = createImage(width, height);
@@ -267,16 +312,15 @@ public class Stna extends JFrame {
 
         //}
     }
- //private double spawnTime = 1 * (double) (fps);//
-   // private double spawnFrame = spawnTime - fps;
-    
+    //private double spawnTime = 1 * (double) (fps);//
+    // private double spawnFrame = spawnTime - fps;
 
     public void drawShoot(Graphics g) {
         for (ModelTower tower : arena.getTowers()) {//For each tower dis is gonna check if there is enemy to shoot
             try {
                 if (shootFrame >= shootTime) {//tower has to cool down aka load weapons
 
-                    if (shootFrame <=  shootTime*tower.getfRate()) {//this is the time how long tower shoots enemy
+                    if (shootFrame <= shootTime * tower.getfRate()) {//this is the time how long tower shoots enemy
                         shootFrame++;
 
                         if ("tower3".equals(tower.getid())) {//for roundtoweer there  is different kind of shooting..
