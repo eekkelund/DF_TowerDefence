@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -95,12 +96,12 @@ public class Stna extends JFrame {
         b1 = new JButton();
         try {
             img = ImageIO.read(new File("images/startb.png"));
-            
+
         } catch (IOException ex) {
         }
-        dimg = img.getScaledInstance(64*2, 32*2, Image.SCALE_SMOOTH);
+        dimg = img.getScaledInstance(64 * 2, 32 * 2, Image.SCALE_SMOOTH);
         b1.setIcon(new ImageIcon(dimg));
-        b1.setPreferredSize(new Dimension(64*2, 32*2));
+        b1.setPreferredSize(new Dimension(64 * 2, 32 * 2));
         b1.setBorder(null);
         add(b1);
 
@@ -201,7 +202,6 @@ public class Stna extends JFrame {
                             JLabel labell = new JLabel("Game over");
                             add(labell);
 
-                            
                         } catch (InterruptedException ex) {
                         }
                     } else if (!sPause) {//if game is not paused aka cooldown between waves, this is true
@@ -325,7 +325,8 @@ public class Stna extends JFrame {
 
                         if ("tower3".equals(tower.getid())) {//for roundtoweer there  is different kind of shooting..
                             //for (ModelTower tower : arena.getTowers()) {
-                            for (ModelEnemy enemy : arena.getEnemies()) {
+                            for (Iterator<ModelEnemy> iterator = arena.getEnemies().iterator(); iterator.hasNext();) {
+                                ModelEnemy enemy = iterator.next();
                                 if (contr.shoottest(tower, enemy)) {
                                     Color c = (tower.getClr());
                                     g.setColor(c);

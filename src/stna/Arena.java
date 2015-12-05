@@ -132,7 +132,7 @@ public class Arena {
                 if (objGrid[y][x].getid().equals("start")) {
                     switch (player.getLevel()) {
                         case 1:
-                            enemy = new ModelEnemy(y, x, y * bsize, x * bsize, "enemy");
+                            enemy = new ModelEnemy(y, x, y * bsize, x * bsize, "enemy3");
                             enemies.add(enemy);
                             break;
                         case 2:

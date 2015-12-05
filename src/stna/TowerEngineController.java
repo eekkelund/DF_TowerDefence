@@ -5,7 +5,7 @@
  */
 package stna;
 
-import java.util.*; 
+import java.util.*;
 
 /**
  *
@@ -35,52 +35,50 @@ public class TowerEngineController {
         //ArrayList<ModelEnemy> enemies2 = new ArrayList();//for (ModelTower tower : arena.getTowers()) {
         for (ModelEnemy enemy : arena.getEnemies()) {
             int range = tower.getRange();
-            
 
-                if (Math.abs(enemy.getX() - tower.getX()) < range && Math.abs(enemy.getY() - tower.getY()) < range) {
-                    enemy.setHealt(tower.getDamage());
-                    if (isDead()) {
-                        player.addMoney(enemy.getPrize());
-                        System.out.print(player.getMoney());
-                    }
-                    //enemies2.add(enemy);
-                    return enemy;
-
+            if (Math.abs(enemy.getX() - tower.getX()) < range && Math.abs(enemy.getY() - tower.getY()) < range) {
+                enemy.setHealt(tower.getDamage());
+                if (isDead()) {
+                    player.addMoney(enemy.getPrize());
+                    System.out.print(player.getMoney());
                 }
+                //enemies2.add(enemy);
+                return enemy;
+
             }
-        
+        }
+
         return null;
     }
 
     public int[] shootable(ModelTower tower) {
 
         ModelEnemy enemy;
-       
-            enemy = shoot(tower);
-            int[] shootList = new int[5];
-            int clr = tower.getClr().getRGB();
-            shootList[0] = clr;
-            shootList[1] = tower.getX();
-            shootList[2] = tower.getY();
-            shootList[3] = enemy.getMoveX();
-            shootList[4] = enemy.getMoveY();
-            return shootList;
-        
+
+        enemy = shoot(tower);
+        int[] shootList = new int[5];
+        int clr = tower.getClr().getRGB();
+        shootList[0] = clr;
+        shootList[1] = tower.getX();
+        shootList[2] = tower.getY();
+        shootList[3] = enemy.getMoveX();
+        shootList[4] = enemy.getMoveY();
+        return shootList;
 
     }
 
     public boolean shoottest(ModelTower tower, ModelEnemy enemy) {
         //for (ModelTower tower : arena.getTowers()) {
-            //for (ModelEnemy enemy : arena.getEnemies()) {
-                if (shootingpossible(tower, enemy)) {
-                    enemy.setHealt(tower.getDamage());
-                        
-                    if (isDead()) {
-                        player.addMoney(enemy.getPrize());
-                        System.out.print(player.getMoney());
-                    }
-                //}
-                    return true;
+        //for (ModelEnemy enemy : arena.getEnemies()) {
+        if (shootingpossible(tower, enemy)) {
+            enemy.setHealt(tower.getDamage());
+
+            if (isDead()) {
+                player.addMoney(enemy.getPrize());
+                System.out.print(player.getMoney());
+            }
+            //}
+            return true;
             //}
         }
         return false;
@@ -101,14 +99,25 @@ public class TowerEngineController {
     public boolean isDead() {
         for (Iterator<ModelEnemy> iterator = arena.getEnemies().iterator(); iterator.hasNext();) {
             ModelEnemy enemy = iterator.next();
+            ModelEnemy enemy2;
             if (!enemy.isAlive()) {
+                if ("enemy3".equals(enemy.getid())) {
+                    iterator.remove();
+                    //for (int i = 0; i < 2; i++) {
+                        enemy2 = new ModelEnemy(enemy.getY(), enemy.getX(), enemy.getY() * bsize, enemy.getX() * bsize, "enemy");
+                        enemy2.setDirection(enemy.getDirection());
+                        arena.getEnemies().add(enemy2);
+                        
+                        return true;
+                    //}
+                }
                 iterator.remove();
-                return true;
-
+                        return true;
             }
         }
         return false;
     }
+
     public void moving() {
         for (int i = 0; i < arena.getEnemies().size(); i++) {
             ModelEnemy enemy = arena.getEnemies().get(i);
