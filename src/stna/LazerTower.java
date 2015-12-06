@@ -18,7 +18,19 @@ public class LazerTower extends ModelTower{
         init();
     }
     public void init() {
-                switch(level){
+                
+                   
+                        img = "images/tower.png";
+                        fireRate = 10;
+                        damage = 1;
+                        range = 2;
+                        clr = YELLOW;
+                        price = 5;
+        }
+    @Override
+    public void setLevel() {
+        level = level+1;
+        switch(level){
                     case 1:
                         img = "images/tower.png";
                         fireRate = 10;
@@ -36,8 +48,6 @@ public class LazerTower extends ModelTower{
                         price =15;
                         break;
                 }
-                
-               
-                
-        }
+        
+    }
     }

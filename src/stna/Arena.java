@@ -90,6 +90,17 @@ public class Arena {
         x /= bsize;
         y /= bsize;
         if ("grass".equals(objGrid[y][x].getid())) {
+            switch (towerid) {
+                case "tower":
+                    price = 5;
+                    break;
+                case "tower2":
+                    price = 10;
+                    break;
+                case "tower3":
+                    price = 10;
+                    break;
+            }
             if (player.getMoney() >= price) {
                 setTower(y, x, towerid);
                 player.reduceMoney(price);
@@ -100,6 +111,10 @@ public class Arena {
             System.out.print("Wrong palace");
         }
     }
+    
+    public void newTowerLevel(){
+    
+}
 
     public ModelBlock[][] getArena() {
         return objGrid;

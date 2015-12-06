@@ -11,17 +11,17 @@ package stna;
  */
 public class ModelEnemy extends ModelBlock {
 
-    private int x, MOVEx;
-    private int y, MOVEy;
-    private int damage;
-    private String id;
-    private String img;
-    private int healt;
-    private boolean alive = true;
-    private int prize;
-    private int speed;
-    private int direction;
-    private int movecounter;
+    protected int x, MOVEx;
+    protected int y, MOVEy;
+    protected int damage;
+    protected String id;
+    protected String img;
+    protected int healt;
+    protected boolean alive = true;
+    protected int prize;
+    protected int speed;
+    protected int direction;
+    protected int movecounter;
 
     public ModelEnemy(int y, int x, int MOVEy, int MOVEx, String id) {
         this.x = x;

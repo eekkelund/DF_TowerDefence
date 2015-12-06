@@ -88,7 +88,7 @@ public class ModelTower extends ModelBlock {
         return fireRate;
     }
     public int getPrice() {
-        return level;
+        return price;
     }
 
   

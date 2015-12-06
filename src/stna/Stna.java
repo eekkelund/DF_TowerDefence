@@ -31,9 +31,9 @@ public class Stna extends JFrame {
 
     private Arena arena;
     private TowerEngineController contr;
-    private JLabel selite;
-    private JButton tower, tower2, tower3;
-    private JPanel panel;
+    private JLabel towerinfo;
+    private JButton tower, tower2, tower3, update;
+    private JPanel panel, panel2;
     private ActionListener actionL;
     private int bsize;//BLOCK SIZE
     private int width = 720;//SCREEN WIDTH
@@ -117,17 +117,30 @@ public class Stna extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         actionL = new ButtonListener();
         panel = new JPanel();
-
+        
+        panel2 = new JPanel();
+        
         tower = new JButton("tower");
         tower2 = new JButton("tower2");
-
+        tower3 = new JButton("tower3");
+        
+        update = new JButton("Update?");
+        
         panel.add(tower);
         panel.add(tower2);
+        panel.add(tower3);
         tower.addActionListener(actionL);
         tower2.addActionListener(actionL);
+        tower3.addActionListener(actionL);
         addMouseListener(new MouseListener());
+        
+        towerinfo = new JLabel();
+        
+        panel2.add(towerinfo);
 
+        add(panel2, BorderLayout.EAST);
         add(panel, BorderLayout.SOUTH);
+        
 
         setVisible(true);
         bsize = arena.getBsize();
@@ -158,6 +171,21 @@ public class Stna extends JFrame {
         public void mousePressed(MouseEvent e) {
             if (btnPress) {
                 arena.newTowerPos(e.getY(), e.getX(), towerid);
+                btnPress=false;
+            }
+            else {
+                 
+                for(ModelTower tower : arena.getTowers()){
+                    if(e.getX()/bsize==tower.getX() && e.getY()/bsize==tower.getY()){
+                        
+                        towerinfo.setText("damage: " + Integer.toString(tower.getDamage()));
+                        panel2.add(update);
+                        
+                        tower.setLevel();
+                        System.out.print(tower.getLevel());
+                    }
+                }
+                    
             }
         }
     }
