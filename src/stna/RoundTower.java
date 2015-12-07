@@ -21,7 +21,7 @@ public class RoundTower extends ModelTower {
     public void init() {
 
         img = "images/tower3.png";
-        fireRate = 1.2;
+        fireRate = 1;
         damage = 5;
         range = 2;
         clr = RED;
@@ -34,7 +34,7 @@ public class RoundTower extends ModelTower {
         switch (level) {
             case 1:
                 img = "images/tower3.png";
-                fireRate = 1.2;
+                fireRate = 1;
                 damage = 5;
                 range = 2;
                 clr = RED;

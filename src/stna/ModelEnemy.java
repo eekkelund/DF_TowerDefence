@@ -19,9 +19,10 @@ public class ModelEnemy extends ModelBlock {
     protected int healt;
     protected boolean alive = true;
     protected int prize;
-    protected int speed;
+    protected double speed;
     protected int direction;
     protected int movecounter;
+    protected boolean frozen = false;
 
     public ModelEnemy(int y, int x, int MOVEy, int MOVEx, String id) {
         this.x = x;
@@ -81,7 +82,7 @@ public class ModelEnemy extends ModelBlock {
         this.id = id;
     }
 
-    public int getSpeed() {
+    public double getSpeed() {
         return speed;
     }
 
@@ -89,7 +90,7 @@ public class ModelEnemy extends ModelBlock {
         return prize;
     }
 
-    public void setSpeed(int speed) {
+    public void setSpeed(double speed) {
         this.speed = speed;
     }
 
@@ -127,19 +128,26 @@ public class ModelEnemy extends ModelBlock {
     public void setMCounter(int movecounter) {
         this.movecounter = movecounter;
     }
+    
+    public boolean isFrzn() {
+        return frozen;
+    }
+    public void setFrzn(boolean frozen) {
+        this.frozen = frozen;
+    }
 
     public void init() {
         switch (id) {
             case "enemy":
                 img = "images/duck.png";
                 speed = 1;
-                healt = 1000;
+                healt = 100;
                 damage = 10;
                 prize = 5;
                 break;
             case "enemy2":
                 img = "images/duck2.png";
-                speed = 2;
+                speed = 1.5;
                 healt = 700;
                 damage = 15;
                 prize = 10;

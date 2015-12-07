@@ -11,19 +11,24 @@ import static java.awt.Color.*;
  *
  * @author eetz1
  */
-public class BLazerTower extends ModelTower{
+public class FreezeTower extends ModelTower{
+    
+    
 
-    public BLazerTower(int y, int x, String id) {
+    public FreezeTower(int y, int x, String id) {
         super(y, x, id);
         init();
     }
     public void init() {
 
-                img = "images/tower2.png";
+                img = "images/tower5.png";
                 fireRate = 1000;
-                damage = 2;
-                range = 4;
-                clr=BLUE;
+                damage = 0;
+                freezeDamage=0.5;
+                range = 2;
+                clr=CYAN;
                 update_price = 15;
         }
+    
+    
     }

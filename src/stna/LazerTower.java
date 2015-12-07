@@ -21,9 +21,9 @@ public class LazerTower extends ModelTower{
                 
                    
                         img = "images/tower.png";
-                        fireRate = 10;
+                        fireRate = 3;
                         damage = 1;
-                        range = 2;
+                        range = 4;
                         clr = YELLOW;
                         update_price = 15;
         }
@@ -33,7 +33,7 @@ public class LazerTower extends ModelTower{
         switch(level){
                     case 1:
                         img = "images/tower.png";
-                        fireRate = 10;
+                        fireRate = 1;
                         damage = 1;
                         range = 2;
                         clr = YELLOW;
@@ -41,7 +41,7 @@ public class LazerTower extends ModelTower{
                         break;
                     case 2:
                         img = "images/tower2.png";
-                        fireRate = 20;
+                        fireRate = 200;
                         damage = 5;
                         range = 4;
                         clr=BLUE;

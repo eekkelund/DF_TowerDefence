@@ -75,7 +75,7 @@ public class Arena {
                 tower = new LazerTower(y, x, id);
                 break;
             case "tower2":
-                tower = new BLazerTower(y, x, id);
+                tower = new FreezeTower(y, x, id);
                 break;
             case "tower3":
                 tower = new RoundTower(y, x, id);

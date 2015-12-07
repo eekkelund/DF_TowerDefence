@@ -37,14 +37,25 @@ public class TowerEngineController {
             int range = tower.getRange();
 
             if (Math.abs(enemy.getX() - tower.getX()) < range && Math.abs(enemy.getY() - tower.getY()) < range) {
-                enemy.setHealt(tower.getDamage());
-                if (isDead()) {
-                    player.addMoney(enemy.getPrize());
-                    System.out.print(player.getMoney());
+                if ("tower2".equals(tower.getid())&&!enemy.isFrzn()) {
+                    
+                    
+                    enemy.setSpeed(tower.getFrz());
+                    
+                    enemy.setFrzn(true);
+                    return enemy;
+                }else if("tower2".equals(tower.getid())&&enemy.isFrzn()){
+                            return enemy;
+                            
+                } else {
+                    enemy.setHealt(tower.getDamage());
+                    if (isDead()) {
+                        player.addMoney(enemy.getPrize());
+                        System.out.print(player.getMoney());
+                    }
+                    //enemies2.add(enemy);
+                    return enemy;
                 }
-                //enemies2.add(enemy);
-                return enemy;
-
             }
         }
 
@@ -95,12 +106,13 @@ public class TowerEngineController {
         }
 
     }
+
     public int[] hover(int x, int y) {
-        int xcoord=0, ycoord=0;
+        int xcoord = 0, ycoord = 0;
         int[] coords = new int[3];
-        for (int i=0; i<=arena.getArena().length; i++) {
+        for (int i = 0; i <= arena.getArena().length; i++) {
             ycoord = bsize * i;
-            for (int j=0; j<=arena.getArena()[0].length; j++) {
+            for (int j = 0; j <= arena.getArena()[0].length; j++) {
                 xcoord = bsize * j;
 
                 if (x <= xcoord && x >= xcoord - bsize) {
@@ -112,8 +124,8 @@ public class TowerEngineController {
             }
         }
         /*if ("grass".equals(arena.getArena()[ycoord][xcoord].getid())){
-            coords[2] = 1;
-        }*/
+         coords[2] = 1;
+         }*/
         return coords;
     }
 
@@ -125,15 +137,15 @@ public class TowerEngineController {
                 if ("enemy3".equals(enemy.getid())) {
                     iterator.remove();
                     //for (int i = 0; i < 2; i++) {
-                        enemy2 = new ModelEnemy(enemy.getY(), enemy.getX(), enemy.getY() * bsize, enemy.getX() * bsize, "enemy");
-                        enemy2.setDirection(enemy.getDirection());
-                        arena.getEnemies().add(enemy2);
-                        
-                        return true;
+                    enemy2 = new ModelEnemy(enemy.getY(), enemy.getX(), enemy.getY() * bsize, enemy.getX() * bsize, "enemy");
+                    enemy2.setDirection(enemy.getDirection());
+                    arena.getEnemies().add(enemy2);
+
+                    return true;
                     //}
                 }
                 iterator.remove();
-                        return true;
+                return true;
             }
         }
         return false;
@@ -168,7 +180,7 @@ public class TowerEngineController {
             }
         }
 
-        for (int i = 0; i < enemy2.getSpeed(); i++) {
+        for (double i = 0; i < enemy2.getSpeed(); i=i+0.5) {
             if (!move) {
                 direction = enemy2.getDirection();
                 int movecounter = enemy2.getMCounter();

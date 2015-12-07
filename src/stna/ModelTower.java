@@ -24,6 +24,8 @@ public class ModelTower extends ModelBlock {
     protected Color clr;
     protected int level=1;
     protected int update_price;
+    protected double freezeDamage;
+    protected int fire_time;
 
     public ModelTower(int y, int x, String id) {
         this.x = x;
@@ -89,6 +91,16 @@ public class ModelTower extends ModelBlock {
     }
     public int getPrice() {
         return update_price;
+    }
+    public double getFrz(){
+    return freezeDamage;
+}
+public int getFireTime() {
+        return fire_time;
+    }
+
+    public void setFireTime(int fire_time) {
+        this.fire_time = fire_time;
     }
 
   
