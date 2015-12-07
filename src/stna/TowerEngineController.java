@@ -95,6 +95,27 @@ public class TowerEngineController {
         }
 
     }
+    public int[] hover(int x, int y) {
+        int xcoord=0, ycoord=0;
+        int[] coords = new int[3];
+        for (int i=0; i<=arena.getArena().length; i++) {
+            ycoord = bsize * i;
+            for (int j=0; j<=arena.getArena()[0].length; j++) {
+                xcoord = bsize * j;
+
+                if (x <= xcoord && x >= xcoord - bsize) {
+                    coords[0] = xcoord;
+                }
+                if (y <= ycoord && y >= ycoord - bsize) {
+                    coords[1] = ycoord;
+                }
+            }
+        }
+        /*if ("grass".equals(arena.getArena()[ycoord][xcoord].getid())){
+            coords[2] = 1;
+        }*/
+        return coords;
+    }
 
     public boolean isDead() {
         for (Iterator<ModelEnemy> iterator = arena.getEnemies().iterator(); iterator.hasNext();) {

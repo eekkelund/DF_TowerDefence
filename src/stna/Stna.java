@@ -54,6 +54,7 @@ public class Stna extends JFrame {
     private double shootTime = 0.5 * (int) fps;//TIME BETWEEN SHOOTING
     private double shootFrame = shootTime;//COUNTER FOR PAUSE BETWEEN SHOOTING
     private boolean running = true;
+    private int mouseX, mouseY;
     
     private boolean startFrame = true;
     ModelTower utower;
@@ -148,6 +149,7 @@ public class Stna extends JFrame {
         tower2.addActionListener(actionL);
         tower3.addActionListener(actionL);
         addMouseListener(new MouseListener());
+        addMouseMotionListener(new MouseListener());
         
         towerinfo = new JLabel();
         towerinfo2 = new JLabel();
@@ -208,6 +210,12 @@ public class Stna extends JFrame {
                     }
                 }
                     
+            }
+        }
+        public void mouseMoved(MouseEvent e) {
+            if (btnPress) {
+                mouseX = e.getX();
+                mouseY = e.getY();
             }
         }
     }
@@ -364,6 +372,7 @@ public class Stna extends JFrame {
         drawShoot(g);
         drawEnemy(g);
         drawTower(g);
+        drawHover(g);
 
         //}
     }
@@ -405,6 +414,17 @@ public class Stna extends JFrame {
             }
         }
 
+    }
+    //Draws the rectangle where you are going to place the tower
+    public void drawHover(Graphics g) {
+        if (btnPress) {
+            int[] coords = contr.hover(mouseX, mouseY);
+            g.setColor(Color.BLACK);
+            if (coords[2] == 1) {
+                g.setColor(Color.RED);
+            }
+            g.drawRect(coords[0]- bsize, coords[1] - bsize, bsize, bsize);
+        }
     }
 
     public void drawEnemy(Graphics g) {
