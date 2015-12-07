@@ -31,7 +31,7 @@ public class Stna extends JFrame {
 
     private Arena arena;
     private TowerEngineController contr;
-    private JLabel towerinfo;
+    private JLabel towerinfo, towerinfo2;
     private JButton tower, tower2, tower3, update;
     private JPanel panel, panel2;
     private ActionListener actionL;
@@ -53,7 +53,13 @@ public class Stna extends JFrame {
     private double pauseTime = pSec * (double) (fps);//TIME IN FPS BETWEEN WAVES
     private double shootTime = 0.5 * (int) fps;//TIME BETWEEN SHOOTING
     private double shootFrame = shootTime;//COUNTER FOR PAUSE BETWEEN SHOOTING
+    private boolean running = true;
+    
     private boolean startFrame = true;
+    ModelTower utower;
+    
+    JButton start;
+        JLabel l1;
 
     public Stna() {
 
@@ -76,34 +82,40 @@ public class Stna extends JFrame {
 
     public void alusta2() {
 
-        setTitle("Karta");
+        
         setSize(width, height);
         actionL = new ButtonListener();
         panel = new JPanel();
-        JButton b1;
-        JLabel l1;
-        setLayout(new BorderLayout());
+        
+        //setLayout(new BorderLayout());
+        
         BufferedImage img = null;
+        
         try {
             img = ImageIO.read(new File("images/bg.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
         Image dimg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         ImageIcon imageIcon = new ImageIcon(dimg);
         setContentPane(new JLabel(imageIcon));
         setLayout(new FlowLayout());
-        b1 = new JButton();
+        start = new JButton();
+        
         try {
             img = ImageIO.read(new File("images/startb.png"));
 
         } catch (IOException ex) {
         }
+        
+        start.addActionListener(actionL);
+        
         dimg = img.getScaledInstance(64 * 2, 32 * 2, Image.SCALE_SMOOTH);
-        b1.setIcon(new ImageIcon(dimg));
-        b1.setPreferredSize(new Dimension(64 * 2, 32 * 2));
-        b1.setBorder(null);
-        add(b1);
+        start.setIcon(new ImageIcon(dimg));
+        start.setPreferredSize(new Dimension(64 * 2, 32 * 2));
+        start.setBorder(null);
+        add(start);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
@@ -124,19 +136,24 @@ public class Stna extends JFrame {
         tower2 = new JButton("tower2");
         tower3 = new JButton("tower3");
         
-        update = new JButton("Update?");
+        update = new JButton("Upgrade");
         
         panel.add(tower);
         panel.add(tower2);
         panel.add(tower3);
+        
+        update.addActionListener(actionL);
+        
         tower.addActionListener(actionL);
         tower2.addActionListener(actionL);
         tower3.addActionListener(actionL);
         addMouseListener(new MouseListener());
         
         towerinfo = new JLabel();
+        towerinfo2 = new JLabel();
         
         panel2.add(towerinfo);
+        panel2.add(towerinfo2);
 
         add(panel2, BorderLayout.EAST);
         add(panel, BorderLayout.SOUTH);
@@ -146,6 +163,7 @@ public class Stna extends JFrame {
         bsize = arena.getBsize();
 
         game.run();
+        
     }
 
     private class ButtonListener implements ActionListener {
@@ -163,6 +181,12 @@ public class Stna extends JFrame {
                 btnPress = true;
                 towerid = "tower3";
             }
+            if (e.getSource() == update) {
+                arena.updateTower(utower);
+            }
+             if (e.getSource() == start) {
+                 alusta();
+             }
         }
     }
 
@@ -177,12 +201,10 @@ public class Stna extends JFrame {
                  
                 for(ModelTower tower : arena.getTowers()){
                     if(e.getX()/bsize==tower.getX() && e.getY()/bsize==tower.getY()){
-                        
+                        utower = tower;
                         towerinfo.setText("damage: " + Integer.toString(tower.getDamage()));
+                        towerinfo2.setText("range: " + Integer.toString(tower.getRange()));
                         panel2.add(update);
-                        
-                        tower.setLevel();
-                        System.out.print(tower.getLevel());
                     }
                 }
                     
@@ -205,6 +227,10 @@ public class Stna extends JFrame {
         }
 
     }
+    
+    public void terminate() {
+        running = false;
+    }
 //game happens here!
     Thread game = new Thread(new Runnable() {
         public void run() {
@@ -214,7 +240,7 @@ public class Stna extends JFrame {
             double delta = 0;
             int updates = 0, frames = 0;
 
-            while (true) {
+            while (running) {
 
                 long now = System.nanoTime();
                 delta += (now - lastTime) / ns;
@@ -224,14 +250,15 @@ public class Stna extends JFrame {
                 while (delta >= 1) {
 
                     //update();
-                    if (!arena.getPlayer().isAlive()) {//if player is ded game waits until...
-                        try {
-                            game.wait();
+                    if (!arena.getPlayer().isAlive()) {//if player is ded game terminates
+                        
+                            
                             JLabel labell = new JLabel("Game over");
-                            add(labell);
+                            panel2.add(labell);
+                            repaint();
+                            terminate();
 
-                        } catch (InterruptedException ex) {
-                        }
+                        
                     } else if (!sPause) {//if game is not paused aka cooldown between waves, this is true
                         enemySpawner();
 

@@ -25,7 +25,7 @@ public class LazerTower extends ModelTower{
                         damage = 1;
                         range = 2;
                         clr = YELLOW;
-                        price = 5;
+                        update_price = 15;
         }
     @Override
     public void setLevel() {
@@ -37,7 +37,7 @@ public class LazerTower extends ModelTower{
                         damage = 1;
                         range = 2;
                         clr = YELLOW;
-                        price = 5;
+                        update_price = 15;
                         break;
                     case 2:
                         img = "images/tower2.png";
@@ -45,7 +45,7 @@ public class LazerTower extends ModelTower{
                         damage = 5;
                         range = 4;
                         clr=BLUE;
-                        price =15;
+                        update_price =15;
                         break;
                 }
         

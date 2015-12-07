@@ -111,10 +111,14 @@ public class Arena {
             System.out.print("Wrong palace");
         }
     }
-    
-    public void updateTower(){
-    
-}
+
+    public void updateTower(ModelTower tower) {
+        if (player.getMoney() >= tower.getPrice()) {
+            tower.setLevel();
+        } else {
+            System.out.print("no mani no upgrade");
+        }
+    }
 
     public ModelBlock[][] getArena() {
         return objGrid;

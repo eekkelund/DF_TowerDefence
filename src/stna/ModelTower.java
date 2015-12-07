@@ -23,7 +23,7 @@ public class ModelTower extends ModelBlock {
     protected double fireRate;
     protected Color clr;
     protected int level=1;
-    protected int price;
+    protected int update_price;
 
     public ModelTower(int y, int x, String id) {
         this.x = x;
@@ -88,7 +88,7 @@ public class ModelTower extends ModelBlock {
         return fireRate;
     }
     public int getPrice() {
-        return price;
+        return update_price;
     }
 
   
