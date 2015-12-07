@@ -26,6 +26,7 @@ public class RoundTower extends ModelTower {
         range = 2;
         clr = RED;
         update_price = 10;
+        max_level =2;
     }
 
     @Override
@@ -38,7 +39,7 @@ public class RoundTower extends ModelTower {
                 damage = 5;
                 range = 2;
                 clr = RED;
-                update_price = 10;
+                update_price = 20;
                 break;
             case 2:
                 img = "images/tower4.png";

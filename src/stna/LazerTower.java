@@ -28,6 +28,7 @@ public class LazerTower extends ModelTower{
                         range = 4;
                         clr = YELLOW;
                         update_price = 15;
+                        max_level =2;
         }
     @Override
     public void setLevel() {

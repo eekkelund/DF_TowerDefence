@@ -28,6 +28,7 @@ public class FreezeTower extends ModelTower{
                 range = 2;
                 clr=CYAN;
                 update_price = 15;
+                max_level = 1;
         }
     
     

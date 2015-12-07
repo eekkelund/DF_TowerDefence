@@ -67,7 +67,9 @@ public class Arena {
         }
 
     }
+
     //this sets towers to objectgrid
+
     public void setTower(int y, int x, String id) {
         switch (id) {
             case "tower"://if tower button is pressed it makes lazertower
@@ -110,19 +112,29 @@ public class Arena {
             System.out.print("Wrong palace");
         }
     }
+
     //if u have moneys one can update towers
+
     public void updateTower(ModelTower tower) {
         if (player.getMoney() >= tower.getPrice()) {
-            tower.setLevel();
+            if (tower.getLevel() < tower.getMaxLvl()) {
+                tower.setLevel();
+            } else {
+                System.out.print("already on maxlvl");
+            }
         } else {
             System.out.print("no mani no upgrade");
         }
     }
+
     //returns objectgrid aka arena
+
     public ModelBlock[][] getArena() {
         return objGrid;
     }
+
     //this defenies how many enemies per round/level is spawned
+
     public int getSpawnWave() {
         switch (player.getLevel()) {
             case 1:
@@ -137,9 +149,9 @@ public class Arena {
                 spawn_wave = 15;
                 break;
             default:
-                spawn_wave = player.getLevel()*10;
+                spawn_wave = player.getLevel() * 10;
                 break;
-                
+
         }
         return spawn_wave;
     }
@@ -184,9 +196,8 @@ public class Arena {
             }
         }
     }
-    
+
     //SETTERS AND GETTERS
-    
     public List<ModelEnemy> getEnemies() {
 
         return enemies;

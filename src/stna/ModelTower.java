@@ -22,10 +22,11 @@ public class ModelTower extends ModelBlock {
     protected String id;
     protected double fireRate;
     protected Color clr;
-    protected int level=1;
+    protected int level = 1;
     protected int update_price;
     protected double freezeDamage;
     protected int fire_time;
+    protected int max_level;
 
     public ModelTower(int y, int x, String id) {
         this.x = x;
@@ -40,14 +41,16 @@ public class ModelTower extends ModelBlock {
     public void setX(int x) {
         this.x = x;
     }
+
     public Color getClr() {
         return clr;
     }
 
     public void setLevel() {
-        level = level+1;
+        level = level + 1;
     }
-     public int getLevel() {
+
+    public int getLevel() {
         return level;
     }
 
@@ -86,16 +89,20 @@ public class ModelTower extends ModelBlock {
     public String getImg() {
         return img;
     }
+
     public double getfRate() {
         return fireRate;
     }
+
     public int getPrice() {
         return update_price;
     }
-    public double getFrz(){
-    return freezeDamage;
-}
-public int getFireTime() {
+
+    public double getFrz() {
+        return freezeDamage;
+    }
+
+    public int getFireTime() {
         return fire_time;
     }
 
@@ -103,8 +110,8 @@ public int getFireTime() {
         this.fire_time = fire_time;
     }
 
-  
-    
-    
+    public int getMaxLvl() {
+        return max_level;
+    }
 
 }
