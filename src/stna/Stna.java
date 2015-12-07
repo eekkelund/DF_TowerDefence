@@ -278,6 +278,7 @@ public class Stna extends JFrame implements Runnable {
                 }
                 //if there is no enemies on the arena and enemyspawner has spawned all the enemies and its not first run, there will be spawnpause and new level
                 if (arena.getEnemies().isEmpty() && !isFirst && spawnCounter == arena.getSpawnWave()) {
+                    
                     if (pauseFrame >= pauseTime) {
                         arena.setLevel();
                         spawnCounter = 0;

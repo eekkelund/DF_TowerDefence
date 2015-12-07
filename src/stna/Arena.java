@@ -138,8 +138,10 @@ public class Arena {
                 spawn_wave = 15;
                 break;
             default:
-                spawn_wave = spawn_wave * 2;
+                spawn_wave = player.getLevel()*10;
+                System.out.println("asdkikkel");
                 break;
+                
         }
         return spawn_wave;
     }
@@ -173,6 +175,7 @@ public class Arena {
                             if (Math.random() >= 0.75) {
                                 enemy = new ModelEnemy(y, x, y * bsize, x * bsize, "enemy2");
                                 enemies.add(enemy);
+                                System.out.println("asddpenis");
                                 break;
                             } else {
                                 enemy = new ModelEnemy(y, x, y * bsize, x * bsize, "enemy");
