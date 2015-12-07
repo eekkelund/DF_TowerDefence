@@ -112,7 +112,7 @@ public class Arena {
         }
     }
     
-    public void newTowerLevel(){
+    public void updateTower(){
     
 }
 

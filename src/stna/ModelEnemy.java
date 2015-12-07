@@ -147,7 +147,7 @@ public class ModelEnemy extends ModelBlock {
             case "enemy3":
                 img = "images/duck3.png";
                 speed = 1;
-                healt = 50;
+                healt = 10;
                 damage = 15;
                 prize = 5;
                 break;
