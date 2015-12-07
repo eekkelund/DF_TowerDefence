@@ -11,6 +11,9 @@ import java.util.*;
  *
  * @author eetz1
  */
+
+
+//THIS IS GAME ENGINE WOOOO
 public class TowerEngineController {
 
     //private ModelEnemy enemy2;
@@ -23,13 +26,13 @@ public class TowerEngineController {
     private int direction;
     private int bsize;
     boolean move = true;
-    private int[] shootList;
 
-    public TowerEngineController(Arena a) {
+    public TowerEngineController(Arena a) {//TO MAKE THIS ENGINE WORK WE NEED ARENA AND PLAYER
         this.arena = a;
         player = arena.getPlayer();
     }
 
+    //ONE OF SHOOTING METHODS THIS IS FOR LAZERTOWER AND FREEZETOWER
     public ModelEnemy shoot(ModelTower tower) {
         //enemies = arena.getEnemies();
         //ArrayList<ModelEnemy> enemies2 = new ArrayList();//for (ModelTower tower : arena.getTowers()) {
@@ -53,7 +56,7 @@ public class TowerEngineController {
                         player.addMoney(enemy.getPrize());
                         System.out.print(player.getMoney());
                     }
-                    //enemies2.add(enemy);
+                    
                     return enemy;
                 }
             }
@@ -61,13 +64,13 @@ public class TowerEngineController {
 
         return null;
     }
-
+    //HERE IS THE LIST FOR LAZER AND FREEZE RETURNED. THIS IS NEEDED TO DRAW LINES
     public int[] shootable(ModelTower tower) {
 
         ModelEnemy enemy;
 
         enemy = shoot(tower);
-        int[] shootList = new int[5];
+        int[] shootList = new int[5];//LIST WHAT IS RETURNED TO PAINT
         int clr = tower.getClr().getRGB();
         shootList[0] = clr;
         shootList[1] = tower.getX();
@@ -77,7 +80,7 @@ public class TowerEngineController {
         return shootList;
 
     }
-
+    //THIS SHOOT METHOD IS FOR ROUNDTOWER. IT SHOOTS ALL ENEMIES ON ITS RANGE WHILE LAZER AND FREEZE ONLY SHOOOTS FIRST ENEMY 
     public boolean shoottest(ModelTower tower, ModelEnemy enemy) {
         //for (ModelTower tower : arena.getTowers()) {
         //for (ModelEnemy enemy : arena.getEnemies()) {
@@ -94,7 +97,7 @@ public class TowerEngineController {
         }
         return false;
     }
-
+    //THIS IS TO CHECK IF THERE IS ENEMIES ON THE RANGE ON ROUNDT
     public boolean shootingpossible(ModelTower tower, ModelEnemy enemy) {
         //for (ModelTower tower : arena.getTowers()) {
         //for (ModelEnemy enemy : arena.getEnemies()) {
@@ -128,16 +131,16 @@ public class TowerEngineController {
          }*/
         return coords;
     }
-
+    //IF ENEMY IS DEAD
     public boolean isDead() {
         for (Iterator<ModelEnemy> iterator = arena.getEnemies().iterator(); iterator.hasNext();) {
             ModelEnemy enemy = iterator.next();
             ModelEnemy enemy2;
             if (!enemy.isAlive()) {
-                if ("enemy3".equals(enemy.getid())) {
+                if ("enemy3".equals(enemy.getid())) {//IF BLACKDUCK ALKA ENEMY3 IS KILLED IT WILL SPAWN YELLOW DUCK THERE WHERE IT DIED
                     iterator.remove();
                     //for (int i = 0; i < 2; i++) {
-                    enemy2 = new ModelEnemy(enemy.getY(), enemy.getX(), enemy.getY() * bsize, enemy.getX() * bsize, "enemy");
+                    enemy2 = new ModelEnemy(enemy.getY(), enemy.getX(), enemy.getY() * bsize, enemy.getX() * bsize, "enemy");//YELLOWDUCK
                     enemy2.setDirection(enemy.getDirection());
                     arena.getEnemies().add(enemy2);
 
@@ -150,27 +153,27 @@ public class TowerEngineController {
         }
         return false;
     }
-
+    //THIS METHOD IS CALLED FROM GAME IT MOVES ENEMIES
     public void moving() {
         for (int i = 0; i < arena.getEnemies().size(); i++) {
             ModelEnemy enemy = arena.getEnemies().get(i);
-            move(enemy);
+            move(enemy);//actual moving happens here
             //repaint();
         }
     }
-
+    //YEAH THE ACTUAL MOVING HAPPENS HERE
     public void move(ModelEnemy enemy2) {
 
         bsize = arena.getBsize();
 
         ModelBlock[][] grid = arena.getArena();
 
-        int x = enemy2.getMoveX();
+        int x = enemy2.getMoveX();//these are enemys objgrid coord
         int y = enemy2.getMoveY();
-        int xcoord = enemy2.getX();
+        int xcoord = enemy2.getX();//these are enemys screen coord
         int ycoord = enemy2.getY();
 
-        if ("finish".equals(grid[ycoord][xcoord].getid())) {
+        if ("finish".equals(grid[ycoord][xcoord].getid())) {//If enemy gets to finish it dies and reduces players healt
             enemy2.setHealt(10000000);
             if (isDead()) {
                 player = arena.getPlayer();
@@ -180,7 +183,7 @@ public class TowerEngineController {
             }
         }
 
-        for (double i = 0; i < enemy2.getSpeed(); i=i+0.5) {
+        for (double i = 0; i < enemy2.getSpeed(); i=i+0.5) {//BLAAAAAH
             if (!move) {
                 direction = enemy2.getDirection();
                 int movecounter = enemy2.getMCounter();

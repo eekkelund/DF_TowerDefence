@@ -393,7 +393,7 @@ public class Stna extends JFrame implements Runnable {
                                     g.drawOval((tower.getX() * bsize - tower.getRange() * bsize + bsize / 2), (tower.getY() * bsize - tower.getRange() * bsize + bsize / 2), tower.getRange() * bsize * 2, tower.getRange() * bsize * 2);
                                 }
                             }
-                        } else if ("tower2".equals(tower.getid())) {
+                        } else if ("tower2".equals(tower.getid())) {//for freezetower there is different kind of shooting..
                             int[] shootList = contr.shootable(tower);//drawing shootlines
                             Color c = new Color(shootList[0]);
                             g.setColor(c);

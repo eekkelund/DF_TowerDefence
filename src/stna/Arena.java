@@ -33,31 +33,30 @@ public class Arena {
     private int ecounter;
 
     public Arena() {
-        player = new ModelPlayer();
+        player = new ModelPlayer();//lets create player
 
-        map = new Map(player);
-        grid = map.getMap();
-        //System.out.print(grid.length+""+grid[0].length);
-        objGrid = new ModelBlock[grid.length][grid[0].length];
+        map = new Map(player);//lets create new map = grid
+        grid = map.getMap();//map=grid
+        objGrid = new ModelBlock[grid.length][grid[0].length];//from that mapgrid lets make objectgrid where objects are groundobjects
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
                 switch (grid[i][j]) {
-                    case 0:
+                    case 0://if map grid is 0 that means it is grass ground
                         ground = new ModelGround(i, j, "grass");
                         objGrid[i][j] = ground;
                         blocks.add(ground);
                         break;
-                    case 1:
+                    case 1://if map grid is 1 that means it is road ground
                         ground = new ModelGround(i, j, "road");
                         objGrid[i][j] = ground;
                         blocks.add(ground);
                         break;
-                    case 2:
+                    case 2://if map grid is 2 that means it is start ground
                         ground = new ModelGround(i, j, "start");
                         objGrid[i][j] = ground;
                         blocks.add(ground);
                         break;
-                    case 3:
+                    case 3://if map grid is 3 that means it is finish ground
                         ground = new ModelGround(i, j, "finish");
                         objGrid[i][j] = ground;
                         blocks.add(ground);
@@ -68,16 +67,16 @@ public class Arena {
         }
 
     }
-
+    //this sets towers to objectgrid
     public void setTower(int y, int x, String id) {
         switch (id) {
-            case "tower":
+            case "tower"://if tower button is pressed it makes lazertower
                 tower = new LazerTower(y, x, id);
                 break;
-            case "tower2":
+            case "tower2"://if tower2 button is pressed it makes freezetower
                 tower = new FreezeTower(y, x, id);
                 break;
-            case "tower3":
+            case "tower3"://if tower3 button is pressed it makes roundtower
                 tower = new RoundTower(y, x, id);
                 break;
         }
@@ -111,7 +110,7 @@ public class Arena {
             System.out.print("Wrong palace");
         }
     }
-
+    //if u have moneys one can update towers
     public void updateTower(ModelTower tower) {
         if (player.getMoney() >= tower.getPrice()) {
             tower.setLevel();
@@ -119,11 +118,11 @@ public class Arena {
             System.out.print("no mani no upgrade");
         }
     }
-
+    //returns objectgrid aka arena
     public ModelBlock[][] getArena() {
         return objGrid;
     }
-
+    //this defenies how many enemies per round/level is spawned
     public int getSpawnWave() {
         switch (player.getLevel()) {
             case 1:
@@ -139,14 +138,13 @@ public class Arena {
                 break;
             default:
                 spawn_wave = player.getLevel()*10;
-                System.out.println("asdkikkel");
                 break;
                 
         }
         return spawn_wave;
     }
 
-    public void spawnEnemy() {//SPAWNS ONE ENEMY
+    public void spawnEnemy() {//SPAWNS ONE ENEMY DEPENDING ON LEVEL
 
         for (int y = 0; y < objGrid.length; y++) {
             for (int x = 0; x < objGrid[0].length; x++) {
@@ -175,7 +173,6 @@ public class Arena {
                             if (Math.random() >= 0.75) {
                                 enemy = new ModelEnemy(y, x, y * bsize, x * bsize, "enemy2");
                                 enemies.add(enemy);
-                                System.out.println("asddpenis");
                                 break;
                             } else {
                                 enemy = new ModelEnemy(y, x, y * bsize, x * bsize, "enemy");
@@ -187,7 +184,9 @@ public class Arena {
             }
         }
     }
-
+    
+    //SETTERS AND GETTERS
+    
     public List<ModelEnemy> getEnemies() {
 
         return enemies;

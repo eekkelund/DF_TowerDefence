@@ -11,6 +11,8 @@ import static java.awt.Color.*;
  *
  * @author eetz1
  */
+
+//LAZERRRTOWERRR
 public class LazerTower extends ModelTower{
 
     public LazerTower(int y, int x, String id) {

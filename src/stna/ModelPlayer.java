@@ -9,6 +9,9 @@ package stna;
  *
  * @author eetz1
  */
+
+
+//player aka YOU is created here
 public class ModelPlayer {
     private int healt;
     private int money;
