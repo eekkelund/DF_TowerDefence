@@ -164,7 +164,7 @@ public class Stna extends JFrame {
         setVisible(true);
         bsize = arena.getBsize();
 
-        game.run();
+        game.start();
         
     }
 
