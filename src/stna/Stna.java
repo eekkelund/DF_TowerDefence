@@ -46,7 +46,8 @@ public class Stna extends JFrame implements Runnable {
     private double spawnFrame = spawnTime - fps;//COUNTER TO CHECK UPPER ^
     private int spawnCounter = 0;//COUNTER TO CHECK IF ALL ENEMIES OF WAVE HAVE SPAWNED
     private boolean isFirst = true;//IF ITS FIRST TIME THAT THREAD IS RUN
-    private boolean btnPress;
+    private boolean btnPress;//CHECKS IF BTN IS PRESSED
+    private boolean towerclick;//CHECKS IF TOWER IS CLICKED
     private boolean sPause = true;//BOOLEAN TO CHECK IF THERE IS PAUSE BETWEEN WAVES
     private String towerid;//JUST TO STORE TOWERID
     private double pauseFrame = 1;//COUNTER FOR PAUSE BETWEEN WAVES
@@ -184,6 +185,7 @@ public class Stna extends JFrame implements Runnable {
             }
             if (e.getSource() == update) {
                 arena.updateTower(utower);
+                towerclick = false;
             }
             if (e.getSource() == start) {
                 alusta();
@@ -205,6 +207,7 @@ public class Stna extends JFrame implements Runnable {
                         towerinfo.setText("damage: " + Integer.toString(tower.getDamage()));
                         towerinfo2.setText("range: " + Integer.toString(tower.getRange()));
                         panel2.add(update);
+                        towerclick = true;
                     }
                 }
 
@@ -410,6 +413,10 @@ public class Stna extends JFrame implements Runnable {
             g.setColor(Color.white);
             g.drawOval(coords[0] - coords[3]*bsize - bsize/2, coords[1] - coords[3]*bsize - bsize/2, coords[3]*bsize*2, coords[3]*bsize*2);
            
+            if (towerclick) {
+            g.setColor(Color.BLACK);
+            g.drawRect(utower.getX()*bsize, utower.getY()*bsize, bsize, bsize);
+        }
         }
     }
 
