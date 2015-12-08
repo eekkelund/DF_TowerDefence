@@ -416,7 +416,7 @@ public class Stna extends JFrame implements Runnable {
     public void drawEnemy(Graphics g) {
 
         BufferedImage img;
-        try {//DRAWS ENEMYS
+        try {//DRAWS ENEMIES
 
             for (int i = 0; i < arena.getEnemies().size(); i++) {
                 ModelEnemy enemy = arena.getEnemies().get(i);

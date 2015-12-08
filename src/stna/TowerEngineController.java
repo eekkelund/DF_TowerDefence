@@ -119,8 +119,7 @@ public class TowerEngineController {
             if (!enemy.isAlive()) {
                 if ("enemy3".equals(enemy.getid())) {//IF BLACKDUCK ALKA ENEMY3 IS KILLED IT WILL SPAWN YELLOW DUCK THERE WHERE IT DIED
                     iterator.remove();
-                    //for (int i = 0; i < 2; i++) {
-                    enemy2 = new ModelEnemy(enemy.getY(), enemy.getX(), enemy.getY() * bsize, enemy.getX() * bsize, "enemy");//YELLOWDUCK
+                    enemy2 = new YDuck(enemy.getY(), enemy.getX(), enemy.getY() * bsize, enemy.getX() * bsize, "enemy");//YELLOWDUCK
                     enemy2.setDirection(enemy.getDirection());
                     arena.getEnemies().add(enemy2);
 

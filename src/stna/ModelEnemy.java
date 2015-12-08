@@ -31,7 +31,7 @@ public class ModelEnemy extends ModelBlock {
         this.MOVEy = MOVEy;
         this.id = id;
         direction = 3;
-        init();
+        
     }
 
     public int getX() {
@@ -135,31 +135,4 @@ public class ModelEnemy extends ModelBlock {
     public void setFrzn(boolean frozen) {
         this.frozen = frozen;
     }
-
-    public void init() {
-        switch (id) {
-            case "enemy":
-                img = "images/duck.png";
-                speed = 1;
-                healt = 100;
-                damage = 10;
-                prize = 5;
-                break;
-            case "enemy2":
-                img = "images/duck2.png";
-                speed = 1.5;
-                healt = 700;
-                damage = 15;
-                prize = 10;
-                break;
-            case "enemy3":
-                img = "images/duck3.png";
-                speed = 1;
-                healt = 10;
-                damage = 15;
-                prize = 5;
-                break;
-        }
-    }
-
 }

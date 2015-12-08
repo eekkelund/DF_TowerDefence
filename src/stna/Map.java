@@ -15,7 +15,6 @@ public class Map {
 
 private Arena arena;
 private ModelPlayer player;
-//2=start,1=road,0=grass,3=finish
 int[][] map1 =
 {
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },

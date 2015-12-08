@@ -149,7 +149,7 @@ public class Arena {
             }
         }
         if (y/bsize < getArena().length && x/bsize < getArena()[0].length) {
-            if ("road".equals(objGrid[(y/bsize)][(x/bsize)].getid())){
+            if (!"grass".equals(objGrid[(y/bsize)][(x/bsize)].getid())){
                 coords[2] = 1;
             }
         }
@@ -193,31 +193,31 @@ public class Arena {
                 if (objGrid[y][x].getid().equals("start")) {
                     switch (player.getLevel()) {
                         case 1:
-                            enemy = new ModelEnemy(y, x, y * bsize, x * bsize, "enemy3");
+                            enemy = new BDuck(y, x, y * bsize, x * bsize, "enemy3");
                             enemies.add(enemy);
                             break;
                         case 2:
-                            enemy = new ModelEnemy(y, x, y * bsize, x * bsize, "enemy");
+                            enemy = new YDuck(y, x, y * bsize, x * bsize, "enemy");
                             enemies.add(enemy);
                             break;
                         case 3:
                             if (ecounter < 5) {
-                                enemy = new ModelEnemy(y, x, y * bsize, x * bsize, "enemy2");
+                                enemy = new PDuck(y, x, y * bsize, x * bsize, "enemy2");
                                 enemies.add(enemy);
                                 ecounter++;
                                 break;
                             } else {
-                                enemy = new ModelEnemy(y, x, y * bsize, x * bsize, "enemy");
+                                enemy = new YDuck(y, x, y * bsize, x * bsize, "enemy");
                                 enemies.add(enemy);
                                 break;
                             }
                         default:
                             if (Math.random() >= 0.75) {
-                                enemy = new ModelEnemy(y, x, y * bsize, x * bsize, "enemy2");
+                                enemy = new PDuck(y, x, y * bsize, x * bsize, "enemy2");
                                 enemies.add(enemy);
                                 break;
                             } else {
-                                enemy = new ModelEnemy(y, x, y * bsize, x * bsize, "enemy");
+                                enemy = new YDuck(y, x, y * bsize, x * bsize, "enemy");
                                 enemies.add(enemy);
                                 break;
                             }
