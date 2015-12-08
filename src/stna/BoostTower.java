@@ -25,24 +25,24 @@ public class BoostTower extends ModelTower{
                         img = "images/tower6.png";
                         fireRate = 1000000000;
                         damage = 0;
-                        range = 3;
+                        range = 2;
                         clr = YELLOW;
-                        update_price = 15;
+                        update_price = 30;
                         price = 20;
                         max_level =2;
-                        improve = 2;
+                        improve = 1;
         }
     @Override
     public void setLevel() {
         level = level+1;
         switch(level){
                     case 2:
-                        img = "images/tower2.png";
-                        fireRate = 2.5;
-                        damage = 5;
-                        range = 4;
+                        img = "images/tower7.png";
+                        fireRate = 1000000000;
+                        damage = 0;
+                        range = 2;
                         clr=BLUE;
-                        update_price =15;
+                        improve = 3;
                         break;
                 }
         

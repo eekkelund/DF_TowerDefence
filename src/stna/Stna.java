@@ -32,7 +32,7 @@ public class Stna extends JFrame implements Runnable {
     private Arena arena;
     private TowerEngineController contr;
     private JLabel towerinfo, towerinfo2;
-    private JButton tower, tower2, tower3, tower4, update;
+    private JButton tower, tower2, tower3, tower4, tower5, update;
     private JPanel panel, panel2;
     private ActionListener actionL;
     private int bsize;//BLOCK SIZE
@@ -56,6 +56,7 @@ public class Stna extends JFrame implements Runnable {
     private double shootFrame = shootTime;//COUNTER FOR PAUSE BETWEEN SHOOTING
     private boolean running = true;
     private int mouseX, mouseY;
+    private boolean shoot_money = false;//boolean to check if show moneys top of moneytower
 
     private boolean startFrame = true;
     ModelTower utower;
@@ -138,6 +139,7 @@ public class Stna extends JFrame implements Runnable {
         tower2 = new JButton("tower2");
         tower3 = new JButton("tower3");
         tower4 = new JButton("tower4");
+        tower5 = new JButton("tower5");
 
         update = new JButton("Upgrade");
 
@@ -145,6 +147,7 @@ public class Stna extends JFrame implements Runnable {
         panel.add(tower2);
         panel.add(tower3);
         panel.add(tower4);
+        panel.add(tower5);
 
         update.addActionListener(actionL);
 
@@ -152,7 +155,8 @@ public class Stna extends JFrame implements Runnable {
         tower2.addActionListener(actionL);
         tower3.addActionListener(actionL);
         tower4.addActionListener(actionL);
-        
+        tower5.addActionListener(actionL);
+
         addMouseListener(new MouseListener());
         addMouseMotionListener(new MouseListener());
 
@@ -191,6 +195,11 @@ public class Stna extends JFrame implements Runnable {
                 btnPress = true;
                 towerid = "tower4";
             }
+            if (e.getSource() == tower5) {
+                btnPress = true;
+                towerid = "tower5";
+            }
+
             if (e.getSource() == update) {
                 arena.updateTower(utower);
                 towerclick = false;
@@ -249,7 +258,7 @@ public class Stna extends JFrame implements Runnable {
     public void terminate() {
         running = false;
     }
-    
+
     //game happens here!
     public void run() {
         long lastTime = System.nanoTime();
@@ -285,17 +294,22 @@ public class Stna extends JFrame implements Runnable {
                     } else {
                         pauseFrame++;
                         sPause = true;
-                        
+
                     }
                 }
                 //if there is no enemies on the arena and enemyspawner has spawned all the enemies and its not first run, there will be spawnpause and new level
                 if (arena.getEnemies().isEmpty() && !isFirst && spawnCounter == arena.getSpawnWave()) {
-                    
+                    if (pauseFrame == 1) {
+                        contr.shootmoney();//when round is over if player has moneytower it makes moneyyy
+                        shoot_money = true;
+
+                    }
                     if (pauseFrame >= pauseTime) {
                         arena.setLevel();
                         spawnCounter = 0;
                         pauseFrame = 1;
                         sPause = false;
+                        shoot_money = false;
                     } else {
                         pauseFrame++;
                         sPause = true;
@@ -310,7 +324,6 @@ public class Stna extends JFrame implements Runnable {
 
             }
 
-            
             frames++;
             if (System.currentTimeMillis() - timer >= 1000) {
                 timer += 1000;
@@ -353,14 +366,14 @@ public class Stna extends JFrame implements Runnable {
 
         }
 
-        drawShoot(g);
-        drawEnemy(g);
+        
+        
         drawTower(g);
+        drawEnemy(g);
+        drawShoot(g);
         drawHover(g);
 
-        
     }
-
 
     public void drawShoot(Graphics g) {
         for (ModelTower tower : arena.getTowers()) {//For each tower dis is gonna check if there is enemy to shoot
@@ -368,7 +381,7 @@ public class Stna extends JFrame implements Runnable {
                 if (tower.getFireTime() >= shootTime) {//tower has to cool down aka load weapons
 
                     if (tower.getFireTime() <= shootTime * tower.getfRate()) {//this is the time how long tower shoots enemy
-                        tower.setFireTime(tower.getFireTime()+1);//each tower has it own firetime
+                        tower.setFireTime(tower.getFireTime() + 1);//each tower has it own firetime
 
                         if ("tower3".equals(tower.getid())) {//for roundtoweer there  is different kind of shooting..
                             //for (ModelTower tower : arena.getTowers()) {
@@ -386,10 +399,16 @@ public class Stna extends JFrame implements Runnable {
                             g.setColor(c);
                             g.drawLine((shootList[1] * bsize + (bsize / 2)), (shootList[2] * bsize + (bsize / 2)), (shootList[3] + (bsize / 3)), (shootList[4] + (bsize / 3)));
                             g.drawLine((shootList[1] * bsize + (bsize / 2)), (shootList[2] * bsize + (bsize / 2)), (shootList[3] + (bsize / 2)), (shootList[4] + (bsize / 2)));
-                       } else if ("tower4".equals(tower.getid())) {
-                           for (ModelTower tower2 : arena.getTowers()) {
-                           contr.shootImprove((BoostTower) tower, tower2);
-                           }
+                        } else if ("tower4".equals(tower.getid())) {//boosttower "shoots" other towers = boosts them
+                            for (ModelTower tower2 : arena.getTowers()) {
+                                contr.shootImprove((BoostTower) tower, tower2);
+                            }
+                        } else if ("tower5".equals(tower.getid())&&shoot_money) {
+                            Color c = (tower.getClr());
+                            int fontSize = bsize/2;
+                            g.setFont(new Font("TimesRoman", Font.PLAIN, fontSize));
+                            g.setColor(c);
+                            g.drawString(Integer.toString(tower.damage), tower.getX()*bsize+bsize/4, tower.getY()*bsize+bsize/4);
                         } else {
                             int[] shootList = contr.shootable(tower);//drawing shootlines for lazertowers
                             Color c = new Color(shootList[0]);
@@ -401,7 +420,7 @@ public class Stna extends JFrame implements Runnable {
                     }
 
                 } else {
-                    tower.setFireTime(tower.getFireTime()+1);
+                    tower.setFireTime(tower.getFireTime() + 1);
                 }
             } catch (Exception e) {
             }
@@ -410,8 +429,7 @@ public class Stna extends JFrame implements Runnable {
     }
 
     //Draws the rectangle where you are going to place the tower
-
-   public void drawHover(Graphics g) {
+    public void drawHover(Graphics g) {
         if (btnPress) {
             int[] coords = arena.hover(mouseX, mouseY, towerid);
             //coords[0]=X, coords[1]=Y, coords[2]=COLOR, coords[3]=RANGE
@@ -423,13 +441,12 @@ public class Stna extends JFrame implements Runnable {
             g.drawRect(coords[0] - bsize, coords[1] - bsize, bsize, bsize);
             //Draws the range of the tower
             g.setColor(Color.white);
-            g.drawOval(coords[0] - coords[3]*bsize - bsize/2, coords[1] - coords[3]*bsize - bsize/2, coords[3]*bsize*2, coords[3]*bsize*2);
-           
-            
+            g.drawOval(coords[0] - coords[3] * bsize - bsize / 2, coords[1] - coords[3] * bsize - bsize / 2, coords[3] * bsize * 2, coords[3] * bsize * 2);
+
         }
         if (towerclick) {
             g.setColor(Color.BLACK);
-            g.drawRect(utower.getX()*bsize, utower.getY()*bsize, bsize, bsize);
+            g.drawRect(utower.getX() * bsize, utower.getY() * bsize, bsize, bsize);
         }
     }
 
@@ -441,7 +458,7 @@ public class Stna extends JFrame implements Runnable {
             for (int i = 0; i < arena.getEnemies().size(); i++) {
                 ModelEnemy enemy = arena.getEnemies().get(i);
                 img = ImageIO.read(new File(enemy.getImg()));
-                g.drawImage(img, enemy.getMoveX(), enemy.getMoveY(), bsize* enemy.getSize(), bsize* enemy.getSize(), this);
+                g.drawImage(img, enemy.getMoveX(), enemy.getMoveY(), bsize * enemy.getSize(), bsize * enemy.getSize(), this);
             }
         } catch (IOException ex) {
             System.out.print(ex);

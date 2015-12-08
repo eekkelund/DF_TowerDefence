@@ -54,7 +54,7 @@ public class TowerEngineController {
                     enemy.setHealt(tower.getDamage());
                     if (isDead()) {
                         player.addMoney(enemy.getPrize());
-                        System.out.print(player.getMoney());
+                        //System.out.print(player.getMoney());
                     }
                     
                     return enemy;
@@ -89,7 +89,7 @@ public class TowerEngineController {
 
             if (isDead()) {
                 player.addMoney(enemy.getPrize());
-                System.out.print(player.getMoney());
+                //System.out.print(player.getMoney());
             }
             //}
             return true;
@@ -120,7 +120,15 @@ public class TowerEngineController {
             //return false;
         }
     }
-    
+    void shootmoney() {
+        for (ModelTower tower : arena.getTowers()){
+            if ("tower5".equals(tower.getid())){
+                player.addMoney(tower.getDamage());
+                System.out.println("asd"+player.getMoney());
+            }
+        }
+            
+    }
 
 
     //IF ENEMY IS DEAD
@@ -169,7 +177,7 @@ public class TowerEngineController {
             if (isDead()) {
                 player = arena.getPlayer();
                 player.setHealt(enemy2.getDamage());
-                System.out.print(player.getHealt());
+                //System.out.print(player.getHealt());
                 move = false;
             }
         }
@@ -269,4 +277,6 @@ public class TowerEngineController {
             System.out.print(e);
         }
     }
+
+    
 }

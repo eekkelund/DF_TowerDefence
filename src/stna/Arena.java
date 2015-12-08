@@ -43,6 +43,7 @@ public class Arena {
         ImaginaryTowers.add(new FreezeTower(1, 1, "tower2"));
         ImaginaryTowers.add(new RoundTower(1, 1, "tower3"));
         ImaginaryTowers.add(new BoostTower(1, 1, "tower4"));
+        ImaginaryTowers.add(new MoneyTower(1, 1, "tower5"));
 
         grid = map.getMap();//map=grid
         objGrid = new ModelBlock[grid.length][grid[0].length];//from that mapgrid lets make objectgrid where objects are groundobjects
@@ -90,6 +91,9 @@ public class Arena {
                 break;
             case "tower4"://if tower4 button is pressed it makes boosttower
                 tower = new BoostTower(y, x, id);
+                break;
+            case "tower5"://if tower5 button is pressed it makes moneytower
+                tower = new MoneyTower(y, x, id);
                 break;
         }
         objGrid[y][x] = tower;
