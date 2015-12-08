@@ -37,12 +37,13 @@ public class Arena {
         player = new ModelPlayer();//lets create player
 
         map = new Map(player);//lets create new map = grid
-        
+
         //Adding imaginary towers for easier price and range handling for some methods
         ImaginaryTowers.add(new LazerTower(1, 1, "tower"));
         ImaginaryTowers.add(new FreezeTower(1, 1, "tower2"));
         ImaginaryTowers.add(new RoundTower(1, 1, "tower3"));
-        
+        ImaginaryTowers.add(new BoostTower(1, 1, "tower4"));
+
         grid = map.getMap();//map=grid
         objGrid = new ModelBlock[grid.length][grid[0].length];//from that mapgrid lets make objectgrid where objects are groundobjects
         for (int i = 0; i < grid.length; i++) {
@@ -76,7 +77,6 @@ public class Arena {
     }
 
     //this sets towers to objectgrid
-
     public void setTower(int y, int x, String id) {
         switch (id) {
             case "tower"://if tower button is pressed it makes lazertower
@@ -88,6 +88,9 @@ public class Arena {
             case "tower3"://if tower3 button is pressed it makes roundtower
                 tower = new RoundTower(y, x, id);
                 break;
+            case "tower4"://if tower4 button is pressed it makes boosttower
+                tower = new BoostTower(y, x, id);
+                break;
         }
         objGrid[y][x] = tower;
         towers.add(tower);
@@ -97,7 +100,7 @@ public class Arena {
         x /= bsize;
         y /= bsize;
         if ("grass".equals(objGrid[y][x].getid())) {
-            for (ModelTower tower: ImaginaryTowers) {
+            for (ModelTower tower : ImaginaryTowers) {
                 if (towerid == tower.getid()) {
                     price = tower.getPrice();
                 }
@@ -114,7 +117,6 @@ public class Arena {
     }
 
     //if u have moneys one can update towers
-
     public void updateTower(ModelTower tower) {
         if (player.getMoney() >= tower.getPrice()) {
             if (tower.getLevel() < tower.getMaxLvl()) {
@@ -126,15 +128,15 @@ public class Arena {
             System.out.print("no mani no upgrade");
         }
     }
-    
-        public int[] hover(int x, int y, String towerid) {
-        int xcoord=0, ycoord=0;
+
+    public int[] hover(int x, int y, String towerid) {
+        int xcoord = 0, ycoord = 0;
         int[] coords = new int[4]; //coords[0]=X, coords[1]=Y, coords[2]=COLOR, coords[3]=RANGE
-        for (int i=0; i<=getArena().length; i++) {
+        for (int i = 0; i <= getArena().length; i++) {
             ycoord = bsize * i;
-            for (int j=0; j<=getArena()[0].length; j++) {
+            for (int j = 0; j <= getArena()[0].length; j++) {
                 xcoord = bsize * j;
- 
+
                 if (x <= xcoord && x >= xcoord - bsize) {
                     coords[0] = xcoord;
                 }
@@ -143,20 +145,18 @@ public class Arena {
                 }
             }
         }
-        for (ModelTower tower: getImTowers()) {
-            if (tower.getid() == towerid) {
+        for (ModelTower tower : getImTowers()) {
+            if (tower.getid().equals(towerid)) {
                 coords[3] = tower.getRange();
             }
         }
-        if (y/bsize < getArena().length && x/bsize < getArena()[0].length) {
-            if (!"grass".equals(objGrid[(y/bsize)][(x/bsize)].getid())){
+        if (y / bsize < getArena().length && x / bsize < getArena()[0].length) {
+            if (!"grass".equals(objGrid[(y / bsize)][(x / bsize)].getid())) {
                 coords[2] = 1;
             }
         }
         return coords;
     }
-        
-        
 
     //returns objectgrid aka arena
     public ModelBlock[][] getArena() {
@@ -164,7 +164,6 @@ public class Arena {
     }
 
     //this defenies how many enemies per round/level is spawned
-
     public int getSpawnWave() {
         switch (player.getLevel()) {
             case 1:
@@ -181,6 +180,8 @@ public class Arena {
             default:
                 spawn_wave = player.getLevel() * 10;
                 break;
+            case 5:
+                spawn_wave = 1;
 
         }
         return spawn_wave;
@@ -221,6 +222,10 @@ public class Arena {
                                 enemies.add(enemy);
                                 break;
                             }
+                        case 5:
+                            enemy = new BigDuck(y, x, y * bsize, x * bsize, "enemy4");
+                            enemies.add(enemy);
+                            break;
                     }
                 }
             }
@@ -232,12 +237,12 @@ public class Arena {
 
         return enemies;
     }
-    
+
     //returns list of towers
     public List<ModelTower> getTowers() {
         return towers;
     }
-    
+
     //get imaginary towers bitch = all different towers
     public List<ModelTower> getImTowers() {
         return ImaginaryTowers;

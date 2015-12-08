@@ -26,8 +26,9 @@ public class ModelTower extends ModelBlock {
     protected int update_price;
     protected int price;
     protected double freezeDamage;
-    protected int fire_time=100;
+    protected int fire_time = 100;
     protected int max_level;
+    protected boolean boosted = false;
 
     public ModelTower(int y, int x, String id) {
         this.x = x;
@@ -98,6 +99,7 @@ public class ModelTower extends ModelBlock {
     public int getPrice() {
         return price;
     }
+
     public int getUpPrice() {
         return price;
     }
@@ -118,4 +120,11 @@ public class ModelTower extends ModelBlock {
         return max_level;
     }
 
+    public boolean isBoosted() {
+        return boosted;
+    }
+
+    public void setBoosted(boolean boosted) {
+        this.boosted = boosted;
+    }
 }

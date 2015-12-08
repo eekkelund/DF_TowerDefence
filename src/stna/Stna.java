@@ -32,7 +32,7 @@ public class Stna extends JFrame implements Runnable {
     private Arena arena;
     private TowerEngineController contr;
     private JLabel towerinfo, towerinfo2;
-    private JButton tower, tower2, tower3, update;
+    private JButton tower, tower2, tower3, tower4, update;
     private JPanel panel, panel2;
     private ActionListener actionL;
     private int bsize;//BLOCK SIZE
@@ -137,18 +137,22 @@ public class Stna extends JFrame implements Runnable {
         tower = new JButton("tower");
         tower2 = new JButton("tower2");
         tower3 = new JButton("tower3");
+        tower4 = new JButton("tower4");
 
         update = new JButton("Upgrade");
 
         panel.add(tower);
         panel.add(tower2);
         panel.add(tower3);
+        panel.add(tower4);
 
         update.addActionListener(actionL);
 
         tower.addActionListener(actionL);
         tower2.addActionListener(actionL);
         tower3.addActionListener(actionL);
+        tower4.addActionListener(actionL);
+        
         addMouseListener(new MouseListener());
         addMouseMotionListener(new MouseListener());
 
@@ -182,6 +186,10 @@ public class Stna extends JFrame implements Runnable {
             if (e.getSource() == tower3) {
                 btnPress = true;
                 towerid = "tower3";
+            }
+            if (e.getSource() == tower4) {
+                btnPress = true;
+                towerid = "tower4";
             }
             if (e.getSource() == update) {
                 arena.updateTower(utower);
@@ -366,7 +374,7 @@ public class Stna extends JFrame implements Runnable {
                             //for (ModelTower tower : arena.getTowers()) {
                             for (Iterator<ModelEnemy> iterator = arena.getEnemies().iterator(); iterator.hasNext();) {//list
                                 ModelEnemy enemy = iterator.next();
-                                if (contr.shoottest(tower, enemy)) {//drawing shootlines
+                                if (contr.shootround(tower, enemy)) {//drawing shootlines
                                     Color c = (tower.getClr());
                                     g.setColor(c);
                                     g.drawOval((tower.getX() * bsize - tower.getRange() * bsize + bsize / 2), (tower.getY() * bsize - tower.getRange() * bsize + bsize / 2), tower.getRange() * bsize * 2, tower.getRange() * bsize * 2);
@@ -378,8 +386,12 @@ public class Stna extends JFrame implements Runnable {
                             g.setColor(c);
                             g.drawLine((shootList[1] * bsize + (bsize / 2)), (shootList[2] * bsize + (bsize / 2)), (shootList[3] + (bsize / 3)), (shootList[4] + (bsize / 3)));
                             g.drawLine((shootList[1] * bsize + (bsize / 2)), (shootList[2] * bsize + (bsize / 2)), (shootList[3] + (bsize / 2)), (shootList[4] + (bsize / 2)));
+                       } else if ("tower4".equals(tower.getid())) {
+                           for (ModelTower tower2 : arena.getTowers()) {
+                           contr.shootImprove((BoostTower) tower, tower2);
+                           }
                         } else {
-                            int[] shootList = contr.shootable(tower);//drawing shootlines
+                            int[] shootList = contr.shootable(tower);//drawing shootlines for lazertowers
                             Color c = new Color(shootList[0]);
                             g.setColor(c);
                             g.drawLine((shootList[1] * bsize + (bsize / 2)), (shootList[2] * bsize + (bsize / 2)), (shootList[3] + (bsize / 2)), (shootList[4] + (bsize / 2)));
@@ -413,10 +425,11 @@ public class Stna extends JFrame implements Runnable {
             g.setColor(Color.white);
             g.drawOval(coords[0] - coords[3]*bsize - bsize/2, coords[1] - coords[3]*bsize - bsize/2, coords[3]*bsize*2, coords[3]*bsize*2);
            
-            if (towerclick) {
+            
+        }
+        if (towerclick) {
             g.setColor(Color.BLACK);
             g.drawRect(utower.getX()*bsize, utower.getY()*bsize, bsize, bsize);
-        }
         }
     }
 
@@ -428,7 +441,7 @@ public class Stna extends JFrame implements Runnable {
             for (int i = 0; i < arena.getEnemies().size(); i++) {
                 ModelEnemy enemy = arena.getEnemies().get(i);
                 img = ImageIO.read(new File(enemy.getImg()));
-                g.drawImage(img, enemy.getMoveX(), enemy.getMoveY(), bsize, bsize, this);
+                g.drawImage(img, enemy.getMoveX(), enemy.getMoveY(), bsize* enemy.getSize(), bsize* enemy.getSize(), this);
             }
         } catch (IOException ex) {
             System.out.print(ex);

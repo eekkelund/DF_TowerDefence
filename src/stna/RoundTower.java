@@ -34,14 +34,6 @@ public class RoundTower extends ModelTower {
     public void setLevel() {
         level = level + 1;
         switch (level) {
-            case 1:
-                img = "images/tower3.png";
-                fireRate = 1.2;
-                damage = 5;
-                range = 2;
-                clr = RED;
-                update_price = 20;
-                break;
             case 2:
                 img = "images/tower4.png";
                 fireRate = 2;

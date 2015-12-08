@@ -39,7 +39,7 @@ public class TowerEngineController {
         for (ModelEnemy enemy : arena.getEnemies()) {
             int range = tower.getRange();
 
-            if (Math.abs(enemy.getX() - tower.getX()) < range && Math.abs(enemy.getY() - tower.getY()) < range) {
+            if (Math.abs(enemy.getX() - tower.getX()) <= range && Math.abs(enemy.getY() - tower.getY()) <= range) {
                 if ("tower2".equals(tower.getid())&&!enemy.isFrzn()) {
                     
                     
@@ -81,10 +81,10 @@ public class TowerEngineController {
 
     }
     //THIS SHOOT METHOD IS FOR ROUNDTOWER. IT SHOOTS ALL ENEMIES ON ITS RANGE WHILE LAZER AND FREEZE ONLY SHOOOTS FIRST ENEMY 
-    public boolean shoottest(ModelTower tower, ModelEnemy enemy) {
+    public boolean shootround(ModelTower tower, ModelEnemy enemy) {
         //for (ModelTower tower : arena.getTowers()) {
         //for (ModelEnemy enemy : arena.getEnemies()) {
-        if (shootingpossible(tower, enemy)) {
+        if (shootRoundPossible(tower, enemy)) {
             enemy.setHealt(tower.getDamage());
 
             if (isDead()) {
@@ -98,17 +98,29 @@ public class TowerEngineController {
         return false;
     }
     //THIS IS TO CHECK IF THERE IS ENEMIES ON THE RANGE ON ROUNDT
-    public boolean shootingpossible(ModelTower tower, ModelEnemy enemy) {
+    public boolean shootRoundPossible(ModelTower tower, ModelEnemy enemy) {
         //for (ModelTower tower : arena.getTowers()) {
         //for (ModelEnemy enemy : arena.getEnemies()) {
         int range = tower.getRange();
-        if (Math.abs(enemy.getX() - tower.getX()) < range && Math.abs(enemy.getY() - tower.getY()) < range) {
+        if (Math.abs(enemy.getX() - tower.getX()) <= range && Math.abs(enemy.getY() - tower.getY()) <= range) {
             return true;
         } else {
             return false;
         }
 
     }
+    public void shootImprove(BoostTower tower, ModelTower tower2) {//THIS IS FOR BOOSTTOWER IT "SHOOTS" TOWERS AROUND IT TO IMPROVE THEM
+        //for (ModelTower tower : arena.getTowers()) {
+        //for (ModelEnemy enemy : arena.getEnemies()) {
+        int range = tower.getRange();
+        if (Math.abs(tower2.getX() - tower.getX()) < range && Math.abs(tower2.getY() - tower.getY()) < range && !"tower4".equals(tower2.getid()) && !tower2.isBoosted()) {
+            tower2.setDamage(tower2.getDamage()+tower.getImprove());
+            tower2.setRange(tower2.getRange()+tower.getImprove());
+            tower2.setBoosted(true);
+            //return false;
+        }
+    }
+    
 
 
     //IF ENEMY IS DEAD

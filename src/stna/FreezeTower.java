@@ -26,7 +26,7 @@ public class FreezeTower extends ModelTower{
                 damage = 0;
                 price = 5;
                 freezeDamage=0.5;
-                range = 2;
+                range = 1;
                 clr=CYAN;
                 update_price = 15;
                 max_level = 1;
