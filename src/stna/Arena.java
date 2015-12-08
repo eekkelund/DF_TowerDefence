@@ -18,9 +18,10 @@ import java.util.Scanner;
 public class Arena {
 
     static private ModelBlock[][] objGrid;
-    private List<ModelGround> blocks = new ArrayList<ModelGround>();
-    private List<ModelEnemy> enemies = new ArrayList<ModelEnemy>();
-    private List<ModelTower> towers = new ArrayList<ModelTower>();
+    private List<ModelGround> blocks = new ArrayList();
+    private List<ModelEnemy> enemies = new ArrayList();
+    private List<ModelTower> towers = new ArrayList();
+    private List<ModelTower> ImaginaryTowers = new ArrayList();
     private ModelGround ground;
     private ModelTower tower;
     private ModelEnemy enemy;
@@ -36,6 +37,12 @@ public class Arena {
         player = new ModelPlayer();//lets create player
 
         map = new Map(player);//lets create new map = grid
+        
+        //Adding imaginary towers for easier price and range handling for some methods
+        ImaginaryTowers.add(new LazerTower(1, 1, "tower"));
+        ImaginaryTowers.add(new FreezeTower(1, 1, "tower2"));
+        ImaginaryTowers.add(new RoundTower(1, 1, "tower3"));
+        
         grid = map.getMap();//map=grid
         objGrid = new ModelBlock[grid.length][grid[0].length];//from that mapgrid lets make objectgrid where objects are groundobjects
         for (int i = 0; i < grid.length; i++) {
@@ -87,20 +94,13 @@ public class Arena {
     }
 
     public void newTowerPos(int y, int x, String towerid) {
-
         x /= bsize;
         y /= bsize;
         if ("grass".equals(objGrid[y][x].getid())) {
-            switch (towerid) {
-                case "tower":
-                    price = 5;
-                    break;
-                case "tower2":
-                    price = 10;
-                    break;
-                case "tower3":
-                    price = 10;
-                    break;
+            for (ModelTower tower: ImaginaryTowers) {
+                if (towerid == tower.getid()) {
+                    price = tower.getPrice();
+                }
             }
             if (player.getMoney() >= price) {
                 setTower(y, x, towerid);
@@ -126,9 +126,39 @@ public class Arena {
             System.out.print("no mani no upgrade");
         }
     }
+    
+        public int[] hover(int x, int y, String towerid) {
+        int xcoord=0, ycoord=0;
+        int[] coords = new int[4]; //coords[0]=X, coords[1]=Y, coords[2]=COLOR, coords[3]=RANGE
+        for (int i=0; i<=getArena().length; i++) {
+            ycoord = bsize * i;
+            for (int j=0; j<=getArena()[0].length; j++) {
+                xcoord = bsize * j;
+ 
+                if (x <= xcoord && x >= xcoord - bsize) {
+                    coords[0] = xcoord;
+                }
+                if (y <= ycoord && y >= ycoord - bsize) {
+                    coords[1] = ycoord;
+                }
+            }
+        }
+        for (ModelTower tower: getImTowers()) {
+            if (tower.getid() == towerid) {
+                coords[3] = tower.getRange();
+            }
+        }
+        if (y/bsize < getArena().length && x/bsize < getArena()[0].length) {
+            if ("road".equals(objGrid[(y/bsize)][(x/bsize)].getid())){
+                coords[2] = 1;
+            }
+        }
+        return coords;
+    }
+        
+        
 
     //returns objectgrid aka arena
-
     public ModelBlock[][] getArena() {
         return objGrid;
     }
@@ -202,9 +232,15 @@ public class Arena {
 
         return enemies;
     }
-
+    
+    //returns list of towers
     public List<ModelTower> getTowers() {
         return towers;
+    }
+    
+    //get imaginary towers bitch = all different towers
+    public List<ModelTower> getImTowers() {
+        return ImaginaryTowers;
     }
 
     public List<ModelGround> getBlocks() {

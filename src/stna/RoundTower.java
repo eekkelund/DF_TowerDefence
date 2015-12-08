@@ -21,12 +21,13 @@ public class RoundTower extends ModelTower {
     public void init() {
 
         img = "images/tower3.png";
-        fireRate = 1;
+        fireRate = 1.2;
         damage = 5;
         range = 2;
         clr = RED;
         update_price = 10;
         max_level =2;
+        price = 10;
     }
 
     @Override
@@ -35,7 +36,7 @@ public class RoundTower extends ModelTower {
         switch (level) {
             case 1:
                 img = "images/tower3.png";
-                fireRate = 1;
+                fireRate = 1.2;
                 damage = 5;
                 range = 2;
                 clr = RED;
@@ -43,7 +44,7 @@ public class RoundTower extends ModelTower {
                 break;
             case 2:
                 img = "images/tower4.png";
-                fireRate = 1.2;
+                fireRate = 2;
                 damage = 5;
                 range = 3;
                 clr = ORANGE;

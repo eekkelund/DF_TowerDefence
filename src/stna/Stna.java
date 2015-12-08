@@ -51,7 +51,7 @@ public class Stna extends JFrame implements Runnable {
     private String towerid;//JUST TO STORE TOWERID
     private double pauseFrame = 1;//COUNTER FOR PAUSE BETWEEN WAVES
     private double pauseTime = pSec * (double) (fps);//TIME IN FPS BETWEEN WAVES
-    private double shootTime = 1 * (double) fps;//TIME BETWEEN SHOOTING
+    private double shootTime = 0.5 * (double) fps;//TIME BETWEEN SHOOTING
     private double shootFrame = shootTime;//COUNTER FOR PAUSE BETWEEN SHOOTING
     private boolean running = true;
     private int mouseX, mouseY;
@@ -274,6 +274,7 @@ public class Stna extends JFrame implements Runnable {
                     } else {
                         pauseFrame++;
                         sPause = true;
+                        
                     }
                 }
                 //if there is no enemies on the arena and enemyspawner has spawned all the enemies and its not first run, there will be spawnpause and new level
@@ -341,37 +342,12 @@ public class Stna extends JFrame implements Runnable {
 
         }
 
-        /*for (ModelTower tower : arena.getTowers()) {//For each tower dis is gonna check if there is enemy to shoot
-         try {
-
-         ModelEnemy enemy;//enemy what to shoot
-
-         if (shootFrame >= shootTime) {//tower has to cool down aka load weapons
-
-         if (shootFrame <= shootTime * tower.getfRate()) {//this is the time how long tower shoots enemy
-         shootFrame++;
-         enemy = contr.shoot(tower);
-
-         } else {
-         shootFrame = 1;
-         enemy = null;
-         }
-         } else {
-         shootFrame++;
-         enemy = null;
-         }
-
-         g.setColor(tower.getClr());
-         System.out.println(tower.getClr().getRGB());
-         g.drawLine(tower.getX() * bsize + (bsize / 2), tower.getY() * bsize + (bsize / 2), enemy.getMoveX() + (bsize / 2), enemy.getMoveY() + (bsize / 2));
-
-         } catch (Exception e) {}*/
         drawShoot(g);
         drawEnemy(g);
         drawTower(g);
         drawHover(g);
 
-        //}
+        
     }
 
 
@@ -420,14 +396,20 @@ public class Stna extends JFrame implements Runnable {
 
     //Draws the rectangle where you are going to place the tower
 
-    public void drawHover(Graphics g) {
+   public void drawHover(Graphics g) {
         if (btnPress) {
-            int[] coords = contr.hover(mouseX, mouseY);
+            int[] coords = arena.hover(mouseX, mouseY, towerid);
+            //coords[0]=X, coords[1]=Y, coords[2]=COLOR, coords[3]=RANGE
             g.setColor(Color.BLACK);
+            //Sets the color as red if you are hovering on wrong square
             if (coords[2] == 1) {
                 g.setColor(Color.RED);
             }
             g.drawRect(coords[0] - bsize, coords[1] - bsize, bsize, bsize);
+            //Draws the range of the tower
+            g.setColor(Color.white);
+            g.drawOval(coords[0] - coords[3]*bsize - bsize/2, coords[1] - coords[3]*bsize - bsize/2, coords[3]*bsize*2, coords[3]*bsize*2);
+           
         }
     }
 

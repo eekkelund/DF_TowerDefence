@@ -24,8 +24,9 @@ public class ModelTower extends ModelBlock {
     protected Color clr;
     protected int level = 1;
     protected int update_price;
+    protected int price;
     protected double freezeDamage;
-    protected int fire_time;
+    protected int fire_time=100;
     protected int max_level;
 
     public ModelTower(int y, int x, String id) {
@@ -95,7 +96,10 @@ public class ModelTower extends ModelBlock {
     }
 
     public int getPrice() {
-        return update_price;
+        return price;
+    }
+    public int getUpPrice() {
+        return price;
     }
 
     public double getFrz() {

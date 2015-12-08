@@ -24,6 +24,7 @@ public class FreezeTower extends ModelTower{
                 img = "images/tower5.png";
                 fireRate = 1000;
                 damage = 0;
+                price = 5;
                 freezeDamage=0.5;
                 range = 2;
                 clr=CYAN;
