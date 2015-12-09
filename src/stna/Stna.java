@@ -367,12 +367,24 @@ public class Stna extends JFrame implements Runnable {
         }
 
         
-        
+        drawShoot(g);
         drawTower(g);
         drawEnemy(g);
-        drawShoot(g);
+        drawMoneyShoot(g);
         drawHover(g);
 
+    }
+    public void drawMoneyShoot(Graphics g){
+         for (ModelTower tower : arena.getTowers()) {//For each tower dis is gonna check if there is enemy to shoot
+    
+         if ("tower5".equals(tower.getid())&&shoot_money) {
+                            Color c = (tower.getClr());
+                            int fontSize = bsize/2;
+                            g.setFont(new Font("TimesRoman", Font.PLAIN, fontSize));
+                            g.setColor(c);
+                            g.drawString(Integer.toString(tower.damage), tower.getX()*bsize+bsize/4, tower.getY()*bsize+bsize/4);
+    }
+    }
     }
 
     public void drawShoot(Graphics g) {
@@ -403,13 +415,8 @@ public class Stna extends JFrame implements Runnable {
                             for (ModelTower tower2 : arena.getTowers()) {
                                 contr.shootImprove((BoostTower) tower, tower2);
                             }
-                        } else if ("tower5".equals(tower.getid())&&shoot_money) {
-                            Color c = (tower.getClr());
-                            int fontSize = bsize/2;
-                            g.setFont(new Font("TimesRoman", Font.PLAIN, fontSize));
-                            g.setColor(c);
-                            g.drawString(Integer.toString(tower.damage), tower.getX()*bsize+bsize/4, tower.getY()*bsize+bsize/4);
-                        } else {
+                        
+                        } else if ("tower".equals(tower.getid())) {
                             int[] shootList = contr.shootable(tower);//drawing shootlines for lazertowers
                             Color c = new Color(shootList[0]);
                             g.setColor(c);
