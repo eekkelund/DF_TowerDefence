@@ -121,16 +121,20 @@ public class Arena {
     }
 
     //if u have moneys one can update towers
-    public void updateTower(ModelTower tower) {
+    public int[] upgradeTower(ModelTower tower) {
+        int[] upgrade = new int[2];
         if (player.getMoney() >= tower.getPrice()) {
             if (tower.getLevel() < tower.getMaxLvl()) {
                 tower.setLevel();
+                upgrade[0] = tower.getDamage();
+                upgrade[1] = tower.getRange();
             } else {
                 System.out.print("already on maxlvl");
             }
         } else {
             System.out.print("no mani no upgrade");
         }
+        return upgrade;
     }
 
     public int[] hover(int x, int y, String towerid) {

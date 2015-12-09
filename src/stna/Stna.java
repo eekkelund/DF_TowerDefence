@@ -201,8 +201,10 @@ public class Stna extends JFrame implements Runnable {
             }
 
             if (e.getSource() == update) {
-                arena.updateTower(utower);
-                towerclick = false;
+                int[] upgrade = new int[2];//upgrade[0]=DMG, upgrade[1]=RANGE
+                upgrade = arena.upgradeTower(utower);
+                towerinfo.setText("damage: " + Integer.toString(upgrade[0]));
+                towerinfo2.setText("range: " + Integer.toString(upgrade[1]));
             }
             if (e.getSource() == start) {
                 alusta();
@@ -210,14 +212,14 @@ public class Stna extends JFrame implements Runnable {
         }
     }
 
-    private class MouseListener extends MouseAdapter {
+       private class MouseListener extends MouseAdapter {
 
         public void mousePressed(MouseEvent e) {
-            if (btnPress) {
+            if (btnPress && e.getButton() == 1) {
                 arena.newTowerPos(e.getY(), e.getX(), towerid);
                 btnPress = false;
+                towerclick = false;
             } else {
-
                 for (ModelTower tower : arena.getTowers()) {
                     if (e.getX() / bsize == tower.getX() && e.getY() / bsize == tower.getY()) {
                         utower = tower;
@@ -227,7 +229,18 @@ public class Stna extends JFrame implements Runnable {
                         towerclick = true;
                     }
                 }
+            }
+            //Allows you to stop placing tower with right mouseclick
+            if (e.getButton() == 3 && btnPress) {
+                btnPress = false;
 
+            }
+            //Clears the tower info
+            if (towerclick && (e.getButton() == 1 || e.getButton() == 3) && "grass".equals(arena.getArena()[e.getY()/bsize][e.getX()/bsize].getid())) {
+                towerclick = false;
+                towerinfo.setText("");
+                towerinfo2.setText("");
+                panel2.remove(update);
             }
         }
 
@@ -451,9 +464,12 @@ public class Stna extends JFrame implements Runnable {
             g.drawOval(coords[0] - coords[3] * bsize - bsize / 2, coords[1] - coords[3] * bsize - bsize / 2, coords[3] * bsize * 2, coords[3] * bsize * 2);
 
         }
+        //Draws a rectangle around a selected tower
         if (towerclick) {
             g.setColor(Color.BLACK);
-            g.drawRect(utower.getX() * bsize, utower.getY() * bsize, bsize, bsize);
+            g.drawRect(utower.getX()*bsize, utower.getY()*bsize, bsize, bsize);
+            g.setColor(Color.WHITE);
+            g.drawOval(utower.getX()*bsize - utower.getRange()*bsize + bsize/2, utower.getY()*bsize - utower.getRange()*bsize + bsize/2, utower.getRange()*bsize*2, utower.getRange()*bsize*2);
         }
     }
 
