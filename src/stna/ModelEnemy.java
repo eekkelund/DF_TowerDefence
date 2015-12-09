@@ -23,7 +23,7 @@ public class ModelEnemy extends ModelBlock {
     protected int direction;
     protected int movecounter;
     protected boolean frozen = false;
-    protected int size =1;
+    protected double size =0;
 
     public ModelEnemy(int y, int x, int MOVEy, int MOVEx, String id) {
         this.x = x;
@@ -136,7 +136,7 @@ public class ModelEnemy extends ModelBlock {
     public void setFrzn(boolean frozen) {
         this.frozen = frozen;
     }
-    public int getSize() {
+    public double getSize() {
         return size;
     }
     

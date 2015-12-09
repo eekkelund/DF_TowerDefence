@@ -22,7 +22,7 @@ public class BigDuck  extends ModelEnemy{
                 healt = 10000;
                 damage = 20;
                 prize = 20;
-                size =2;
+                size =0.5;
                 
         
     }

@@ -465,7 +465,7 @@ public class Stna extends JFrame implements Runnable {
             for (int i = 0; i < arena.getEnemies().size(); i++) {
                 ModelEnemy enemy = arena.getEnemies().get(i);
                 img = ImageIO.read(new File(enemy.getImg()));
-                g.drawImage(img, enemy.getMoveX(), enemy.getMoveY(), bsize * enemy.getSize(), bsize * enemy.getSize(), this);
+                g.drawImage(img, enemy.getMoveX(), enemy.getMoveY(), bsize + (int)(enemy.getSize()*bsize), bsize + (int)(enemy.getSize()*bsize), this);
             }
         } catch (IOException ex) {
             System.out.print(ex);
