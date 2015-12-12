@@ -27,16 +27,17 @@ import javax.swing.UIManager;
  *
  * @author eetz1
  */
-public class Stna extends JPanel implements Runnable {
+public class Stna2 extends JPanel implements Runnable {
 
     private Arena arena;
     private TowerEngineController contr;
-    private JLabel towerinfo, towerinfo2, playerinfo, playerinfo2, playerinfo3, startLabel, playerinfo4, creditsLabel;
-    private JButton tower, tower2, tower3, tower4, tower5, update, start, credits;
-    private JPanel storePanel, towerInfoPane, contentPanel, playerInfoPane;
+    private JLabel towerinfo, towerinfo2;
+    private JLabel tower, tower2, tower3, tower4, tower5, update;
+    private JPanel storePanel, panel2;
     private ActionListener actionL;
     private int bsize;//BLOCK SIZE
-    private int rows, cols;
+    private int width = 720;//SCREEN WIDTH
+    private int height = 480;//SCREEN HEIGHT
     private Graphics buffer;//THIS IS NEEDED FOR DOUBLE BUFFERING
     private Image dbImage;//THIS IMAGE STORES DOUBLEBUFFERED IMAGE, THAT SCREEN WONT FLICKER
     private static double fps = 60;//FRAMES PER SECOND
@@ -52,132 +53,105 @@ public class Stna extends JPanel implements Runnable {
     private double pauseFrame = 1;//COUNTER FOR PAUSE BETWEEN WAVES
     private double pauseTime = pSec * (double) (fps);//TIME IN FPS BETWEEN WAVES
     private double shootTime = 0.5 * (double) fps;//TIME BETWEEN SHOOTING
+    private double shootFrame = shootTime;//COUNTER FOR PAUSE BETWEEN SHOOTING
     private boolean running = true;
     private int mouseX, mouseY;
     private boolean shoot_money = false;//boolean to check if show moneys top of moneytower
-    private ModelTower utower;
-    private JFrame frame;
-    private String title = "TD: DACK FACK";
-    private ImageIcon icon, icon2;
-    private Thread game = new Thread(this);
 
-    public Stna() {
+    private boolean startFrame = true;
+    ModelTower utower;
 
-        frame = new JFrame();
-        frame.setLayout(new BorderLayout());
-        frame.setTitle(title);
-        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    JButton start;
+    JLabel l1;
 
-        arena = new Arena();
-        contr = new TowerEngineController(arena);
+    Thread game = new Thread(this);
 
-        cols = arena.getColumns();
-        rows = arena.getRows();
-        bsize = arena.getBsize();
+    JFrame frame;
+
+    public Stna2() {
 
         try {
             UIManager.setLookAndFeel(
                     UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
-            System.err.println("Look and feel");
+            System.err.println("Look and feel -asetus epäonnistui.");
         }
-
-        initStart();
+        //if (startFrame) {
+        //  alusta2();
+        //}
+        alusta();
+        //arena.setTower(2, 3, "tower2");
+        //arena.setTower(5, 3, "tower2");
+        //arena.setTower(3, 2, "tower3");
+        //arena.setTower(4, 2, "tower");
 
     }
 
-    public void initStart() {
+    public void alusta2() {
 
+        setSize(width, height);
         actionL = new ButtonListener();
+        storePanel = new JPanel();
 
         //setLayout(new BorderLayout());
         BufferedImage img = null;
 
-        startLabel = new JLabel();
         try {
             img = ImageIO.read(new File("images/bg.png"));
         } catch (IOException e) {
+            e.printStackTrace();
         }
-        Image dimg = img.getScaledInstance(cols * bsize + bsize * 3, rows * bsize + bsize, Image.SCALE_SMOOTH);
-        ImageIcon imageIcon = new ImageIcon(dimg);
-        startLabel.setLayout(new BoxLayout(startLabel, BoxLayout.PAGE_AXIS));
-        startLabel.setIcon(imageIcon);
 
+        Image dimg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        ImageIcon imageIcon = new ImageIcon(dimg);
+        setContentPane(new JLabel(imageIcon));
+        setLayout(new FlowLayout());
         start = new JButton();
+
         try {
             img = ImageIO.read(new File("images/startb.png"));
+
         } catch (IOException ex) {
         }
+
         start.addActionListener(actionL);
-        dimg = img.getScaledInstance(img.getWidth() + bsize * 2, img.getHeight() + bsize, Image.SCALE_SMOOTH);
+
+        dimg = img.getScaledInstance(64 * 2, 32 * 2, Image.SCALE_SMOOTH);
         start.setIcon(new ImageIcon(dimg));
-        start.setPreferredSize(new Dimension(img.getWidth() * 2, img.getHeight() * 2));
+        start.setPreferredSize(new Dimension(64 * 2, 32 * 2));
         start.setBorder(null);
-        start.setMargin(null);
-        start.setContentAreaFilled(false);
-        start.setAlignmentX(CENTER_ALIGNMENT);
-        //start.setAlignmentY(CENTER_ALIGNMENT);
+        add(start);
 
-        credits = new JButton();
-        try {
-            img = ImageIO.read(new File("images/creditsb.png"));
-        } catch (IOException ex) {
-        }
-        credits.addActionListener(actionL);
-        dimg = img.getScaledInstance(img.getWidth() + bsize * 2, img.getHeight() + bsize, Image.SCALE_SMOOTH);
-        credits.setIcon(new ImageIcon(dimg));
-        credits.setPreferredSize(new Dimension(img.getWidth() * 2, img.getHeight() * 2));
-        credits.setBorder(null);
-        credits.setMargin(null);
-        credits.setContentAreaFilled(false);
-        credits.setAlignmentX(CENTER_ALIGNMENT);
-        //credits.setAlignmentY(CENTER_ALIGNMENT);
-
-        creditsLabel = new JLabel("Version: 1.0");
-
-        creditsLabel.setAlignmentX(CENTER_ALIGNMENT);
-
-        startLabel.add(Box.createVerticalGlue());
-        startLabel.add(start);
-        //startLabel.add(Box.createVerticalGlue());
-        startLabel.add(Box.createRigidArea(new Dimension(0, bsize * 2)));
-        startLabel.add(credits);
-        //startLabel.add(Box.createRigidArea(new Dimension(0, bsize)));
-
-        startLabel.add(Box.createVerticalGlue());
-
-        startLabel.add(creditsLabel);
-
-        frame.add(startLabel);
-        frame.setVisible(true);
-        frame.pack();
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setVisible(true);
     }
 
-    public void initGame() {
-        frame.setLayout(new BorderLayout());
-
-        frame.remove(start);
-        frame.remove(startLabel);
-
+    public void alusta() {
+        
         BufferedImage img = null;
         Image dimg = null;
-
+        
         this.setLayout(new BorderLayout());
+        
+        frame = new JFrame();
+        arena = new Arena();
+        contr = new TowerEngineController(arena);
+        
+        bsize = arena.getBsize();
+
+        frame.setTitle("Karta");
+        frame.setSize(width, height);
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         actionL = new ButtonListener();
 
-        contentPanel = new JPanel(new BorderLayout());
-
         storePanel = new JPanel();
-        storePanel.setLayout(new BoxLayout(storePanel, BoxLayout.LINE_AXIS));
+        storePanel.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
 
-        towerInfoPane = new JPanel();
-        towerInfoPane.setLayout(new BoxLayout(towerInfoPane, BoxLayout.PAGE_AXIS));
+        panel2 = new JPanel(new BorderLayout());
 
-        playerInfoPane = new JPanel();
-        playerInfoPane.setLayout(new BoxLayout(playerInfoPane, BoxLayout.PAGE_AXIS));
-
-        tower = new JButton();
+        tower = new JLabel();
         try {
             img = ImageIO.read(new File("images/tower.png"));
 
@@ -187,12 +161,12 @@ public class Stna extends JPanel implements Runnable {
         tower.setIcon(new ImageIcon(dimg));
         tower.setPreferredSize(new Dimension(bsize, bsize));
         tower.setBorder(null);
-        tower.setMargin(null);
         tower.setName("tower");
-
-        tower2 = new JButton();
+        
+        tower2 = new JLabel();
+        
         try {
-            img = ImageIO.read(new File("images/tower5.png"));
+            img = ImageIO.read(new File("images/tower2.png"));
 
         } catch (IOException ex) {
         }
@@ -200,9 +174,9 @@ public class Stna extends JPanel implements Runnable {
         tower2.setIcon(new ImageIcon(dimg));
         tower2.setPreferredSize(new Dimension(bsize, bsize));
         tower2.setBorder(null);
-        tower2.setMargin(null);
-
-        tower3 = new JButton();
+        
+        tower3 = new JLabel();
+        
         try {
             img = ImageIO.read(new File("images/tower3.png"));
 
@@ -212,11 +186,11 @@ public class Stna extends JPanel implements Runnable {
         tower3.setIcon(new ImageIcon(dimg));
         tower3.setPreferredSize(new Dimension(bsize, bsize));
         tower3.setBorder(null);
-        tower3.setMargin(null);
-
-        tower4 = new JButton();
+        
+        tower4 = new JLabel();
+        
         try {
-            img = ImageIO.read(new File("images/tower6.png"));
+            img = ImageIO.read(new File("images/tower4.png"));
 
         } catch (IOException ex) {
         }
@@ -224,11 +198,11 @@ public class Stna extends JPanel implements Runnable {
         tower4.setIcon(new ImageIcon(dimg));
         tower4.setPreferredSize(new Dimension(bsize, bsize));
         tower4.setBorder(null);
-        tower4.setMargin(null);
-
-        tower5 = new JButton();
+        
+        tower5 = new JLabel();
+        
         try {
-            img = ImageIO.read(new File("images/tower8.png"));
+            img = ImageIO.read(new File("images/tower5.png"));
 
         } catch (IOException ex) {
         }
@@ -236,76 +210,83 @@ public class Stna extends JPanel implements Runnable {
         tower5.setIcon(new ImageIcon(dimg));
         tower5.setPreferredSize(new Dimension(bsize, bsize));
         tower5.setBorder(null);
-        tower5.setMargin(null);
 
-        update = new JButton("Upgrade");
+        update = new JLabel("Upgrade");
 
-        update.addActionListener(actionL);
 
-        tower.addActionListener(actionL);
-        tower2.addActionListener(actionL);
-        tower3.addActionListener(actionL);
-        tower4.addActionListener(actionL);
-        tower5.addActionListener(actionL);
+        c.anchor = GridBagConstraints.PAGE_START;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.0;
+        c.gridx = 0;
+        c.gridy = 0;
+        storePanel.add(tower, c);
+
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.0;
+        c.gridx = 1;
+        c.gridy = 0;
+        storePanel.add(tower2, c);
+
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.0;
+        c.gridx = 2;
+        c.gridy = 0;
+        storePanel.add(tower3, c);
+
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.0 ;
+        c.gridx = 3;
+        c.gridy = 0;
+        storePanel.add(tower4, c);
+
+        c.anchor = GridBagConstraints.PAGE_END;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.0;
+        c.gridx = 4;
+        c.gridy = 0;
+        storePanel.add(tower5, c);
+
+        update.addMouseListener(new MouseListener());
+
+        tower.addMouseListener(new MouseListener());
+        tower.addMouseMotionListener(new MouseListener());
+        tower2.addMouseListener(new MouseListener());
+                tower2.addMouseMotionListener(new MouseListener());
+
+        tower3.addMouseListener(new MouseListener());
+                tower3.addMouseMotionListener(new MouseListener());
+
+        tower4.addMouseListener(new MouseListener());
+                tower4.addMouseMotionListener(new MouseListener());
+
+        tower5.addMouseListener(new MouseListener());
+                tower.addMouseMotionListener(new MouseListener());
+
 
         this.addMouseListener(new MouseListener());
         this.addMouseMotionListener(new MouseListener());
 
-        playerinfo = new JLabel("Wave: " + String.valueOf(arena.getPlayer().getLevel()));
-        playerinfo4 = new JLabel("Time: " + Math.round(Math.abs((pauseFrame / fps) - pSec)));
-
         towerinfo = new JLabel();
         towerinfo2 = new JLabel();
 
-        icon = new ImageIcon("images/heart2.png"); // load the image to a imageIcon
-        Image image = icon.getImage(); // transform it 
-        Image newimg = image.getScaledInstance(bsize / 2, bsize / 2, Image.SCALE_SMOOTH); // scale it the smooth way  
-        icon = new ImageIcon(newimg);  //transform back
-        playerinfo2 = new JLabel(String.valueOf(arena.getPlayer().getHealt()), icon, 0);
+        panel2.add(towerinfo, BorderLayout.EAST);
+        panel2.add(towerinfo2, BorderLayout.EAST);
 
-        icon2 = new ImageIcon("images/money.png"); // load the image to a imageIcon
-        image = icon2.getImage(); // transform it 
-        newimg = image.getScaledInstance(bsize / 2, bsize / 2, Image.SCALE_SMOOTH); // scale it the smooth way  
-        icon2 = new ImageIcon(newimg);  //transform back
-        playerinfo3 = new JLabel(String.valueOf(arena.getPlayer().getMoney()), icon2, 0);
-
-        playerInfoPane.add(playerinfo2);
-        playerInfoPane.add(playerinfo3);
-
-        storePanel.add(playerInfoPane);
-        storePanel.add(tower);
-        storePanel.add(Box.createHorizontalGlue());
-        storePanel.add(tower2);
-        storePanel.add(Box.createHorizontalGlue());
-        storePanel.add(tower3);
-        storePanel.add(Box.createHorizontalGlue());
-        storePanel.add(tower4);
-        storePanel.add(Box.createHorizontalGlue());
-        storePanel.add(tower5);
-
-        towerInfoPane.add(playerinfo);
-        towerInfoPane.add(playerinfo4);
-        towerInfoPane.add(Box.createRigidArea(new Dimension(0, bsize)));
-        towerInfoPane.add(towerinfo);
-        towerInfoPane.add(towerinfo2);
-        towerInfoPane.add(Box.createVerticalGlue());
-
-        towerInfoPane.setPreferredSize(new Dimension(bsize * 3, bsize * 3));
-
-        contentPanel.add(this, BorderLayout.CENTER);
-        contentPanel.add(storePanel, BorderLayout.SOUTH);
-
-        frame.add(contentPanel, BorderLayout.CENTER);
-        frame.add(towerInfoPane, BorderLayout.EAST);
+        this.add(storePanel, BorderLayout.SOUTH);
+        panel2.add(this, BorderLayout.CENTER);
+        frame.add(panel2, BorderLayout.EAST);
+        
 
         frame.setVisible(true);
+        
+
         game.start();
-        frame.pack();
 
     }
-
+    
+    
     public Dimension getPreferredSize() {
-        return new Dimension(bsize * cols, bsize * rows);
+        return new Dimension(bsize * 14, bsize * 10);
     }
 
     private class ButtonListener implements ActionListener {
@@ -335,14 +316,11 @@ public class Stna extends JPanel implements Runnable {
             if (e.getSource() == update) {
                 int[] upgrade = new int[2];//upgrade[0]=DMG, upgrade[1]=RANGE
                 upgrade = arena.upgradeTower(utower);
-                towerinfo.setText("Damage: " + Integer.toString(upgrade[0]));
-                towerinfo2.setText("Range: " + Integer.toString(upgrade[1]));
+                towerinfo.setText("damage: " + Integer.toString(upgrade[0]));
+                towerinfo2.setText("range: " + Integer.toString(upgrade[1]));
             }
             if (e.getSource() == start) {
-                initGame();
-            }
-            if (e.getSource() == credits) {
-                creditsLabel.setText("M2ko, eetz1, Taucci");
+                alusta();
             }
         }
     }
@@ -350,7 +328,21 @@ public class Stna extends JPanel implements Runnable {
     private class MouseListener extends MouseAdapter {
 
         public void mousePressed(MouseEvent e) {
+            
+            
+            
+            
+            
+         JLabel l = (JLabel) e.getSource();
 
+         if(l.getName().equals("tower")){
+             btnPress = true;
+                towerid = "tower";
+         }else if(l.getName().equals("tower2")){
+             btnPress = true;
+                towerid = "tower2";
+         }
+            
             if (btnPress && e.getButton() == 1) {
                 arena.newTowerPos(e.getY(), e.getX(), towerid);
                 btnPress = false;
@@ -359,10 +351,9 @@ public class Stna extends JPanel implements Runnable {
                 for (ModelTower tower : arena.getTowers()) {
                     if (e.getX() / bsize == tower.getX() && e.getY() / bsize == tower.getY()) {
                         utower = tower;
-                        towerinfo.setText("Damage: " + Integer.toString(tower.getDamage()));
-                        towerinfo2.setText("Range: " + Integer.toString(tower.getRange()));
-                        towerInfoPane.add(update);
-                        towerInfoPane.add(Box.createRigidArea(new Dimension(0, bsize)));
+                        towerinfo.setText("damage: " + Integer.toString(tower.getDamage()));
+                        towerinfo2.setText("range: " + Integer.toString(tower.getRange()));
+                        panel2.add(update, BorderLayout.EAST);
                         towerclick = true;
                     }
                 }
@@ -377,7 +368,7 @@ public class Stna extends JPanel implements Runnable {
                 towerclick = false;
                 towerinfo.setText("");
                 towerinfo2.setText("");
-                towerInfoPane.remove(update);
+                panel2.remove(update);
             }
         }
 
@@ -430,7 +421,7 @@ public class Stna extends JPanel implements Runnable {
                 if (!arena.getPlayer().isAlive()) {//if player is ded game terminates
 
                     JLabel labell = new JLabel("Game over");
-                    towerInfoPane.add(labell);
+                    panel2.add(labell);
                     terminate();
 
                 } else if (!sPause) {//if game is not paused aka cooldown between waves, this is true
@@ -442,8 +433,6 @@ public class Stna extends JPanel implements Runnable {
                         sPause = false;
                     } else {
                         pauseFrame++;
-                        playerinfo4.setText("Next in: " + Math.round(Math.abs((pauseFrame / fps) - pSec)));
-
                         sPause = true;
 
                     }
@@ -457,13 +446,11 @@ public class Stna extends JPanel implements Runnable {
                     }
                     if (pauseFrame >= pauseTime) {
                         arena.setLevel();
-                        playerinfo.setText("Wave: " + String.valueOf(arena.getPlayer().getLevel()));
                         spawnCounter = 0;
                         pauseFrame = 1;
                         sPause = false;
                         shoot_money = false;
                     } else {
-                        playerinfo4.setText("Next in: " + Math.round(Math.abs((pauseFrame / fps) - pSec)));
                         pauseFrame++;
                         sPause = true;
                     }
@@ -473,8 +460,6 @@ public class Stna extends JPanel implements Runnable {
                 updates++;
                 repaint();
                 contr.moving();
-                playerinfo2.setText(String.valueOf(arena.getPlayer().getHealt()));
-                playerinfo3.setText(String.valueOf(arena.getPlayer().getMoney()));
                 delta--;
 
             }
@@ -482,7 +467,7 @@ public class Stna extends JPanel implements Runnable {
             frames++;
             if (System.currentTimeMillis() - timer >= 1000) {
                 timer += 1000;
-                frame.setTitle(title + " | ups: " + updates + " | fps: " + frames);
+                frame.setTitle(" | ups: " + updates + " | fps: " + frames + "| Time: " + Math.round(Math.abs((pauseFrame / fps) - pSec)));
                 updates = 0;
                 frames = 0;
             }
@@ -491,7 +476,7 @@ public class Stna extends JPanel implements Runnable {
 
     //this is needed for doublebuffering it makes image of the game while paintComponent draws new. it happens so quickly that u cant see it.
     public void paint(Graphics g) {
-        dbImage = createImage(cols * bsize, rows * bsize);
+        dbImage = createImage(width, height);
         buffer = dbImage.getGraphics();
         paintComponent(buffer);
         g.drawImage(dbImage, 0, 0, this);
@@ -500,17 +485,8 @@ public class Stna extends JPanel implements Runnable {
 
     public void paintComponent(Graphics g) {
 
-        drawMap(g);
-        drawShoot(g);
-        drawTower(g);
-        drawEnemy(g);
-        drawMoneyShoot(g);
-        drawHover(g);
-
-    }
-
-    public void drawMap(Graphics g) {
         ModelBlock[][] grid = arena.getArena();
+//        super.paint(g);
 
         BufferedImage img;
         for (int y = 0; y < grid.length; y++) {//DRAWS MAP
@@ -529,6 +505,13 @@ public class Stna extends JPanel implements Runnable {
             }
 
         }
+
+        drawShoot(g);
+        drawTower(g);
+        drawEnemy(g);
+        drawMoneyShoot(g);
+        drawHover(g);
+
     }
 
     public void drawMoneyShoot(Graphics g) {

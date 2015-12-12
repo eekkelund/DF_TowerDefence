@@ -255,19 +255,19 @@ public class TowerEngineController {
         try {
 
             if (direction != down && direction != up) {
-                if ("road".equals(grid[ycoord + 1][xcoord].getid())) {
+                if ("road".equals(grid[ycoord + 1][xcoord].getid())||"finish".equals(grid[ycoord + 1][xcoord].getid())) {
                     direction = down;
                     enemy.setDirection(direction);
 
-                } else if ("road".equals(grid[ycoord - 1][xcoord].getid())) {
+                } else if ("road".equals(grid[ycoord - 1][xcoord].getid())||"finish".equals(grid[ycoord - 1][xcoord].getid())) {
                     direction = up;
                     enemy.setDirection(direction);
                 }
             } else if (direction != right && direction != left) {
-                if ("road".equals(grid[ycoord][xcoord + 1].getid())) {
+                if ("road".equals(grid[ycoord][xcoord + 1].getid())||"finish".equals(grid[ycoord][xcoord+1].getid())) {
                     direction = right;
                     enemy.setDirection(direction);
-                } else if ("road".equals(grid[ycoord][xcoord - 1].getid())) {
+                } else if ("road".equals(grid[ycoord][xcoord - 1].getid())||"finish".equals(grid[ycoord][xcoord - 1].getid())) {
                     direction = left;
                     enemy.setDirection(direction);
                 }

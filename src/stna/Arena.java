@@ -29,7 +29,7 @@ public class Arena {
     private Map map;
     static int[][] grid;
     private TowerEngineController controller;
-    private int bsize = 32, price = 5;
+    private int bsize = 32, price;
     private int spawn_wave;
     private int ecounter;
 
@@ -275,5 +275,14 @@ public class Arena {
     public void setLevel() {
         player.setLevel();
     }
+    public int getRows() {
+        return map.getRows();
+    }
+
+    public int getColumns() {
+        return map.getColumns();
+    }
+
+    
 
 }
