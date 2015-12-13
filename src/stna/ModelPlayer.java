@@ -23,8 +23,8 @@ public class ModelPlayer {
         init();
     }
     public void init(){
-    healt = 10000;
-    money = 150;
+    healt = 100;
+    money = 15;
     level =1;
     }
      public int getHealt() {

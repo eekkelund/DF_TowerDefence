@@ -29,6 +29,7 @@ public class ModelTower extends ModelBlock {
     protected int fire_time = 100;
     protected int max_level;
     protected boolean boosted = false;
+    protected String info;
 
     public ModelTower(int y, int x, String id) {
         this.x = x;
@@ -101,7 +102,7 @@ public class ModelTower extends ModelBlock {
     }
 
     public int getUpPrice() {
-        return price;
+        return update_price;
     }
 
     public double getFrz() {
@@ -126,5 +127,8 @@ public class ModelTower extends ModelBlock {
 
     public void setBoosted(boolean boosted) {
         this.boosted = boosted;
+    }
+     public String getInfo() {
+        return info;
     }
 }

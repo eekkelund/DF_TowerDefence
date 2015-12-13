@@ -21,10 +21,10 @@ import sun.audio.*;
  * @author eetz1
  */
 public class Stna extends JPanel implements Runnable {
-    
+
     private Arena arena;
     private TowerEngineController contr;
-    private JLabel towerinfo, towerinfo2, playerinfo, playerinfo2, playerinfo3, startLabel, playerinfo4, creditsLabel, musicLabel;
+    private JLabel towerinfo, towerinfo2, playerinfo, playerinfo2, playerinfo3, startLabel, playerinfo4, creditsLabel, musicLabel, towerinfoLong, towerUpPrice;
     private JButton tower, tower2, tower3, tower4, tower5, update, start, credits, musicb;
     private JPanel storePanel, towerInfoPane, contentPanel, playerInfoPane, musicPanel;
     private ActionListener actionL;
@@ -33,7 +33,7 @@ public class Stna extends JPanel implements Runnable {
     private Graphics buffer;//THIS IS NEEDED FOR DOUBLE BUFFERING
     private Image dbImage;//THIS IMAGE STORES DOUBLEBUFFERED IMAGE, THAT SCREEN WONT FLICKER
     private static double fps = 60;//FRAMES PER SECOND
-    private int pSec = 5;//PAUSETIME IN SEC, HOW LONG PAUSE IS BETWEEN WAVES
+    private int pSec = 10;//PAUSETIME IN SEC, HOW LONG PAUSE IS BETWEEN WAVES
     private double spawnTime = 1 * (double) (fps);//HOW MANYTIMES PERSEC ENEMIES SPAWN
     private double spawnFrame = spawnTime - fps;//COUNTER TO CHECK UPPER ^
     private int spawnCounter = 0;//COUNTER TO CHECK IF ALL ENEMIES OF WAVE HAVE SPAWNED
@@ -57,40 +57,40 @@ public class Stna extends JPanel implements Runnable {
     private AudioStream BGM;
     private AudioData MD;
     ContinuousAudioDataStream loop = null;
-    
+
     public Stna() {
-        
+
         frame = new JFrame();
         frame.setLayout(new BorderLayout());
         frame.setTitle(title);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        
+
         arena = new Arena();
         contr = new TowerEngineController(arena);
-        
+
         cols = arena.getColumns();
         rows = arena.getRows();
         bsize = arena.getBsize();
-        
+
         actionL = new ButtonListener();
-        
+
         try {
             UIManager.setLookAndFeel(
                     UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
             System.err.println("Look and feel");
         }
-        
+
         music(musicOn);
         initStart();
-        
+
     }
-    
+
     public void initStart() {
 
         //setLayout(new BorderLayout());
         BufferedImage img = null;
-        
+
         startLabel = new JLabel();
         try {
             img = ImageIO.read(new File("images/bg.png"));
@@ -98,11 +98,11 @@ public class Stna extends JPanel implements Runnable {
         }
         Image dimg = img.getScaledInstance(cols * bsize + bsize * 3, rows * bsize + bsize, Image.SCALE_SMOOTH);
         ImageIcon imageIcon = new ImageIcon(dimg);
-        
+
         startLabel.setLayout(new BoxLayout(startLabel, BoxLayout.PAGE_AXIS));
-        
+
         startLabel.setIcon(imageIcon);
-         //startLabel.setAlignmentX(CENTER_ALIGNMENT);
+        //startLabel.setAlignmentX(CENTER_ALIGNMENT);
         //startLabel.setAlignmentY(CENTER_ALIGNMENT);
         startLabel.setSize(new Dimension(imageIcon.getIconWidth(), imageIcon.getIconHeight()));
         start = new JButton();
@@ -134,11 +134,11 @@ public class Stna extends JPanel implements Runnable {
         credits.setContentAreaFilled(false);
         credits.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         //credits.setAlignmentY(CENTER_ALIGNMENT);
-        
+
         musicb = new JButton();
         try {
             img = ImageIO.read(new File("images/musicbOn.png"));
-            
+
         } catch (IOException ex) {
         }
         musicb.addActionListener(actionL);
@@ -163,8 +163,8 @@ public class Stna extends JPanel implements Runnable {
         //startLabel.add(Box.createHorizontalBox());
         //startLabel.add(musicb);
         //startLabel.add(Box.createHorizontalGlue());
-        
-        startLabel.add(musicb);
+
+        //startLabel.add(musicb);
         //startLabel.add(Box.createVerticalBox());
         startLabel.add(Box.createVerticalGlue());
         startLabel.add(start);
@@ -174,41 +174,41 @@ public class Stna extends JPanel implements Runnable {
         //startLabel.add(Box.createRigidArea(new Dimension(0, bsize)));
 
         startLabel.add(Box.createVerticalGlue());
-        
+
         startLabel.add(creditsLabel);
-        
+
         frame.add(startLabel);
-        
+
         frame.setVisible(true);
         frame.pack();
-        
+
     }
-    
+
     public void initGame() {
         frame.setLayout(new BorderLayout());
-        
+
         frame.remove(start);
         frame.remove(startLabel);
-        
+
         BufferedImage img = null;
         Image dimg = null;
-        
+
         this.setLayout(new BorderLayout());
         contentPanel = new JPanel(new BorderLayout());
-        
+
         storePanel = new JPanel();
         storePanel.setLayout(new BoxLayout(storePanel, BoxLayout.LINE_AXIS));
-        
+
         towerInfoPane = new JPanel();
         towerInfoPane.setLayout(new BoxLayout(towerInfoPane, BoxLayout.PAGE_AXIS));
-        
+
         playerInfoPane = new JPanel();
         playerInfoPane.setLayout(new BoxLayout(playerInfoPane, BoxLayout.PAGE_AXIS));
-        
+
         tower = new JButton();
         try {
             img = ImageIO.read(new File("images/tower.png"));
-            
+
         } catch (IOException ex) {
         }
         dimg = img.getScaledInstance(bsize, bsize, Image.SCALE_SMOOTH);
@@ -217,11 +217,11 @@ public class Stna extends JPanel implements Runnable {
         tower.setBorder(null);
         tower.setMargin(null);
         tower.setName("tower");
-        
+
         tower2 = new JButton();
         try {
             img = ImageIO.read(new File("images/tower5.png"));
-            
+
         } catch (IOException ex) {
         }
         dimg = img.getScaledInstance(bsize, bsize, Image.SCALE_SMOOTH);
@@ -229,11 +229,11 @@ public class Stna extends JPanel implements Runnable {
         tower2.setPreferredSize(new Dimension(bsize, bsize));
         tower2.setBorder(null);
         tower2.setMargin(null);
-        
+
         tower3 = new JButton();
         try {
             img = ImageIO.read(new File("images/tower3.png"));
-            
+
         } catch (IOException ex) {
         }
         dimg = img.getScaledInstance(bsize, bsize, Image.SCALE_SMOOTH);
@@ -241,11 +241,11 @@ public class Stna extends JPanel implements Runnable {
         tower3.setPreferredSize(new Dimension(bsize, bsize));
         tower3.setBorder(null);
         tower3.setMargin(null);
-        
+
         tower4 = new JButton();
         try {
             img = ImageIO.read(new File("images/tower6.png"));
-            
+
         } catch (IOException ex) {
         }
         dimg = img.getScaledInstance(bsize, bsize, Image.SCALE_SMOOTH);
@@ -253,11 +253,11 @@ public class Stna extends JPanel implements Runnable {
         tower4.setPreferredSize(new Dimension(bsize, bsize));
         tower4.setBorder(null);
         tower4.setMargin(null);
-        
+
         tower5 = new JButton();
         try {
             img = ImageIO.read(new File("images/tower8.png"));
-            
+
         } catch (IOException ex) {
         }
         dimg = img.getScaledInstance(bsize, bsize, Image.SCALE_SMOOTH);
@@ -265,41 +265,43 @@ public class Stna extends JPanel implements Runnable {
         tower5.setPreferredSize(new Dimension(bsize, bsize));
         tower5.setBorder(null);
         tower5.setMargin(null);
-        
+
         update = new JButton("Upgrade");
-        
+
         update.addActionListener(actionL);
-        
+
         tower.addActionListener(actionL);
         tower2.addActionListener(actionL);
         tower3.addActionListener(actionL);
         tower4.addActionListener(actionL);
         tower5.addActionListener(actionL);
-        
+
         this.addMouseListener(new MouseListener());
         this.addMouseMotionListener(new MouseListener());
-        
+
         playerinfo = new JLabel("Wave: " + String.valueOf(arena.getPlayer().getLevel()));
         playerinfo4 = new JLabel("Time: " + Math.round(Math.abs((pauseFrame / fps) - pSec)));
-        
+
         towerinfo = new JLabel();
         towerinfo2 = new JLabel();
-        
+        towerinfoLong = new JLabel();
+        towerUpPrice = new JLabel();
+
         icon = new ImageIcon("images/heart2.png"); // load the image to a imageIcon
         Image image = icon.getImage(); // transform it 
         Image newimg = image.getScaledInstance(bsize / 2, bsize / 2, Image.SCALE_SMOOTH); // scale it the smooth way  
         icon = new ImageIcon(newimg);  //transform back
         playerinfo2 = new JLabel(String.valueOf(arena.getPlayer().getHealt()), icon, 0);
-        
+
         icon2 = new ImageIcon("images/money.png"); // load the image to a imageIcon
         image = icon2.getImage(); // transform it 
         newimg = image.getScaledInstance(bsize / 2, bsize / 2, Image.SCALE_SMOOTH); // scale it the smooth way  
         icon2 = new ImageIcon(newimg);  //transform back
         playerinfo3 = new JLabel(String.valueOf(arena.getPlayer().getMoney()), icon2, 0);
-        
+
         playerInfoPane.add(playerinfo2);
         playerInfoPane.add(playerinfo3);
-        
+
         storePanel.add(playerInfoPane);
         storePanel.add(tower);
         storePanel.add(Box.createHorizontalGlue());
@@ -310,39 +312,42 @@ public class Stna extends JPanel implements Runnable {
         storePanel.add(tower4);
         storePanel.add(Box.createHorizontalGlue());
         storePanel.add(tower5);
-        
+
         towerInfoPane.add(playerinfo);
         towerInfoPane.add(playerinfo4);
         towerInfoPane.add(Box.createRigidArea(new Dimension(0, bsize)));
         towerInfoPane.add(towerinfo);
         towerInfoPane.add(towerinfo2);
+        towerInfoPane.add(towerUpPrice);
+        towerInfoPane.add(Box.createRigidArea(new Dimension(0, bsize / 2)));
+        towerInfoPane.add(towerinfoLong);
         towerInfoPane.add(Box.createVerticalGlue());
-        
+
         towerInfoPane.setPreferredSize(new Dimension(bsize * 3, bsize * 3));
-        
+
         contentPanel.add(this, BorderLayout.CENTER);
         contentPanel.add(storePanel, BorderLayout.SOUTH);
-        
+
         frame.add(contentPanel, BorderLayout.CENTER);
         frame.add(towerInfoPane, BorderLayout.EAST);
-        
+
         frame.setVisible(true);
         game.start();
         frame.pack();
-        
+
     }
-    
+
     public void music(boolean musicOn) {
-        
+
         try {
             if (musicOn) {
                 InputStream test = new FileInputStream("audio/asd.wav");
-                
+
                 BGM = new AudioStream(test);
                 MD = BGM.getData();
                 loop = new ContinuousAudioDataStream(MD);
                 AudioPlayer.player.start(loop);
-                
+
             } else {
                 AudioPlayer.player.stop(loop);
             }
@@ -352,40 +357,65 @@ public class Stna extends JPanel implements Runnable {
             System.out.print(ee);
         }
     }
-    
+
     public Dimension getPreferredSize() {
         return new Dimension(bsize * cols, bsize * rows);
     }
-    
+
     private class ButtonListener implements ActionListener {
-        
+
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == tower) {
                 btnPress = true;
                 towerid = "tower";
+                towerinfo.setText("Price: " + Integer.toString(arena.getImTowers().get(0).getPrice()));
+                towerinfoLong.setText(arena.getImTowers().get(0).getInfo());
+                towerinfo2.setText("");
+                towerUpPrice.setText("");
             }
             if (e.getSource() == tower2) {
                 btnPress = true;
                 towerid = "tower2";
+                towerinfo.setText("Price: " + Integer.toString(arena.getImTowers().get(1).getPrice()));
+                towerinfoLong.setText(arena.getImTowers().get(1).getInfo());
+                towerinfo2.setText("");
+                towerUpPrice.setText("");
             }
             if (e.getSource() == tower3) {
                 btnPress = true;
                 towerid = "tower3";
+                towerinfo.setText("Price: " + Integer.toString(arena.getImTowers().get(2).getPrice()));
+                towerinfoLong.setText(arena.getImTowers().get(2).getInfo());
+                towerinfo2.setText("");
+                towerUpPrice.setText("");
             }
             if (e.getSource() == tower4) {
                 btnPress = true;
                 towerid = "tower4";
+                towerinfo.setText("Price: " + Integer.toString(arena.getImTowers().get(3).getPrice()));
+                towerinfoLong.setText(arena.getImTowers().get(3).getInfo());
+                towerinfo2.setText("");
+                towerUpPrice.setText("");
             }
             if (e.getSource() == tower5) {
                 btnPress = true;
                 towerid = "tower5";
+                towerinfo.setText("Price: " + Integer.toString(arena.getImTowers().get(4).getPrice()));
+                towerinfoLong.setText(arena.getImTowers().get(4).getInfo());
+                towerinfo2.setText("");
+                towerUpPrice.setText("");
             }
-            
+
             if (e.getSource() == update) {
-                int[] upgrade = new int[2];//upgrade[0]=DMG, upgrade[1]=RANGE
+                String[] upgrade = new String[2];//upgrade[0]=DMG, upgrade[1]=RANGE
                 upgrade = arena.upgradeTower(utower);
-                towerinfo.setText("Damage: " + Integer.toString(upgrade[0]));
-                towerinfo2.setText("Range: " + Integer.toString(upgrade[1]));
+                towerinfo.setText(upgrade[0]);
+                towerinfo2.setText(upgrade[1]);
+                
+                            towerUpPrice.setText("");
+                            towerInfoPane.remove(update);
+                            towerInfoPane.updateUI();
+                        
             }
             if (e.getSource() == start) {
                 musicOn = false;
@@ -394,7 +424,7 @@ public class Stna extends JPanel implements Runnable {
             }
             if (e.getSource() == credits) {
                 creditsLabel.setText("M2ko, eetz1, Taucci");
-                
+
             }
             if (e.getSource() == musicb) {
                 if (musicOn) {
@@ -408,22 +438,29 @@ public class Stna extends JPanel implements Runnable {
             }
         }
     }
-    
+
     private class MouseListener extends MouseAdapter {
-        
+
         public void mousePressed(MouseEvent e) {
-            
+
             if (btnPress && e.getButton() == 1) {
                 arena.newTowerPos(e.getY(), e.getX(), towerid);
                 btnPress = false;
                 towerclick = false;
+                towerinfo.setText("");
+                towerinfoLong.setText("");
+
             } else {
                 for (ModelTower tower : arena.getTowers()) {
                     if (e.getX() / bsize == tower.getX() && e.getY() / bsize == tower.getY()) {
                         utower = tower;
                         towerinfo.setText("Damage: " + Integer.toString(tower.getDamage()));
                         towerinfo2.setText("Range: " + Integer.toString(tower.getRange()));
-                        towerInfoPane.add(update);
+                        if (tower.getUpPrice() != 0) {
+                            towerUpPrice.setText("Upgrade: " + Integer.toString(tower.getUpPrice()));
+                            towerInfoPane.add(update);
+                            towerInfoPane.updateUI();
+                        }
                         towerInfoPane.add(Box.createRigidArea(new Dimension(0, bsize)));
                         towerclick = true;
                     }
@@ -432,17 +469,19 @@ public class Stna extends JPanel implements Runnable {
             //Allows you to stop placing tower with right mouseclick
             if (e.getButton() == 3 && btnPress) {
                 btnPress = false;
-                
+
             }
             //Clears the tower info
             if (towerclick && (e.getButton() == 1 || e.getButton() == 3) && "grass".equals(arena.getArena()[e.getY() / bsize][e.getX() / bsize].getid())) {
                 towerclick = false;
                 towerinfo.setText("");
                 towerinfo2.setText("");
+                towerUpPrice.setText("");
                 towerInfoPane.remove(update);
+                towerInfoPane.updateUI();
             }
         }
-        
+
         public void mouseMoved(MouseEvent e) {
             if (btnPress) {
                 mouseX = e.getX();
@@ -455,18 +494,18 @@ public class Stna extends JPanel implements Runnable {
     public void enemySpawner() {
         //spawns enemy every 1sec(after 60frames) and if spawncounter is not too much. also if spawnpause is true spawning is not happening
         if (spawnFrame >= spawnTime && spawnCounter < arena.getSpawnWave() && !sPause) {
-            
+
             arena.spawnEnemy();
             spawnFrame = 1;//-= spawnTime;
             spawnCounter++;
             isFirst = false;
-            
+
         } else {
             spawnFrame++;
         }
-        
+
     }
-    
+
     public void terminate() {
         running = false;
     }
@@ -478,9 +517,9 @@ public class Stna extends JPanel implements Runnable {
         final double ns = 1000000000.0 / fps;
         double delta = 0;
         int updates = 0, frames = 0;
-        
+
         while (running) {
-            
+
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
             lastTime = now;
@@ -494,10 +533,10 @@ public class Stna extends JPanel implements Runnable {
                     JLabel labell = new JLabel("Game over");
                     towerInfoPane.add(labell);
                     terminate();
-                    
+
                 } else if (!sPause) {//if game is not paused aka cooldown between waves, this is true
                     enemySpawner();
-                    
+
                 } else if (sPause && isFirst) {//in the beginning of the game wait pSec
                     if (pauseFrame >= pauseTime) {
                         pauseFrame = 1;
@@ -505,9 +544,9 @@ public class Stna extends JPanel implements Runnable {
                     } else {
                         pauseFrame++;
                         playerinfo4.setText("Next in: " + Math.round(Math.abs((pauseFrame / fps) - pSec)));
-                        
+
                         sPause = true;
-                        
+
                     }
                 }
                 //if there is no enemies on the arena and enemyspawner has spawned all the enemies and its not first run, there will be spawnpause and new level
@@ -515,7 +554,7 @@ public class Stna extends JPanel implements Runnable {
                     if (pauseFrame == 1) {
                         contr.shootmoney();//when round is over if player has moneytower it makes moneyyy
                         shoot_money = true;
-                        
+
                     }
                     if (pauseFrame >= pauseTime) {
                         arena.setLevel();
@@ -529,18 +568,18 @@ public class Stna extends JPanel implements Runnable {
                         pauseFrame++;
                         sPause = true;
                     }
-                    
+
                 }
-                
+
                 updates++;
                 repaint();
                 contr.moving();
                 playerinfo2.setText(String.valueOf(arena.getPlayer().getHealt()));
                 playerinfo3.setText(String.valueOf(arena.getPlayer().getMoney()));
                 delta--;
-                
+
             }
-            
+
             frames++;
             if (System.currentTimeMillis() - timer >= 1000) {
                 timer += 1000;
@@ -557,23 +596,23 @@ public class Stna extends JPanel implements Runnable {
         buffer = dbImage.getGraphics();
         paintComponent(buffer);
         g.drawImage(dbImage, 0, 0, this);
-        
+
     }
-    
+
     public void paintComponent(Graphics g) {
-        
+
         drawMap(g);
         drawShoot(g);
         drawTower(g);
         drawEnemy(g);
         drawMoneyShoot(g);
         drawHover(g);
-        
+
     }
-    
+
     public void drawMap(Graphics g) {
         ModelBlock[][] grid = arena.getArena();
-        
+
         BufferedImage img;
         for (int y = 0; y < grid.length; y++) {//DRAWS MAP
             int h = y;
@@ -584,15 +623,15 @@ public class Stna extends JPanel implements Runnable {
                     w = w * bsize;
                     img = ImageIO.read(new File(grid[y][x].getImg()));
                     g.drawImage(img, w, h, bsize, bsize, this);
-                    
+
                 } catch (IOException ex) {
                     System.out.println(ex);
                 }
             }
-            
+
         }
     }
-    
+
     public void drawMoneyShoot(Graphics g) {
         for (ModelTower tower : arena.getTowers()) {//For each tower dis is gonna check if there is enemy to shoot
 
@@ -605,7 +644,7 @@ public class Stna extends JPanel implements Runnable {
             }
         }
     }
-    
+
     public void drawShoot(Graphics g) {
         for (ModelTower tower : arena.getTowers()) {//For each tower dis is gonna check if there is enemy to shoot
             try {
@@ -634,7 +673,7 @@ public class Stna extends JPanel implements Runnable {
                             for (ModelTower tower2 : arena.getTowers()) {
                                 contr.shootImprove((BoostTower) tower, tower2);
                             }
-                            
+
                         } else if ("tower".equals(tower.getid())) {
                             int[] shootList = contr.shootable(tower);//drawing shootlines for lazertowers
                             Color c = new Color(shootList[0]);
@@ -644,14 +683,14 @@ public class Stna extends JPanel implements Runnable {
                     } else {
                         tower.setFireTime(1);
                     }
-                    
+
                 } else {
                     tower.setFireTime(tower.getFireTime() + 1);
                 }
             } catch (Exception e) {
             }
         }
-        
+
     }
 
     //Draws the rectangle where you are going to place the tower
@@ -668,7 +707,7 @@ public class Stna extends JPanel implements Runnable {
             //Draws the range of the tower
             g.setColor(Color.white);
             g.drawOval(coords[0] - coords[3] * bsize - bsize / 2, coords[1] - coords[3] * bsize - bsize / 2, coords[3] * bsize * 2, coords[3] * bsize * 2);
-            
+
         }
         //Draws a rectangle around a selected tower
         if (towerclick) {
@@ -678,9 +717,9 @@ public class Stna extends JPanel implements Runnable {
             g.drawOval(utower.getX() * bsize - utower.getRange() * bsize + bsize / 2, utower.getY() * bsize - utower.getRange() * bsize + bsize / 2, utower.getRange() * bsize * 2, utower.getRange() * bsize * 2);
         }
     }
-    
+
     public void drawEnemy(Graphics g) {
-        
+
         BufferedImage img;
         try {//DRAWS ENEMIES
 
@@ -692,9 +731,9 @@ public class Stna extends JPanel implements Runnable {
         } catch (IOException ex) {
             System.out.print(ex);
         }
-        
+
     }
-    
+
     public void drawTower(Graphics g) {
         BufferedImage img;
         try {
@@ -706,10 +745,10 @@ public class Stna extends JPanel implements Runnable {
             System.out.print(ex);
         }
     }
-    
+
     public static void main(String args[]) {
         new Stna();
-        
+
     }
-    
+
 }

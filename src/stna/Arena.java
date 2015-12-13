@@ -121,18 +121,22 @@ public class Arena {
     }
 
     //if u have moneys one can update towers
-    public int[] upgradeTower(ModelTower tower) {
-        int[] upgrade = new int[2];
+    public String[] upgradeTower(ModelTower tower) {
+        String[] upgrade = new String[2];
         if (player.getMoney() >= tower.getPrice()) {
             if (tower.getLevel() < tower.getMaxLvl()) {
                 tower.setLevel();
-                upgrade[0] = tower.getDamage();
-                upgrade[1] = tower.getRange();
+                upgrade[0] = "Damage: " + Integer.toString(tower.getDamage());
+                upgrade[1] = "Range: " + Integer.toString(tower.getRange());
             } else {
                 System.out.print("already on maxlvl");
+                upgrade[0] = "Already";
+                upgrade[1] = "on MAX";
             }
         } else {
             System.out.print("no mani no upgrade");
+            upgrade[0] = "Not enough";
+            upgrade[1] = "money";
         }
         return upgrade;
     }
@@ -176,20 +180,22 @@ public class Arena {
         switch (player.getLevel()) {
             case 1:
                 spawn_wave = 5;
-
                 break;
-
             case 2:
-                spawn_wave = 15;
+                spawn_wave = 10;
                 break;
             case 3:
                 spawn_wave = 15;
                 break;
-            default:
-                spawn_wave = player.getLevel() * 10;
+            case 4:
+                spawn_wave = 10;
                 break;
             case 5:
                 spawn_wave = 1;
+                break;
+            default:
+                spawn_wave = player.getLevel() * 10;
+                break;
 
         }
         return spawn_wave;
@@ -202,7 +208,7 @@ public class Arena {
                 if (objGrid[y][x].getid().equals("start")) {
                     switch (player.getLevel()) {
                         case 1:
-                            enemy = new BDuck(y, x, y * bsize, x * bsize, "enemy3");
+                            enemy = new YDuck(y, x, y * bsize, x * bsize, "enemy");
                             enemies.add(enemy);
                             break;
                         case 2:
@@ -220,6 +226,22 @@ public class Arena {
                                 enemies.add(enemy);
                                 break;
                             }
+                        case 4:
+                            if (ecounter < 5) {
+                                enemy = new YDuck(y, x, y * bsize, x * bsize, "enemy2");
+                                enemies.add(enemy);
+                                ecounter++;
+                                break;
+                            } else {
+                                enemy = new BDuck(y, x, y * bsize, x * bsize, "enemy3");
+                                enemies.add(enemy);
+                                break;
+                            }
+
+                        case 5:
+                            enemy = new BigDuck(y, x, y * bsize, x * bsize, "enemy4");
+                            enemies.add(enemy);
+                            break;
                         default:
                             if (Math.random() >= 0.75) {
                                 enemy = new PDuck(y, x, y * bsize, x * bsize, "enemy2");
@@ -230,10 +252,6 @@ public class Arena {
                                 enemies.add(enemy);
                                 break;
                             }
-                        case 5:
-                            enemy = new BigDuck(y, x, y * bsize, x * bsize, "enemy4");
-                            enemies.add(enemy);
-                            break;
                     }
                 }
             }
@@ -275,6 +293,7 @@ public class Arena {
     public void setLevel() {
         player.setLevel();
     }
+
     public int getRows() {
         return map.getRows();
     }
@@ -282,7 +301,5 @@ public class Arena {
     public int getColumns() {
         return map.getColumns();
     }
-
-    
 
 }

@@ -28,8 +28,9 @@ public class FreezeTower extends ModelTower{
                 freezeDamage=0.5;
                 range = 1;
                 clr=CYAN;
-                update_price = 15;
+                update_price = 0;
                 max_level = 1;
+                info = "<html>Slows down<br />enemy in<br />its range.</html>";//MAKO KORJAA NÄÄ PLZ
         }
     
     

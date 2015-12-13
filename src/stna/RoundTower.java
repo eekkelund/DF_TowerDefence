@@ -28,6 +28,7 @@ public class RoundTower extends ModelTower {
         update_price = 10;
         max_level =2;
         price = 10;
+        info = "<html>Shoots all<br />enemies in<br />its range.</html>";//MAKO KORJAA NÄÄ PLZ
     }
 
     @Override
@@ -40,7 +41,7 @@ public class RoundTower extends ModelTower {
                 damage = 5;
                 range = 3;
                 clr = ORANGE;
-                update_price = 10;
+                update_price = 0;
                 break;
         }
 

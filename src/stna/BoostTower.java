@@ -31,6 +31,7 @@ public class BoostTower extends ModelTower{
                         price = 20;
                         max_level =2;
                         improve = 1;
+                        info = "<html>Boosts own<br />towers in<br />its range.</html>";//MAKO KORJAA NÄÄ PLZ
         }
     @Override
     public void setLevel() {
@@ -43,6 +44,7 @@ public class BoostTower extends ModelTower{
                         range = 2;
                         clr=BLUE;
                         improve = 3;
+                        update_price = 0;
                         break;
                 }
         

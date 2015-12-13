@@ -124,7 +124,6 @@ public class TowerEngineController {
         for (ModelTower tower : arena.getTowers()){
             if ("tower5".equals(tower.getid())){
                 player.addMoney(tower.getDamage());
-                System.out.println("asd"+player.getMoney());
             }
         }
             

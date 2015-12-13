@@ -29,6 +29,7 @@ public class MoneyTower extends ModelTower {
         update_price = 100;
         max_level =2;
         price = 50;
+        info = "<html>After each<br />round<br />...</html>";//MAKO KORJAA NÄÄ PLZ
     }
 
     @Override
@@ -41,7 +42,7 @@ public class MoneyTower extends ModelTower {
                 damage = 20;
                 range = 0;
                 clr = ORANGE;
-                update_price = 10;
+                update_price = 0;
                 break;
         }
 

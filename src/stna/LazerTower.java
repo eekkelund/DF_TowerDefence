@@ -30,6 +30,7 @@ public class LazerTower extends ModelTower{
                         update_price = 15;
                         price = 5;
                         max_level =2;
+                        info = "<html>Shoots one<br />enemy in<br />its range.</html>";//MAKO KORJAA NÄÄ PLZ
         }
     @Override
     public void setLevel() {
@@ -41,7 +42,7 @@ public class LazerTower extends ModelTower{
                         damage = 5;
                         range = 4;
                         clr=BLUE;
-                        update_price =15;
+                        update_price =0;
                         break;
                 }
         
