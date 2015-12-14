@@ -22,7 +22,7 @@ public class RoundTower extends ModelTower {
 
         img = "images/tower3.png";
         fireRate = 1.2;
-        damage = 5;
+        damage = 2;
         range = 2;
         clr = RED;
         update_price = 15;
@@ -38,7 +38,7 @@ public class RoundTower extends ModelTower {
             case 2:
                 img = "images/tower4.png";
                 fireRate = 2;
-                damage = 5;
+                damage = 3;
                 range = 3;
                 clr = ORANGE;
                 update_price = 0;

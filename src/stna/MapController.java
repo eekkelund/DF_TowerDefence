@@ -292,11 +292,11 @@ public class MapController {
                                 enemy = new BigDuck(y, x, y * bsize, x * bsize, "enemy4");
                                 enemies.add(enemy);
                                 break;
-                            } else if (rand >= 0.40) {
+                            } else if (rand <= 0.40) {
                                 enemy = new BDuck(y, x, y * bsize, x * bsize, "enemy3");
                                 enemies.add(enemy);
                                 break;
-                            } else if(rand>=0.60){
+                            } else if(rand<=0.60){
                                 enemy = new PDuck(y, x, y * bsize, x * bsize, "enemy2");
                                 enemies.add(enemy);
                                 break;

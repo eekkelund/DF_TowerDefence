@@ -19,7 +19,7 @@ public class BigDuck  extends ModelEnemy{
 
                 img = "images/duck4.png";
                 speed = 0.5;
-                healt = 1000;
+                healt = 3000;
                 damage = 30;
                 prize = 20;
                 size =0.5;

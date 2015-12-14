@@ -43,7 +43,7 @@ public class BoostTower extends ModelTower{
                         damage = 0;
                         range = 2;
                         clr=BLUE;
-                        improve = 3;
+                        improve = 2;
                         update_price = 0;
                         break;
                 }

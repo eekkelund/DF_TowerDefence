@@ -64,7 +64,7 @@ public class View extends JPanel implements Runnable {
         frame.setLayout(new BorderLayout());
         frame.setTitle(title);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        frame.setResizable(false);
+        frame.setResizable(true);
 	frame.setLocationRelativeTo(null);
 
         arena = new MapController();
@@ -559,6 +559,7 @@ public class View extends JPanel implements Runnable {
                 towerinfo.setText("");
                 towerinfo2.setText("");
                 towerUpPrice.setText("");
+                towerSellPrice.setText("");
                 update.setVisible(false);
                 sell.setVisible(false);
                 towerInfoPane.updateUI();
@@ -617,6 +618,9 @@ public class View extends JPanel implements Runnable {
                     towerUpPrice.setText("");
                     update.setVisible(false);
                     towerInfoPane.updateUI();
+                    towerSellPrice.setText("");
+                sell.setVisible(false);
+                towerInfoPane.updateUI();
                     terminate();
 
                 } else if (!sPause) {//if game is not paused aka cooldown between waves, this is true
@@ -677,16 +681,21 @@ public class View extends JPanel implements Runnable {
 
     //this is needed for doublebuffering it makes image of the game while paintComponent draws new. it happens so quickly that u cant see it.
     public void paint(Graphics g) {
+         
         dbImage = createImage(cols * bsize, rows * bsize);
         buffer = dbImage.getGraphics();
         paintComponent(buffer);
         g.drawImage(dbImage, 0, 0, this);
+        
 
     }
 
     public void paintComponent(Graphics g) {
 
+        
         drawMap(g);
+        g.setColor(Color.PINK);
+       g.drawRect(-1, -1, bsize*cols, bsize*rows);
         drawShoot(g);
         drawTower(g);
         drawEnemy(g);

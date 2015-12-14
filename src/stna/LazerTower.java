@@ -27,7 +27,7 @@ public class LazerTower extends ModelTower{
                         damage = 1;
                         range = 2;
                         clr = YELLOW;
-                        update_price = 10;
+                        update_price = 15;
                         price = 5;
                         max_level =2;
                         info = "<html>Shoots one<br />enemy in<br />its range.</html>";//MAKO KORJAA NÄÄ PLZ
@@ -40,7 +40,7 @@ public class LazerTower extends ModelTower{
                         img = "images/tower2.png";
                         fireRate = 2.5;
                         damage = 2;
-                        range = 4;
+                        range = 3;
                         clr=BLUE;
                         update_price =0;
                         break;

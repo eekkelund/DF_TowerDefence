@@ -19,7 +19,7 @@ public class PDuck extends ModelEnemy{
 
                 img = "images/duck2.png";
                 speed = 2;
-                healt = 100;
+                healt = 150;
                 damage = 15;
                 prize = 5;
                 
