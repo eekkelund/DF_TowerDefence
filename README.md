@@ -3,7 +3,7 @@
 
 FIRST RELEASE!
 Version: 1.0 ALPHA
-![Alt text](/stna/images/bg.png?raw=true "Optional Title")
+![Alt text](https://github.com/eetz1/stna/blob/master/images/bg.png?raw=true "Duckfuck")
 
 ## Installation
 
