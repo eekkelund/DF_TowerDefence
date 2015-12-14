@@ -158,8 +158,10 @@ public class View extends JPanel implements Runnable {
         //musicLabel.setSize(new Dimension(img.getWidth()*bsize, img.getHeight()*bsize));
         //musicLabel.add(musicb);
         //musicLabel.setAlignmentX(RIGHT_ALIGNMENT);
-        creditsLabel = new JLabel("Version: 1.0'Alpha' Powered by: Java");
+        creditsLabel = new JLabel("<html><div style=\'text-align: center;\'>"+"Version: 1.0'Alpha'"+"<br>"+"Powered by: Java"+"</html>");
         creditsLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        creditsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        creditsLabel.setVerticalAlignment(SwingConstants.CENTER);
         //startLabel.add(Box.createRigidArea(new Dimension(bsize * 200,0)));
         //startLabel.add(Box.createHorizontalGlue());
         //startLabel.add(Box.createHorizontalBox());
@@ -431,8 +433,7 @@ public class View extends JPanel implements Runnable {
                 initGame();
             }
             if (e.getSource() == credits) {
-                creditsLabel.setText("M2ko, eetz1, Taucci");
-
+                creditsLabel.setText("<html><div style=\'text-align: center;\'>"+"Developed by:M2ko, eetz1, Taucci"+"<br>"+"Music by:OttoPatrik"+"</html>");
             }
             if (e.getSource() == musicb) {
                 if (musicOn) {
