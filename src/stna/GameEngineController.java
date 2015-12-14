@@ -112,19 +112,24 @@ public class GameEngineController {
 
     }
 //THIS IS FOR BOOSTTOWER IT "SHOOTS" TOWERS AROUND IT TO IMPROVE THEM
-    public void shootImprove(BoostTower boosttower) {
-        //for (ModelTower tower : arena.getTowers()) {
-        //for (ModelEnemy enemy : arena.getEnemies()) {
+    public void shootImprove(BoostTower boosttower, String sell) {
         int range = boosttower.getRange();
         for (ModelTower tower: arena.getTowers()) {
             if (Math.abs(tower.getX() - boosttower.getX()) < range && Math.abs(tower.getY() - boosttower.getY()) < range && !"tower4".equals(tower.getid())) {
-                if(boosttower.isBoosted()==3){
-                    tower.setBoosted(3);
+                if (sell == null) {
+                    if(boosttower.isBoosted()==3){
+                        tower.setBoosted(3);
+                        tower.setBoost(boosttower.getImprove());
+                        tower.setBoosted(1);
+                    }else {
+                        tower.setBoost(boosttower.getImprove());
+                        tower.setBoosted(1);
+                    }
+                }
+                else if (sell == "sell") {
+                    tower.setBoosted(4);
                     tower.setBoost(boosttower.getImprove());
-                    tower.setBoosted(1);
-                }else {
-                tower.setBoost(boosttower.getImprove());
-                tower.setBoosted(1);
+                    tower.setBoosted(2);
                 }
                 //return false;
             }
@@ -142,12 +147,12 @@ public class GameEngineController {
                 tower.setBoosted(2);
                     if ("tower4".equals(tower.getid())) {
                         tower.setBoosted(3);
-                        shootImprove((BoostTower) tower);
+                        shootImprove((BoostTower) tower, null);
                        
                     }
                     for (ModelTower tower2: arena.getTowers()) {
                         if ("tower4".equals(tower2.getid())) {
-                            shootImprove((BoostTower) tower2);
+                            shootImprove((BoostTower) tower2, null);
                         }
                     }
                 upgrade[0] = "Damage: " + Integer.toString(tower.getDamage());
@@ -167,16 +172,23 @@ public class GameEngineController {
         for (Iterator<ModelTower> iterator = arena.getTowers().iterator(); iterator.hasNext();) {
             ModelTower tower2 = iterator.next();
             if (tower2 == tower) {
+                //If the sold tower is the boosttower it goes to shoot "negative" improves kinda
+                if (tower.getid() == "tower4") {
+                    shootImprove((BoostTower) tower, "sell");
+                }
                 arena.getArena()[tower.getY()][tower.getX()] = new ModelGround(tower.getY(), tower.getX(), "grass");
                 player.addMoney((int)tower.getPrice() / 2);
                 iterator.remove();
                 sold = true;
+                
             }else {
                 sold = false;
             }
         }
         return sold;
     }
+    
+    
     
     
     

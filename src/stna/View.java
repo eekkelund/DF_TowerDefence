@@ -559,6 +559,7 @@ public class View extends JPanel implements Runnable {
                 towerinfo.setText("");
                 towerinfo2.setText("");
                 towerUpPrice.setText("");
+                towerSellPrice.setText("");
                 update.setVisible(false);
                 sell.setVisible(false);
                 towerInfoPane.updateUI();
@@ -756,7 +757,7 @@ public class View extends JPanel implements Runnable {
                             g.drawLine((shootList[1] * bsize + (bsize / 2)), (shootList[2] * bsize + (bsize / 2)), (shootList[3] + (bsize / 2)), (shootList[4] + (bsize / 2)));
                         } else if ("tower4".equals(tower.getid())) {//boosttower "shoots" other towers = boosts them
 
-                            contr.shootImprove((BoostTower) tower);
+                            contr.shootImprove((BoostTower) tower, null);
 
                         } else if ("tower".equals(tower.getid())) {
                             int[] shootList = contr.shootable(tower);//drawing shootlines for lazertowers

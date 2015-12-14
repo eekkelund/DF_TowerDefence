@@ -131,17 +131,25 @@ public class ModelTower extends ModelBlock {
     }
    
     public void setBoost(int boost) {
+        //If its max boosted -- do nothing
         if (boosted == 1) {
            
         }
+        //If its not boosted at all -- boost once
         else if (boosted == 2) {
             boosts = boost;
             setDamage(getDamage() + boost);
             setRange(getRange() + boost);
         }
+        //If its boosted once already -- remove earlier boosts and add new ones
         else if (boosted == 3) {
             setDamage(getDamage()- boosts + boost);
             setRange(getRange() - boosts + boost);
+        }
+        //If a boost tower is going to be sold removes boosts
+        else if (boosted == 4) {
+            setDamage(getDamage() - boost);
+            setRange(getRange() - boost);
         }
  
     }
