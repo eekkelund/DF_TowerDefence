@@ -389,11 +389,11 @@ public class View extends JPanel implements Runnable {
                 InputStream test = new FileInputStream("audio/kvakmix2.wav");
 
                 BGM = new AudioStream(test);
-                MD = BGM.getData();
-                loop = new ContinuousAudioDataStream(MD);
+                //MD = BGM.getData();
+                //loop = new ContinuousAudioDataStream(MD);
                 
-                //AudioPlayer.player.start(loop);
-                MGP.start(loop);
+                AudioPlayer.player.start(BGM);
+                //MGP.start(loop);
             } else {
                 AudioPlayer.player.stop(BGM);
             }
