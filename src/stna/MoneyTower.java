@@ -37,7 +37,7 @@ public class MoneyTower extends ModelTower {
         level = level + 1;
         switch (level) {
             case 2:
-                img = "images/tower4.png";
+                img = "images/tower9.png";
                 fireRate = 100000000;
                 damage = 20;
                 range = 0;

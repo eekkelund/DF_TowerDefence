@@ -13,17 +13,7 @@ public class ModelBlock {
     private int x;
     private int y;
     private String id;
-    private String img; 
-    
-    /*public ModelBlock (int x, int y) {
-        this.x=x;
-        this.y=y;
-        this.id = id;
-        
-    }
-    public ModelBlock(){
-    
-    }*/
+    private String img;
     
     public int getX() {
         return x;

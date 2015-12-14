@@ -5,7 +5,6 @@
  */
 package stna;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,21 +14,22 @@ import java.util.List;
  */
 public class MapController {
 
-    static private ModelBlock[][] objGrid;
-    private List<ModelGround> blocks = new ArrayList();
-    private List<ModelEnemy> enemies = new ArrayList();
-    private List<ModelTower> towers = new ArrayList();
-    private List<ModelTower> ImaginaryTowers = new ArrayList();
-    private ModelGround ground;
-    private ModelTower tower;
-    private ModelEnemy enemy;
-    private ModelPlayer player;
-    private Map map;
-    static int[][] grid;
-    private int bsize = 32, price;
-    private int spawn_wave;
-    private int ecounter;
-    private String[] newTower = new String[2];
+    static private ModelBlock[][] objGrid;//this is grid where modelblocks are stored aka visible map
+    private List<ModelGround> blocks = new ArrayList();//all the groundblocks
+    private List<ModelEnemy> enemies = new ArrayList();//all the enemies
+    private List<ModelTower> towers = new ArrayList();//all the towers
+    private List<ModelTower> ImaginaryTowers = new ArrayList();//all different towers that are made just for that one can buy them from shop
+    private ModelGround ground;//modelground d44
+    private ModelTower tower;//tower..
+    private ModelEnemy enemy;//enemyyyy
+    private ModelPlayer player;//and player
+    private Map map;//also map
+    private static int[][] grid; //map(numbers) are stored here
+    private int bsize = 32;//blocksize EDIT HERE IF WANT TO EDIT
+    private int price;//tower price stored here
+    private int spawn_wave;//depends on players level
+    private int ecounter;//counter to check how many enemies spawned so far on that level
+    private String[] newTower = new String[2];//just to store and return to view "no money"&"wrong place"
 
     public MapController() {
         player = new ModelPlayer();//lets create player
@@ -99,34 +99,32 @@ public class MapController {
     }
 
     public void newTowerPos(int y, int x, String towerid) {
-        
+
         x /= bsize;
         y /= bsize;
         if ("grass".equals(objGrid[y][x].getid())) {
             for (ModelTower tower : ImaginaryTowers) {
                 if (towerid.equals(tower.getid())) {
                     price = tower.getPrice();
-                    newTower[0]="";
-        newTower[1]="";
+                    newTower[0] = "";
+                    newTower[1] = "";
                 }
             }
             if (player.getMoney() >= price) {
                 setTower(y, x, towerid);
                 player.reduceMoney(price);
-                newTower[0]="";
-        newTower[1]="";
+                newTower[0] = "";
+                newTower[1] = "";
             } else {
-                newTower[0]="Not enough";
-                newTower[1]="money";
+                newTower[0] = "Not enough";
+                newTower[1] = "money";
             }
         } else {
-            newTower[0]="Wrong";
-            newTower[1]="place";
+            newTower[0] = "Wrong";
+            newTower[1] = "place";
         }
-        
-    }
 
-    
+    }
 
     public int[] hover(int x, int y, String towerid) {
         int xcoord = 0, ycoord = 0;
@@ -180,8 +178,23 @@ public class MapController {
             case 5:
                 spawn_wave = 1;
                 break;
+            case 6:
+                spawn_wave = 20;
+                break;
+            case 7:
+                spawn_wave = 30;
+                break;
+            case 8:
+                spawn_wave = 23;
+                break;
+            case 9:
+                spawn_wave = 17;
+                break;
+            case 10:
+                spawn_wave = 7;
+                break;
             default:
-                spawn_wave = player.getLevel() * 10;
+                spawn_wave = player.getLevel() * 5;
                 break;
 
         }
@@ -194,15 +207,15 @@ public class MapController {
             for (int x = 0; x < objGrid[0].length; x++) {
                 if (objGrid[y][x].getid().equals("start")) {
                     switch (player.getLevel()) {
-                        case 1:
+                        case 1://if level is 1 spawn only normal yducks
                             enemy = new YDuck(y, x, y * bsize, x * bsize, "enemy");
                             enemies.add(enemy);
                             break;
-                        case 2:
+                        case 2://if level is 2 spawn only normal yducks
                             enemy = new YDuck(y, x, y * bsize, x * bsize, "enemy");
                             enemies.add(enemy);
                             break;
-                        case 3:
+                        case 3://if level is 3 spawn five fast pink ducks and rest normal yducks
                             if (ecounter < 5) {
                                 enemy = new PDuck(y, x, y * bsize, x * bsize, "enemy2");
                                 enemies.add(enemy);
@@ -213,7 +226,7 @@ public class MapController {
                                 enemies.add(enemy);
                                 break;
                             }
-                        case 4:
+                        case 4://level 4, spawn first pink ducks then rest black ducks
                             if (ecounter < 5) {
                                 enemy = new YDuck(y, x, y * bsize, x * bsize, "enemy2");
                                 enemies.add(enemy);
@@ -225,16 +238,70 @@ public class MapController {
                                 break;
                             }
 
-                        case 5:
+                        case 5://level 5, spawn one big duck
                             enemy = new BigDuck(y, x, y * bsize, x * bsize, "enemy4");
                             enemies.add(enemy);
                             break;
-                        default:
-                            if (Math.random() >= 0.75) {
+                        case 6://level 6, spawn first black ducks then yellow ducks then couple pink
+                            if (ecounter < 5) {
+                                enemy = new BDuck(y, x, y * bsize, x * bsize, "enemy3");
+                                enemies.add(enemy);
+                                ecounter++;
+                                break;
+                            } else if (ecounter < 17) {
+                                enemy = new YDuck(y, x, y * bsize, x * bsize, "enemy");
+                                enemies.add(enemy);
+                                ecounter++;
+                                break;
+                            } else {
                                 enemy = new PDuck(y, x, y * bsize, x * bsize, "enemy2");
                                 enemies.add(enemy);
                                 break;
+                            }
+                        case 7://if level is 7 spawn only normal yducks
+                            enemy = new YDuck(y, x, y * bsize, x * bsize, "enemy");
+                            enemies.add(enemy);
+                            break;
+                        case 8://level 8, spawn first yellow ducks then black ducks then pink
+                            if (ecounter < 5) {
+                                enemy = new YDuck(y, x, y * bsize, x * bsize, "enemy");
+                                enemies.add(enemy);
+                                ecounter++;
+                                break;
+                            } else if (ecounter < 15) {
+                                enemy = new BDuck(y, x, y * bsize, x * bsize, "enemy3");
+                                enemies.add(enemy);
+                                ecounter++;
+                                break;
                             } else {
+                                enemy = new PDuck(y, x, y * bsize, x * bsize, "enemy2");
+                                enemies.add(enemy);
+                                break;
+                            }
+                        case 9://if level is 9 spawn pink ducks
+                            enemy = new PDuck(y, x, y * bsize, x * bsize, "enemy2");
+                            enemies.add(enemy);
+                            break;
+                        case 10://level 10, spawn big ducks
+                            enemy = new BigDuck(y, x, y * bsize, x * bsize, "enemy4");
+                            enemies.add(enemy);
+                            break;
+                        default://this math spawns rest of the levels just randomly ducks
+                            double rand = Math.random();
+                            if (rand <= 0.10) {
+                                enemy = new BigDuck(y, x, y * bsize, x * bsize, "enemy4");
+                                enemies.add(enemy);
+                                break;
+                            } else if (rand >= 0.40) {
+                                enemy = new BDuck(y, x, y * bsize, x * bsize, "enemy3");
+                                enemies.add(enemy);
+                                break;
+                            } else if(rand>=0.60){
+                                enemy = new PDuck(y, x, y * bsize, x * bsize, "enemy2");
+                                enemies.add(enemy);
+                                break;
+                            }
+                                else{
                                 enemy = new YDuck(y, x, y * bsize, x * bsize, "enemy");
                                 enemies.add(enemy);
                                 break;
@@ -288,7 +355,8 @@ public class MapController {
     public int getColumns() {
         return map.getColumns();
     }
-    public String[] getNewTower(){
+
+    public String[] getNewTower() {
         return newTower;
     }
 

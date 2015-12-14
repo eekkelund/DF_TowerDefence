@@ -45,15 +45,15 @@ public class View extends JPanel implements Runnable {
     private double pauseFrame = 1;//COUNTER FOR PAUSE BETWEEN WAVES
     private double pauseTime = pSec * (double) (fps);//TIME IN FPS BETWEEN WAVES
     private double shootTime = 0.5 * (double) fps;//TIME BETWEEN SHOOTING
-    private boolean running = true;
+    private boolean running = true;//IF GAME IS RUNNING
     private int mouseX, mouseY;
     private boolean shoot_money = false;//boolean to check if show moneys top of moneytower
-    private ModelTower utower;
-    private JFrame frame;
-    private String title = "TD: DACK FACK";
+    private ModelTower utower;//SELECTED TOWER FROM MAP
+    private JFrame frame;//FRAME WHERE EVERYTHING HAPPENS
+    private String title = "TD: DACK FACK";//TITLE
     private ImageIcon icon, icon2;
-    private Thread game = new Thread(this);
-    private boolean musicOn = true;
+    private Thread game = new Thread(this);//THREAD WHERE GAME RUNS
+    private boolean musicOn = true;//BOOLEAN TO CHECK IF MUSICA IS ON
     private AudioStream BGM;
     private AudioData MD;
     ContinuousAudioDataStream loop = null;
@@ -64,6 +64,8 @@ public class View extends JPanel implements Runnable {
         frame.setLayout(new BorderLayout());
         frame.setTitle(title);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        frame.setResizable(false);
+	frame.setLocationRelativeTo(null);
 
         arena = new MapController();
         contr = new GameEngineController(arena);
@@ -271,8 +273,20 @@ public class View extends JPanel implements Runnable {
         tower5.setBorder(null);
         tower5.setMargin(null);
 
-        update = new JButton("Upgrade");
+        update = new JButton();
+        try {
+            img = ImageIO.read(new File("images/upgradeb2.png"));
+
+        } catch (IOException ex) {
+        }
+        dimg = img.getScaledInstance(bsize*3, bsize, Image.SCALE_SMOOTH);
+        update.setIcon(new ImageIcon(dimg));
+        update.setPreferredSize(new Dimension(bsize*3, bsize));
+        update.setBorder(null);
+        update.setMargin(null);
+        update.setContentAreaFilled(false);
         update.setVisible(false);
+        
 
         update.addActionListener(actionL);
 
