@@ -359,7 +359,7 @@ public class View extends JPanel implements Runnable {
         towerInfoPane.add(towerinfoLong);
         towerInfoPane.add(Box.createVerticalGlue());
         towerInfoPane.add(update);
-        towerInfoPane.add(Box.createRigidArea(new Dimension(0, bsize)));
+        towerInfoPane.add(Box.createRigidArea(new Dimension(0, bsize/4)));
         towerInfoPane.add(sell);
         towerInfoPane.add(Box.createRigidArea(new Dimension(0, bsize)));
 
@@ -412,6 +412,7 @@ public class View extends JPanel implements Runnable {
                 towerinfoLong.setText(arena.getImTowers().get(0).getInfo());
                 towerinfo2.setText("");
                 towerUpPrice.setText("");
+                towerSellPrice.setText("");
                 update.setVisible(false);
                 sell.setVisible(false);
                 towerInfoPane.updateUI();
@@ -423,6 +424,7 @@ public class View extends JPanel implements Runnable {
                 towerinfoLong.setText(arena.getImTowers().get(1).getInfo());
                 towerinfo2.setText("");
                 towerUpPrice.setText("");
+                towerSellPrice.setText("");
                 update.setVisible(false);
                 sell.setVisible(false);
                 towerInfoPane.updateUI();
@@ -434,6 +436,7 @@ public class View extends JPanel implements Runnable {
                 towerinfoLong.setText(arena.getImTowers().get(2).getInfo());
                 towerinfo2.setText("");
                 towerUpPrice.setText("");
+                towerSellPrice.setText("");
                 update.setVisible(false);
                 sell.setVisible(false);
                 towerInfoPane.updateUI();
@@ -445,6 +448,7 @@ public class View extends JPanel implements Runnable {
                 towerinfoLong.setText(arena.getImTowers().get(3).getInfo());
                 towerinfo2.setText("");
                 towerUpPrice.setText("");
+                towerSellPrice.setText("");
                 update.setVisible(false);
                 sell.setVisible(false);
                 towerInfoPane.updateUI();
@@ -456,6 +460,7 @@ public class View extends JPanel implements Runnable {
                 towerinfoLong.setText(arena.getImTowers().get(4).getInfo());
                 towerinfo2.setText("");
                 towerUpPrice.setText("");
+                towerSellPrice.setText("");
                 update.setVisible(false);
                 sell.setVisible(false);
                 towerInfoPane.updateUI();
@@ -467,7 +472,7 @@ public class View extends JPanel implements Runnable {
                 upgrade = contr.upgradeTower(utower);
                 towerinfo.setText(upgrade[0]);
                 towerinfo2.setText(upgrade[1]);
-
+                towerSellPrice.setText("");
                 towerUpPrice.setText("");
                 //update.setVisible(false);
                 towerInfoPane.updateUI();
@@ -480,6 +485,10 @@ public class View extends JPanel implements Runnable {
                 towerinfo.setText("");
                 towerinfo2.setText("");
                 towerUpPrice.setText("");
+                towerSellPrice.setText("");
+                update.setVisible(false);
+                sell.setVisible(false);
+                towerInfoPane.updateUI();
             }
             
             if (e.getSource() == start) {
@@ -516,6 +525,8 @@ public class View extends JPanel implements Runnable {
                 towerinfo2.setText(arena.getNewTower()[0]);
                 towerUpPrice.setText(arena.getNewTower()[1]);
                 update.setVisible(false);
+                 sell.setVisible(false);
+                towerSellPrice.setText("");
                 towerInfoPane.updateUI();
             } else {
                 for (ModelTower tower : arena.getTowers()) {
