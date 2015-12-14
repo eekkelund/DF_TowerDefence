@@ -3,15 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/eetz1/Templates/Stna/src/stna/MoneyTower.java</file>
-            <file>file:/home/eetz1/Templates/Stna/src/stna/TowerEngineController.java</file>
-            <file>file:/home/eetz1/Templates/Stna/src/stna/RoundTower.java</file>
-            <file>file:/home/eetz1/Templates/Stna/src/stna/FreezeTower.java</file>
-            <file>file:/home/eetz1/Templates/Stna/src/stna/Arena.java</file>
-            <file>file:/home/eetz1/Templates/Stna/src/stna/ModelTower.java</file>
-            <file>file:/home/eetz1/Templates/Stna/src/stna/LazerTower.java</file>
-            <file>file:/home/eetz1/Templates/Stna/src/stna/Stna.java</file>
-            <file>file:/home/eetz1/Templates/Stna/src/stna/BoostTower.java</file>
+            <file>file:/home/mako/NetBeansProjects/stna_v11/src/stna/View.java</file>
+            <file>file:/home/mako/NetBeansProjects/stna_v11/src/stna/ModelPlayer.java</file>
+            <file>file:/home/mako/NetBeansProjects/stna_v11/src/stna/MapController.java</file>
+            <file>file:/home/mako/NetBeansProjects/stna_v11/src/stna/GameEngineController.java</file>
         </group>
     </open-files>
 </project-private>
