@@ -15,7 +15,7 @@ import java.util.Scanner;
  *
  * @author eetz1
  */
-public class Arena {
+public class MapController {
 
     static private ModelBlock[][] objGrid;
     private List<ModelGround> blocks = new ArrayList();
@@ -28,12 +28,12 @@ public class Arena {
     private ModelPlayer player;
     private Map map;
     static int[][] grid;
-    private TowerEngineController controller;
+    private GameEngineController controller;
     private int bsize = 32, price;
     private int spawn_wave;
     private int ecounter;
 
-    public Arena() {
+    public MapController() {
         player = new ModelPlayer();//lets create player
 
         map = new Map(player);//lets create new map = grid

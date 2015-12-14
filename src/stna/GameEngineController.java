@@ -14,12 +14,12 @@ import java.util.*;
 
 
 //THIS IS GAME ENGINE WOOOO
-public class TowerEngineController {
+public class GameEngineController {
 
     //private ModelEnemy enemy2;
     private ModelTower tower;
     private ModelPlayer player;
-    private final Arena arena;
+    private final MapController arena;
     private List enemies;
 //    private List towers = arena.getTowers();
     public final int up = 1, down = 2, right = 3, left = 4;//just for easier direction management
@@ -27,7 +27,7 @@ public class TowerEngineController {
     private int bsize;
     boolean move = true;
 
-    public TowerEngineController(Arena a) {//TO MAKE THIS ENGINE WORK WE NEED ARENA AND PLAYER
+    public GameEngineController(MapController a) {//TO MAKE THIS ENGINE WORK WE NEED ARENA AND PLAYER
         this.arena = a;
         player = arena.getPlayer();
     }

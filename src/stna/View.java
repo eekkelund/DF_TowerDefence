@@ -20,10 +20,10 @@ import sun.audio.*;
  *
  * @author eetz1
  */
-public class Stna extends JPanel implements Runnable {
+public class View extends JPanel implements Runnable {
 
-    private Arena arena;
-    private TowerEngineController contr;
+    private MapController arena;
+    private GameEngineController contr;
     private JLabel towerinfo, towerinfo2, playerinfo, playerinfo2, playerinfo3, startLabel, playerinfo4, creditsLabel, musicLabel, towerinfoLong, towerUpPrice;
     private JButton tower, tower2, tower3, tower4, tower5, update, start, credits, musicb;
     private JPanel storePanel, towerInfoPane, contentPanel, playerInfoPane, musicPanel;
@@ -58,7 +58,7 @@ public class Stna extends JPanel implements Runnable {
     private AudioData MD;
     ContinuousAudioDataStream loop = null;
 
-    public Stna() {
+    public View() {
 
         frame = new JFrame();
         frame.setLayout(new BorderLayout());
@@ -66,8 +66,8 @@ public class Stna extends JPanel implements Runnable {
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         
 
-        arena = new Arena();
-        contr = new TowerEngineController(arena);
+        arena = new MapController();
+        contr = new GameEngineController(arena);
 
         cols = arena.getColumns();
         rows = arena.getRows();
@@ -757,7 +757,7 @@ public class Stna extends JPanel implements Runnable {
     }
 
     public static void main(String args[]) {
-        new Stna();
+        new View();
 
     }
 

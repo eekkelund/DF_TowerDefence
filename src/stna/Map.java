@@ -12,7 +12,7 @@ package stna;
 //HERE MAP IS CREATED!!
 public class Map {
 
-    private Arena arena;
+    private MapController arena;
     private ModelPlayer player;
     private int rows = 12, columns = 16;
     int[][] map1
