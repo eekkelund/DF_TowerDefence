@@ -24,8 +24,8 @@ public class View extends JPanel implements Runnable {
 
     private MapController arena;
     private GameEngineController contr;
-    private JLabel towerinfo, towerinfo2, playerinfo, playerinfo2, playerinfo3, startLabel, playerinfo4, creditsLabel, musicLabel, towerinfoLong, towerUpPrice;
-    private JButton tower, tower2, tower3, tower4, tower5, update, start, credits, musicb;
+    private JLabel towerinfo, towerinfo2, playerinfo, playerinfo2, playerinfo3, startLabel, playerinfo4, creditsLabel, musicLabel, towerinfoLong, towerUpPrice, towerSellPrice;
+    private JButton tower, tower2, tower3, tower4, tower5, update, start, credits, musicb, sell;
     private JPanel storePanel, towerInfoPane, contentPanel, playerInfoPane, musicPanel;
     private ActionListener actionL;
     private int bsize;//BLOCK SIZE
@@ -287,8 +287,22 @@ public class View extends JPanel implements Runnable {
         update.setContentAreaFilled(false);
         update.setVisible(false);
         
+        sell = new JButton();
+        try {
+            img = ImageIO.read(new File("images/sellb.png"));
 
+        } catch (IOException ex) {
+        }
+        dimg = img.getScaledInstance(bsize*3, bsize, Image.SCALE_SMOOTH);
+        sell.setIcon(new ImageIcon(dimg));
+        sell.setPreferredSize(new Dimension(bsize*3, bsize));
+        sell.setBorder(null);
+        sell.setMargin(null);
+        sell.setContentAreaFilled(false);
+        sell.setVisible(false);
+        
         update.addActionListener(actionL);
+        sell.addActionListener(actionL);
 
         tower.addActionListener(actionL);
         tower2.addActionListener(actionL);
@@ -306,6 +320,7 @@ public class View extends JPanel implements Runnable {
         towerinfo2 = new JLabel();
         towerinfoLong = new JLabel();
         towerUpPrice = new JLabel();
+        towerSellPrice = new JLabel();
 
         icon = new ImageIcon("images/heart2.png"); // load the image to a imageIcon
         Image image = icon.getImage(); // transform it 
@@ -339,10 +354,13 @@ public class View extends JPanel implements Runnable {
         towerInfoPane.add(towerinfo);
         towerInfoPane.add(towerinfo2);
         towerInfoPane.add(towerUpPrice);
+        towerInfoPane.add(towerSellPrice);
         towerInfoPane.add(Box.createRigidArea(new Dimension(0, bsize / 2)));
         towerInfoPane.add(towerinfoLong);
         towerInfoPane.add(Box.createVerticalGlue());
         towerInfoPane.add(update);
+        towerInfoPane.add(Box.createRigidArea(new Dimension(0, bsize)));
+        towerInfoPane.add(sell);
         towerInfoPane.add(Box.createRigidArea(new Dimension(0, bsize)));
 
         towerInfoPane.setPreferredSize(new Dimension(bsize * 3, bsize * 3));
@@ -395,6 +413,7 @@ public class View extends JPanel implements Runnable {
                 towerinfo2.setText("");
                 towerUpPrice.setText("");
                 update.setVisible(false);
+                sell.setVisible(false);
                 towerInfoPane.updateUI();
             }
             if (e.getSource() == tower2) {
@@ -405,6 +424,7 @@ public class View extends JPanel implements Runnable {
                 towerinfo2.setText("");
                 towerUpPrice.setText("");
                 update.setVisible(false);
+                sell.setVisible(false);
                 towerInfoPane.updateUI();
             }
             if (e.getSource() == tower3) {
@@ -415,6 +435,7 @@ public class View extends JPanel implements Runnable {
                 towerinfo2.setText("");
                 towerUpPrice.setText("");
                 update.setVisible(false);
+                sell.setVisible(false);
                 towerInfoPane.updateUI();
             }
             if (e.getSource() == tower4) {
@@ -425,6 +446,7 @@ public class View extends JPanel implements Runnable {
                 towerinfo2.setText("");
                 towerUpPrice.setText("");
                 update.setVisible(false);
+                sell.setVisible(false);
                 towerInfoPane.updateUI();
             }
             if (e.getSource() == tower5) {
@@ -435,6 +457,7 @@ public class View extends JPanel implements Runnable {
                 towerinfo2.setText("");
                 towerUpPrice.setText("");
                 update.setVisible(false);
+                sell.setVisible(false);
                 towerInfoPane.updateUI();
                 
             }
@@ -450,6 +473,15 @@ public class View extends JPanel implements Runnable {
                 towerInfoPane.updateUI();
 
             }
+            //sells the tower you have selected
+            if (e.getSource() == sell) {
+                if (contr.sell(utower));
+                towerclick = false;
+                towerinfo.setText("");
+                towerinfo2.setText("");
+                towerUpPrice.setText("");
+            }
+            
             if (e.getSource() == start) {
                 musicOn = false;
                 music(musicOn);
@@ -496,7 +528,9 @@ public class View extends JPanel implements Runnable {
                         } else {
                             towerUpPrice.setText("");
                         }
+                        towerSellPrice.setText("Sell: " + Integer.toString((int)tower.getPrice() / 2));
                         update.setVisible(true);
+                        sell.setVisible(true);
                         towerInfoPane.updateUI();
 
                         towerclick = true;
@@ -515,6 +549,7 @@ public class View extends JPanel implements Runnable {
                 towerinfo2.setText("");
                 towerUpPrice.setText("");
                 update.setVisible(false);
+                sell.setVisible(false);
                 towerInfoPane.updateUI();
             }
         }

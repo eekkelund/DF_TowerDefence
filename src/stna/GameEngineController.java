@@ -25,7 +25,8 @@ public class GameEngineController {
     public final int up = 1, down = 2, right = 3, left = 4;//just for easier direction management
     private int direction;
     private int bsize;
-    boolean move = true;
+    private boolean move = true;
+    private boolean sold = false;
     String[] upgrade = new String[2];
 
     public GameEngineController(MapController a) {//TO MAKE THIS ENGINE WORK WE NEED ARENA AND PLAYER
@@ -160,6 +161,21 @@ public class GameEngineController {
             upgrade[1] = "money";
         }
         return upgrade;
+    }
+    //Remove the selected tower from the towerlist and adds grass block to the map
+    public boolean sell(ModelTower tower) {
+        for (Iterator<ModelTower> iterator = arena.getTowers().iterator(); iterator.hasNext();) {
+            ModelTower tower2 = iterator.next();
+            if (tower2 == tower) {
+                arena.getArena()[tower.getY()][tower.getX()] = new ModelGround(tower.getY(), tower.getX(), "grass");
+                player.addMoney((int)tower.getPrice() / 2);
+                iterator.remove();
+                sold = true;
+            }else {
+                sold = false;
+            }
+        }
+        return sold;
     }
     
     
