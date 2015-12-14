@@ -5,11 +5,9 @@
  */
 package stna;
 
-import java.io.BufferedReader;
-import java.io.*;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  *
@@ -28,10 +26,10 @@ public class MapController {
     private ModelPlayer player;
     private Map map;
     static int[][] grid;
-    private GameEngineController controller;
     private int bsize = 32, price;
     private int spawn_wave;
     private int ecounter;
+    private String[] newTower = new String[2];
 
     public MapController() {
         player = new ModelPlayer();//lets create player
@@ -101,23 +99,31 @@ public class MapController {
     }
 
     public void newTowerPos(int y, int x, String towerid) {
+        
         x /= bsize;
         y /= bsize;
         if ("grass".equals(objGrid[y][x].getid())) {
             for (ModelTower tower : ImaginaryTowers) {
-                if (towerid == tower.getid()) {
+                if (towerid.equals(tower.getid())) {
                     price = tower.getPrice();
+                    newTower[0]="";
+        newTower[1]="";
                 }
             }
             if (player.getMoney() >= price) {
                 setTower(y, x, towerid);
                 player.reduceMoney(price);
+                newTower[0]="";
+        newTower[1]="";
             } else {
-                System.out.print("no mani no hani");
+                newTower[0]="Not enough";
+                newTower[1]="money";
             }
         } else {
-            System.out.print("Wrong palace");
+            newTower[0]="Wrong";
+            newTower[1]="place";
         }
+        
     }
 
     
@@ -281,6 +287,9 @@ public class MapController {
 
     public int getColumns() {
         return map.getColumns();
+    }
+    public String[] getNewTower(){
+        return newTower;
     }
 
 }

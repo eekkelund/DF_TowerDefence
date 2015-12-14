@@ -26,6 +26,7 @@ public class GameEngineController {
     private int direction;
     private int bsize;
     boolean move = true;
+    String[] upgrade = new String[2];
 
     public GameEngineController(MapController a) {//TO MAKE THIS ENGINE WORK WE NEED ARENA AND PLAYER
         this.arena = a;
@@ -132,7 +133,6 @@ public class GameEngineController {
  
     //if u have moneys one can update towers
     public String[] upgradeTower(ModelTower tower) {
-        String[] upgrade = new String[2];
         if (player.getMoney() >= tower.getPrice()) {
             
             if (tower.getLevel() < tower.getMaxLvl()) {
@@ -152,12 +152,10 @@ public class GameEngineController {
                 upgrade[0] = "Damage: " + Integer.toString(tower.getDamage());
                 upgrade[1] = "Range: " + Integer.toString(tower.getRange());
             } else {
-                System.out.print("already on maxlvl");
                 upgrade[0] = "Already";
                 upgrade[1] = "on MAX";
             }
         } else {
-            System.out.print("no mani no upgrade");
             upgrade[0] = "Not enough";
             upgrade[1] = "money";
         }

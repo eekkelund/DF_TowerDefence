@@ -64,7 +64,6 @@ public class View extends JPanel implements Runnable {
         frame.setLayout(new BorderLayout());
         frame.setTitle(title);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        
 
         arena = new MapController();
         contr = new GameEngineController(arena);
@@ -93,7 +92,7 @@ public class View extends JPanel implements Runnable {
         BufferedImage img = null;
 
         startLabel = new JLabel();
-        
+
         try {
             img = ImageIO.read(new File("images/bg.png"));
         } catch (IOException e) {
@@ -158,7 +157,7 @@ public class View extends JPanel implements Runnable {
         //musicLabel.setSize(new Dimension(img.getWidth()*bsize, img.getHeight()*bsize));
         //musicLabel.add(musicb);
         //musicLabel.setAlignmentX(RIGHT_ALIGNMENT);
-        creditsLabel = new JLabel("<html><div style=\'text-align: center;\'>"+"Version: 1.0'Alpha'"+"<br>"+"Powered by: Java"+"</html>");
+        creditsLabel = new JLabel("<html><div style=\'text-align: center;\'>" + "Version: 1.0'Alpha'" + "<br>" + "Powered by: Java" + "</html>");
         creditsLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         creditsLabel.setHorizontalAlignment(SwingConstants.CENTER);
         creditsLabel.setVerticalAlignment(SwingConstants.CENTER);
@@ -191,7 +190,6 @@ public class View extends JPanel implements Runnable {
     public void initGame() {
         frame.setLayout(new BorderLayout());
 
-
         frame.remove(startLabel);
 
         BufferedImage img = null;
@@ -199,7 +197,7 @@ public class View extends JPanel implements Runnable {
 
         this.setLayout(new BorderLayout());
         contentPanel = new JPanel(new BorderLayout());
-        
+
         storePanel = new JPanel();
         storePanel.setBackground(Color.GREEN);
         storePanel.setLayout(new BoxLayout(storePanel, BoxLayout.LINE_AXIS));
@@ -382,6 +380,8 @@ public class View extends JPanel implements Runnable {
                 towerinfoLong.setText(arena.getImTowers().get(0).getInfo());
                 towerinfo2.setText("");
                 towerUpPrice.setText("");
+                update.setVisible(false);
+                towerInfoPane.updateUI();
             }
             if (e.getSource() == tower2) {
                 btnPress = true;
@@ -390,6 +390,8 @@ public class View extends JPanel implements Runnable {
                 towerinfoLong.setText(arena.getImTowers().get(1).getInfo());
                 towerinfo2.setText("");
                 towerUpPrice.setText("");
+                update.setVisible(false);
+                towerInfoPane.updateUI();
             }
             if (e.getSource() == tower3) {
                 btnPress = true;
@@ -398,6 +400,8 @@ public class View extends JPanel implements Runnable {
                 towerinfoLong.setText(arena.getImTowers().get(2).getInfo());
                 towerinfo2.setText("");
                 towerUpPrice.setText("");
+                update.setVisible(false);
+                towerInfoPane.updateUI();
             }
             if (e.getSource() == tower4) {
                 btnPress = true;
@@ -406,6 +410,8 @@ public class View extends JPanel implements Runnable {
                 towerinfoLong.setText(arena.getImTowers().get(3).getInfo());
                 towerinfo2.setText("");
                 towerUpPrice.setText("");
+                update.setVisible(false);
+                towerInfoPane.updateUI();
             }
             if (e.getSource() == tower5) {
                 btnPress = true;
@@ -414,6 +420,9 @@ public class View extends JPanel implements Runnable {
                 towerinfoLong.setText(arena.getImTowers().get(4).getInfo());
                 towerinfo2.setText("");
                 towerUpPrice.setText("");
+                update.setVisible(false);
+                towerInfoPane.updateUI();
+                
             }
 
             if (e.getSource() == update) {
@@ -423,7 +432,7 @@ public class View extends JPanel implements Runnable {
                 towerinfo2.setText(upgrade[1]);
 
                 towerUpPrice.setText("");
-                //towerInfoPane.remove(update);
+                //update.setVisible(false);
                 towerInfoPane.updateUI();
 
             }
@@ -433,7 +442,7 @@ public class View extends JPanel implements Runnable {
                 initGame();
             }
             if (e.getSource() == credits) {
-                creditsLabel.setText("<html><div style=\'text-align: center;\'>"+"Developed by:M2ko, eetz1, Taucci"+"<br>"+"Music by:OttoPatrik"+"</html>");
+                creditsLabel.setText("<html><div style=\'text-align: center;\'>" + "Developed by:M2ko, eetz1, Taucci" + "<br>" + "Music by:OttoPatrik" + "</html>");
             }
             if (e.getSource() == musicb) {
                 if (musicOn) {
@@ -458,8 +467,10 @@ public class View extends JPanel implements Runnable {
                 towerclick = false;
                 towerinfo.setText("");
                 towerinfoLong.setText("");
-                towerUpPrice.setText("");
-
+                towerinfo2.setText(arena.getNewTower()[0]);
+                towerUpPrice.setText(arena.getNewTower()[1]);
+                update.setVisible(false);
+                towerInfoPane.updateUI();
             } else {
                 for (ModelTower tower : arena.getTowers()) {
                     if (e.getX() / bsize == tower.getX() && e.getY() / bsize == tower.getY()) {
@@ -468,12 +479,12 @@ public class View extends JPanel implements Runnable {
                         towerinfo2.setText("Range: " + Integer.toString(tower.getRange()));
                         if (tower.getUpPrice() != 0) {
                             towerUpPrice.setText("Upgrade: " + Integer.toString(tower.getUpPrice()));
-                        }else{
+                        } else {
                             towerUpPrice.setText("");
                         }
                         update.setVisible(true);
-                            towerInfoPane.updateUI();
-                        
+                        towerInfoPane.updateUI();
+
                         towerclick = true;
                     }
                 }
@@ -506,7 +517,6 @@ public class View extends JPanel implements Runnable {
     public void enemySpawner() {
         //spawns enemy every 1sec(after 60frames) and if spawncounter is not too much. also if spawnpause is true spawning is not happening
         if (spawnFrame >= spawnTime && spawnCounter < arena.getSpawnWave() && !sPause) {
-
             arena.spawnEnemy();
             spawnFrame = 1;//-= spawnTime;
             spawnCounter++;
@@ -542,8 +552,11 @@ public class View extends JPanel implements Runnable {
                 //update();
                 if (!arena.getPlayer().isAlive()) {//if player is ded game terminates
 
-                    JLabel labell = new JLabel("Game over");
-                    towerInfoPane.add(labell);
+                    towerinfo.setText("Game over");
+                    towerinfo2.setText("");
+                    towerUpPrice.setText("");
+                    update.setVisible(false);
+                    towerInfoPane.updateUI();
                     terminate();
 
                 } else if (!sPause) {//if game is not paused aka cooldown between waves, this is true
@@ -683,7 +696,7 @@ public class View extends JPanel implements Runnable {
                             g.drawLine((shootList[1] * bsize + (bsize / 2)), (shootList[2] * bsize + (bsize / 2)), (shootList[3] + (bsize / 2)), (shootList[4] + (bsize / 2)));
                         } else if ("tower4".equals(tower.getid())) {//boosttower "shoots" other towers = boosts them
 
-                                contr.shootImprove((BoostTower) tower);
+                            contr.shootImprove((BoostTower) tower);
 
                         } else if ("tower".equals(tower.getid())) {
                             int[] shootList = contr.shootable(tower);//drawing shootlines for lazertowers
