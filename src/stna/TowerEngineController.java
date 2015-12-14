@@ -109,17 +109,63 @@ public class TowerEngineController {
         }
 
     }
-    public void shootImprove(BoostTower tower, ModelTower tower2) {//THIS IS FOR BOOSTTOWER IT "SHOOTS" TOWERS AROUND IT TO IMPROVE THEM
+//THIS IS FOR BOOSTTOWER IT "SHOOTS" TOWERS AROUND IT TO IMPROVE THEM
+    public void shootImprove(BoostTower boosttower) {
         //for (ModelTower tower : arena.getTowers()) {
         //for (ModelEnemy enemy : arena.getEnemies()) {
-        int range = tower.getRange();
-        if (Math.abs(tower2.getX() - tower.getX()) < range && Math.abs(tower2.getY() - tower.getY()) < range && !"tower4".equals(tower2.getid()) && !tower2.isBoosted()) {
-            tower2.setDamage(tower2.getDamage()+tower.getImprove());
-            tower2.setRange(tower2.getRange()+tower.getImprove());
-            tower2.setBoosted(true);
-            //return false;
+        int range = boosttower.getRange();
+        for (ModelTower tower: arena.getTowers()) {
+            if (Math.abs(tower.getX() - boosttower.getX()) < range && Math.abs(tower.getY() - boosttower.getY()) < range && !"tower4".equals(tower.getid())) {
+                if(boosttower.isBoosted()==3){
+                    tower.setBoosted(3);
+                    tower.setBoost(boosttower.getImprove());
+                    tower.setBoosted(1);
+                }else {
+                tower.setBoost(boosttower.getImprove());
+                tower.setBoosted(1);
+                }
+                //return false;
+            }
         }
+        boosttower.setBoosted(1);
     }
+ 
+    //if u have moneys one can update towers
+    public String[] upgradeTower(ModelTower tower) {
+        String[] upgrade = new String[2];
+        if (player.getMoney() >= tower.getPrice()) {
+            
+            if (tower.getLevel() < tower.getMaxLvl()) {
+                player.reduceMoney(tower.getPrice());
+                tower.setLevel();
+                tower.setBoosted(2);
+                    if ("tower4".equals(tower.getid())) {
+                        tower.setBoosted(3);
+                        shootImprove((BoostTower) tower);
+                       
+                    }
+                    for (ModelTower tower2: arena.getTowers()) {
+                        if ("tower4".equals(tower2.getid())) {
+                            shootImprove((BoostTower) tower2);
+                        }
+                    }
+                upgrade[0] = "Damage: " + Integer.toString(tower.getDamage());
+                upgrade[1] = "Range: " + Integer.toString(tower.getRange());
+            } else {
+                System.out.print("already on maxlvl");
+                upgrade[0] = "Already";
+                upgrade[1] = "on MAX";
+            }
+        } else {
+            System.out.print("no mani no upgrade");
+            upgrade[0] = "Not enough";
+            upgrade[1] = "money";
+        }
+        return upgrade;
+    }
+    
+    
+    
     void shootmoney() {
         for (ModelTower tower : arena.getTowers()){
             if ("tower5".equals(tower.getid())){

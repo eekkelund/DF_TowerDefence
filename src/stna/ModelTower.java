@@ -28,8 +28,9 @@ public class ModelTower extends ModelBlock {
     protected double freezeDamage;
     protected int fire_time = 100;
     protected int max_level;
-    protected boolean boosted = false;
+     protected int boosted=2;
     protected String info;
+    protected int boosts=0;
 
     public ModelTower(int y, int x, String id) {
         this.x = x;
@@ -121,12 +122,28 @@ public class ModelTower extends ModelBlock {
         return max_level;
     }
 
-    public boolean isBoosted() {
+    public int isBoosted() {
         return boosted;
     }
-
-    public void setBoosted(boolean boosted) {
+ 
+    public void setBoosted(int boosted) {
         this.boosted = boosted;
+    }
+   
+    public void setBoost(int boost) {
+        if (boosted == 1) {
+           
+        }
+        else if (boosted == 2) {
+            boosts = boost;
+            setDamage(getDamage() + boost);
+            setRange(getRange() + boost);
+        }
+        else if (boosted == 3) {
+            setDamage(getDamage()- boosts + boost);
+            setRange(getRange() - boosts + boost);
+        }
+ 
     }
      public String getInfo() {
         return info;

@@ -64,6 +64,7 @@ public class Stna extends JPanel implements Runnable {
         frame.setLayout(new BorderLayout());
         frame.setTitle(title);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        
 
         arena = new Arena();
         contr = new TowerEngineController(arena);
@@ -92,6 +93,7 @@ public class Stna extends JPanel implements Runnable {
         BufferedImage img = null;
 
         startLabel = new JLabel();
+        
         try {
             img = ImageIO.read(new File("images/bg.png"));
         } catch (IOException e) {
@@ -187,7 +189,7 @@ public class Stna extends JPanel implements Runnable {
     public void initGame() {
         frame.setLayout(new BorderLayout());
 
-        frame.remove(start);
+
         frame.remove(startLabel);
 
         BufferedImage img = null;
@@ -195,14 +197,17 @@ public class Stna extends JPanel implements Runnable {
 
         this.setLayout(new BorderLayout());
         contentPanel = new JPanel(new BorderLayout());
-
+        
         storePanel = new JPanel();
+        storePanel.setBackground(Color.GREEN);
         storePanel.setLayout(new BoxLayout(storePanel, BoxLayout.LINE_AXIS));
 
         towerInfoPane = new JPanel();
+        towerInfoPane.setBackground(Color.GREEN);
         towerInfoPane.setLayout(new BoxLayout(towerInfoPane, BoxLayout.PAGE_AXIS));
 
         playerInfoPane = new JPanel();
+        playerInfoPane.setBackground(Color.GREEN);
         playerInfoPane.setLayout(new BoxLayout(playerInfoPane, BoxLayout.PAGE_AXIS));
 
         tower = new JButton();
@@ -411,7 +416,7 @@ public class Stna extends JPanel implements Runnable {
 
             if (e.getSource() == update) {
                 String[] upgrade = new String[2];//upgrade[0]=DMG, upgrade[1]=RANGE
-                upgrade = arena.upgradeTower(utower);
+                upgrade = contr.upgradeTower(utower);
                 towerinfo.setText(upgrade[0]);
                 towerinfo2.setText(upgrade[1]);
 
@@ -676,9 +681,8 @@ public class Stna extends JPanel implements Runnable {
                             g.drawLine((shootList[1] * bsize + (bsize / 2)), (shootList[2] * bsize + (bsize / 2)), (shootList[3] + (bsize / 3)), (shootList[4] + (bsize / 3)));
                             g.drawLine((shootList[1] * bsize + (bsize / 2)), (shootList[2] * bsize + (bsize / 2)), (shootList[3] + (bsize / 2)), (shootList[4] + (bsize / 2)));
                         } else if ("tower4".equals(tower.getid())) {//boosttower "shoots" other towers = boosts them
-                            for (ModelTower tower2 : arena.getTowers()) {
-                                contr.shootImprove((BoostTower) tower, tower2);
-                            }
+
+                                contr.shootImprove((BoostTower) tower);
 
                         } else if ("tower".equals(tower.getid())) {
                             int[] shootList = contr.shootable(tower);//drawing shootlines for lazertowers
