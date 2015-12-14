@@ -62,10 +62,10 @@ public class ModelGround extends ModelBlock{
                 img = "images/water2.png";
                 break;
             case "finish":
-                img = "images/finish.png";
+                img = "images/finish2.png";
                 break;
             case "start":
-                img = "images/start.png";
+                img = "images/start2.png";
                 break;
         
     }
