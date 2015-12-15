@@ -111,17 +111,17 @@ public class MapController {
 
     public void newTowerPos(int y, int x, String towerid) {
 
-        x /= bsize;
+        x /= bsize;// mousex/bsize=gridx
         y /= bsize;
         if ("grass".equals(objGrid[y][x].getid())) {
-            for (ModelTower tower : ImaginaryTowers) {
+            for (ModelTower tower : ImaginaryTowers) {//this allows to set new towers
                 if (towerid.equals(tower.getid())) {
                     price = tower.getPrice();
                     newTower[0] = "";
                     newTower[1] = "";
                 }
             }
-            if (player.getMoney() >= price) {
+            if (player.getMoney() >= price) {//and if you actually have enough money you can add the tower
                 setTower(y, x, towerid);
                 player.reduceMoney(price);
                 newTower[0] = "";
@@ -136,11 +136,11 @@ public class MapController {
         }
 
     }
-
+//draws white box and its range when hovering mouse top of the map
     public int[] hover(int x, int y, String towerid) {
         int xcoord = 0, ycoord = 0;
         int[] coords = new int[4]; //coords[0]=X, coords[1]=Y, coords[2]=COLOR, coords[3]=RANGE
-        for (int i = 0; i <= getArena().length; i++) {
+        for (int i = 0; i <= getArena().length; i++) {//math to draw box to map
             ycoord = bsize * i;
             for (int j = 0; j <= getArena()[0].length; j++) {
                 xcoord = bsize * j;
@@ -153,7 +153,7 @@ public class MapController {
                 }
             }
         }
-        for (ModelTower tower : getImTowers()) {
+        for (ModelTower tower : getImTowers()) {//draws range
             if (tower.getid().equals(towerid)) {
                 coords[3] = tower.getRange();
             }

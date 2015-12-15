@@ -30,7 +30,6 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
-
 /**
  *
  * @author eetz1
@@ -72,16 +71,16 @@ public class View extends JPanel implements Runnable {
     private AudioStream BGM;
     private AudioData MD;
     ContinuousAudioDataStream loop = null;
-     AudioPlayer MGP = AudioPlayer.player;
+    AudioPlayer MGP = AudioPlayer.player;
 
-    public View() {
+    public View() {//constructor
 
-        frame = new JFrame();
-        frame.setLayout(new BorderLayout());
+        frame = new JFrame();//creates frame
+        frame.setLayout(new BorderLayout());//layout
         frame.setTitle(title);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.setResizable(true);
-	frame.setLocationRelativeTo(null);
+        frame.setLocationRelativeTo(null);
 
         arena = new MapController();
         contr = new GameEngineController(arena);
@@ -99,38 +98,38 @@ public class View extends JPanel implements Runnable {
             System.err.println("Look and feel");
         }
 
-        music(musicOn);
-        initStart();
+        music(musicOn);//MUUUSIIIC
+        initStart();//startscreen
 
     }
 
-    public void initStart() {
+    public void initStart() {//inits startscreen
 
         //setLayout(new BorderLayout());
         BufferedImage img = null;
 
-        startLabel = new JLabel();
+        startLabel = new JLabel();//startlabel where whole start screen is
 
         try {
-            img = ImageIO.read(new File("images/bg.png"));
+            img = ImageIO.read(new File("images/bg.png"));//backgroundpic
         } catch (IOException e) {
         }
         Image dimg = img.getScaledInstance(cols * bsize + bsize * 3, rows * bsize + bsize, Image.SCALE_SMOOTH);
         ImageIcon imageIcon = new ImageIcon(dimg);
 
-        startLabel.setLayout(new BoxLayout(startLabel, BoxLayout.PAGE_AXIS));
+        startLabel.setLayout(new BoxLayout(startLabel, BoxLayout.PAGE_AXIS));//boxlayout is good layout for this
 
         startLabel.setIcon(imageIcon);
         //startLabel.setAlignmentX(CENTER_ALIGNMENT);
         //startLabel.setAlignmentY(CENTER_ALIGNMENT);
         startLabel.setSize(new Dimension(imageIcon.getIconWidth(), imageIcon.getIconHeight()));
-        start = new JButton();
+        start = new JButton();//startbutton, game begins after this is pressed
         try {
             img = ImageIO.read(new File("images/startb.png"));
         } catch (IOException ex) {
         }
         start.addActionListener(actionL);
-        dimg = img.getScaledInstance(img.getWidth() + bsize * 2, img.getHeight() + bsize, Image.SCALE_SMOOTH);
+        dimg = img.getScaledInstance(img.getWidth() + bsize * 2, img.getHeight() + bsize, Image.SCALE_SMOOTH);//image scaling
         start.setIcon(new ImageIcon(dimg));
         start.setPreferredSize(new Dimension(img.getWidth() * 2, img.getHeight() * 2));
         start.setBorder(null);
@@ -145,8 +144,8 @@ public class View extends JPanel implements Runnable {
         } catch (IOException ex) {
         }
         credits.addActionListener(actionL);
-        dimg = img.getScaledInstance(img.getWidth() + bsize * 2, img.getHeight() + bsize, Image.SCALE_SMOOTH);
-        credits.setIcon(new ImageIcon(dimg));
+        dimg = img.getScaledInstance(img.getWidth() + bsize * 2, img.getHeight() + bsize, Image.SCALE_SMOOTH);//image scaling
+        credits.setIcon(new ImageIcon(dimg));//image scaling
         credits.setPreferredSize(new Dimension(img.getWidth() * 2, img.getHeight() * 2));
         credits.setBorder(null);
         credits.setMargin(null);
@@ -161,9 +160,9 @@ public class View extends JPanel implements Runnable {
         } catch (IOException ex) {
         }
         musicb.addActionListener(actionL);
-        dimg = img.getScaledInstance(bsize, bsize, Image.SCALE_SMOOTH);
-        musicb.setIcon(new ImageIcon(dimg));
-        musicb.setPreferredSize(new Dimension(bsize, bsize));
+        dimg = img.getScaledInstance(bsize, bsize, Image.SCALE_SMOOTH);//image scaling
+        musicb.setIcon(new ImageIcon(dimg));//image scaling
+        musicb.setPreferredSize(new Dimension(bsize, bsize));//image scaling
         musicb.setBorder(null);
         musicb.setMargin(null);
         musicb.setContentAreaFilled(false);
@@ -175,7 +174,7 @@ public class View extends JPanel implements Runnable {
         //musicLabel.setSize(new Dimension(img.getWidth()*bsize, img.getHeight()*bsize));
         //musicLabel.add(musicb);
         //musicLabel.setAlignmentX(RIGHT_ALIGNMENT);
-        creditsLabel = new JLabel("<html><div style=\'text-align: center;\'>" + "Version: 1.0'Alpha'" + "<br>" + "Powered by: Java" + "</html>");
+        creditsLabel = new JLabel("<html><div style=\'text-align: center;\'>" + "Version: 1.0'Alpha'" + "<br>" + "Powered by: Java" + "</html>");//bottomlabel wrote in html to make it center
         creditsLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         creditsLabel.setHorizontalAlignment(SwingConstants.CENTER);
         creditsLabel.setVerticalAlignment(SwingConstants.CENTER);
@@ -187,10 +186,10 @@ public class View extends JPanel implements Runnable {
 
         //startLabel.add(musicb);
         //startLabel.add(Box.createVerticalBox());
-        startLabel.add(Box.createVerticalGlue());
+        startLabel.add(Box.createVerticalGlue());//glue between jcomponents
         startLabel.add(start);
         //startLabel.add(Box.createVerticalGlue());
-        startLabel.add(Box.createRigidArea(new Dimension(0, bsize * 2)));
+        startLabel.add(Box.createRigidArea(new Dimension(0, bsize * 2)));//space between start and creditbuttons
         startLabel.add(credits);
         //startLabel.add(Box.createRigidArea(new Dimension(0, bsize)));
 
@@ -205,29 +204,30 @@ public class View extends JPanel implements Runnable {
 
     }
 
-    public void initGame() {
+    public void initGame() {//this inits actual game
         frame.setLayout(new BorderLayout());
 
-        frame.remove(startLabel);
+        frame.remove(startLabel);///SUPER VERY UGLY WAY TO CODE THIS!! MAYBE SHOULD HAVE DONE WITH CARDLAYOUT!! but it works so..
 
         BufferedImage img = null;
         Image dimg = null;
 
-        this.setLayout(new BorderLayout());
+        this.setLayout(new BorderLayout());//contentpanel layout
         contentPanel = new JPanel(new BorderLayout());
 
-        storePanel = new JPanel();
+        storePanel = new JPanel();//panel for towerstore, bottom
         storePanel.setBackground(Color.GREEN);
-        storePanel.setLayout(new BoxLayout(storePanel, BoxLayout.LINE_AXIS));
+        storePanel.setLayout(new BoxLayout(storePanel, BoxLayout.LINE_AXIS));//box layout is super good for this. and line_axis makes it horizontal
 
-        towerInfoPane = new JPanel();
+        towerInfoPane = new JPanel();//for all towerinfolabels on the right
         towerInfoPane.setBackground(Color.GREEN);
-        towerInfoPane.setLayout(new BoxLayout(towerInfoPane, BoxLayout.PAGE_AXIS));
+        towerInfoPane.setLayout(new BoxLayout(towerInfoPane, BoxLayout.PAGE_AXIS));//booox. vertical page_axis
 
-        playerInfoPane = new JPanel();
+        playerInfoPane = new JPanel();//player infos, moneys and healt. this is inside of storepanel
         playerInfoPane.setBackground(Color.GREEN);
-        playerInfoPane.setLayout(new BoxLayout(playerInfoPane, BoxLayout.PAGE_AXIS));
+        playerInfoPane.setLayout(new BoxLayout(playerInfoPane, BoxLayout.PAGE_AXIS));//vertical
 
+        //all the buttons and button pics, sizes,outlooks
         tower = new JButton();
         try {
             img = ImageIO.read(new File("images/tower.png"));
@@ -295,28 +295,28 @@ public class View extends JPanel implements Runnable {
 
         } catch (IOException ex) {
         }
-        dimg = img.getScaledInstance(bsize*3, bsize, Image.SCALE_SMOOTH);
+        dimg = img.getScaledInstance(bsize * 3, bsize, Image.SCALE_SMOOTH);
         update.setIcon(new ImageIcon(dimg));
-        update.setPreferredSize(new Dimension(bsize*3, bsize));
+        update.setPreferredSize(new Dimension(bsize * 3, bsize));
         update.setBorder(null);
         update.setMargin(null);
         update.setContentAreaFilled(false);
-        update.setVisible(false);
-        
+        update.setVisible(false);//not visible if tower is not clicked
+
         sell = new JButton();
         try {
             img = ImageIO.read(new File("images/sellb.png"));
 
         } catch (IOException ex) {
         }
-        dimg = img.getScaledInstance(bsize*3, bsize, Image.SCALE_SMOOTH);
+        dimg = img.getScaledInstance(bsize * 3, bsize, Image.SCALE_SMOOTH);
         sell.setIcon(new ImageIcon(dimg));
-        sell.setPreferredSize(new Dimension(bsize*3, bsize));
+        sell.setPreferredSize(new Dimension(bsize * 3, bsize));
         sell.setBorder(null);
         sell.setMargin(null);
         sell.setContentAreaFilled(false);
-        sell.setVisible(false);
-        
+        sell.setVisible(false);//not visible if tower is not clicked
+
         update.addActionListener(actionL);
         sell.addActionListener(actionL);
 
@@ -329,8 +329,8 @@ public class View extends JPanel implements Runnable {
         this.addMouseListener(new MouseListener());
         this.addMouseMotionListener(new MouseListener());
 
-        playerinfo = new JLabel("Wave: " + String.valueOf(arena.getPlayer().getLevel()));
-        playerinfo4 = new JLabel("Time: " + Math.round(Math.abs((pauseFrame / fps) - pSec)));
+        playerinfo = new JLabel("Wave: " + String.valueOf(arena.getPlayer().getLevel()));//wave..
+        playerinfo4 = new JLabel("Time: " + Math.round(Math.abs((pauseFrame / fps) - pSec)));//time to next wave
 
         towerinfo = new JLabel();
         towerinfo2 = new JLabel();
@@ -350,8 +350,9 @@ public class View extends JPanel implements Runnable {
         icon2 = new ImageIcon(newimg);  //transform back
         playerinfo3 = new JLabel(String.valueOf(arena.getPlayer().getMoney()), icon2, 0);
 
-        playerInfoPane.add(playerinfo2);
-        playerInfoPane.add(playerinfo3);
+        //add all components to panels, check names
+        playerInfoPane.add(playerinfo2);//healt
+        playerInfoPane.add(playerinfo3);//moneys
 
         storePanel.add(playerInfoPane);
         storePanel.add(tower);
@@ -375,7 +376,7 @@ public class View extends JPanel implements Runnable {
         towerInfoPane.add(towerinfoLong);
         towerInfoPane.add(Box.createVerticalGlue());
         towerInfoPane.add(update);
-        towerInfoPane.add(Box.createRigidArea(new Dimension(0, bsize/4)));
+        towerInfoPane.add(Box.createRigidArea(new Dimension(0, bsize / 4)));
         towerInfoPane.add(sell);
         towerInfoPane.add(Box.createRigidArea(new Dimension(0, bsize)));
 
@@ -384,6 +385,7 @@ public class View extends JPanel implements Runnable {
         contentPanel.add(this, BorderLayout.CENTER);
         contentPanel.add(storePanel, BorderLayout.SOUTH);
 
+        //finally add content panel and towerinfo to frame
         frame.add(contentPanel, BorderLayout.CENTER);
         frame.add(towerInfoPane, BorderLayout.EAST);
 
@@ -393,20 +395,20 @@ public class View extends JPanel implements Runnable {
 
     }
 
-    public void music(boolean musicOn) {
+    public void music(boolean musicOn) {//audiopalyer, plays wav files
 
         try {
             if (musicOn) {
-                InputStream test = new FileInputStream("audio/kvakmix2.wav");
+                InputStream test = new FileInputStream("audio/kvakmix2.wav");//one can change this to different. eg. "audio/ANKKA1.wav"
 
                 BGM = new AudioStream(test);
                 //MD = BGM.getData();
                 //loop = new ContinuousAudioDataStream(MD);
-                
-                AudioPlayer.player.start(BGM);
+
+                AudioPlayer.player.start(BGM);//start music
                 //MGP.start(loop);
             } else {
-                AudioPlayer.player.stop(BGM);
+                AudioPlayer.player.stop(BGM);//stop
             }
         } catch (FileNotFoundException e) {
             System.out.print(e);
@@ -415,11 +417,12 @@ public class View extends JPanel implements Runnable {
         }
     }
 
-    public Dimension getPreferredSize() {
+    public Dimension getPreferredSize() {//SIZE OF THIS VIEW JPANEL
         return new Dimension(bsize * cols, bsize * rows);
     }
 
     private class ButtonListener implements ActionListener {
+//pretty simple just buttonlistener
 
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == tower) {
@@ -481,7 +484,7 @@ public class View extends JPanel implements Runnable {
                 update.setVisible(false);
                 sell.setVisible(false);
                 towerInfoPane.updateUI();
-                
+
             }
 
             if (e.getSource() == update) {
@@ -507,13 +510,13 @@ public class View extends JPanel implements Runnable {
                 sell.setVisible(false);
                 towerInfoPane.updateUI();
             }
-            
+
             if (e.getSource() == start) {
                 musicOn = false;
                 music(musicOn);
                 initGame();
             }
-            if (e.getSource() == credits) {
+            if (e.getSource() == credits) {//when credits button clicked text changes to this
                 creditsLabel.setText("<html><div style=\'text-align: center;\'>" + "Developed by:M2ko, eetz1, Taucci" + "<br>" + "Music by:OttoPatrik" + "</html>");
             }
             if (e.getSource() == musicb) {
@@ -532,7 +535,7 @@ public class View extends JPanel implements Runnable {
     private class MouseListener extends MouseAdapter {
 
         public void mousePressed(MouseEvent e) {
-
+            //add new towers
             if (btnPress && e.getButton() == 1) {
                 arena.newTowerPos(e.getY(), e.getX(), towerid);
                 btnPress = false;
@@ -542,10 +545,10 @@ public class View extends JPanel implements Runnable {
                 towerinfo2.setText(arena.getNewTower()[0]);
                 towerUpPrice.setText(arena.getNewTower()[1]);
                 update.setVisible(false);
-                 sell.setVisible(false);
+                sell.setVisible(false);
                 towerSellPrice.setText("");
                 towerInfoPane.updateUI();
-            } else {
+            } else {//view info of old towers
                 for (ModelTower tower : arena.getTowers()) {
                     if (e.getX() / bsize == tower.getX() && e.getY() / bsize == tower.getY()) {
                         utower = tower;
@@ -556,7 +559,7 @@ public class View extends JPanel implements Runnable {
                         } else {
                             towerUpPrice.setText("");
                         }
-                        towerSellPrice.setText("Sell: " + Integer.toString((int)tower.getPrice() / 2));
+                        towerSellPrice.setText("Sell: " + Integer.toString((int) tower.getPrice() / 2));
                         update.setVisible(true);
                         sell.setVisible(true);
                         towerInfoPane.updateUI();
@@ -606,6 +609,8 @@ public class View extends JPanel implements Runnable {
 
     }
 
+    //ends game
+
     public void terminate() {
         running = false;
     }
@@ -636,8 +641,8 @@ public class View extends JPanel implements Runnable {
                     update.setVisible(false);
                     towerInfoPane.updateUI();
                     towerSellPrice.setText("");
-                sell.setVisible(false);
-                towerInfoPane.updateUI();
+                    sell.setVisible(false);
+                    towerInfoPane.updateUI();
                     terminate();
 
                 } else if (!sPause) {//if game is not paused aka cooldown between waves, this is true
@@ -680,7 +685,7 @@ public class View extends JPanel implements Runnable {
                 updates++;
                 repaint();
                 contr.moving();
-                playerinfo2.setText(String.valueOf(arena.getPlayer().getHealt()));
+                playerinfo2.setText(String.valueOf(arena.getPlayer().getHealt()));//update healt and moneys
                 playerinfo3.setText(String.valueOf(arena.getPlayer().getMoney()));
                 delta--;
 
@@ -698,21 +703,19 @@ public class View extends JPanel implements Runnable {
 
     //this is needed for doublebuffering it makes image of the game while paintComponent draws new. it happens so quickly that u cant see it.
     public void paint(Graphics g) {
-         
+
         dbImage = createImage(cols * bsize, rows * bsize);
         buffer = dbImage.getGraphics();
         paintComponent(buffer);
         g.drawImage(dbImage, 0, 0, this);
-        
 
     }
 
     public void paintComponent(Graphics g) {
 
-        
         drawMap(g);
         g.setColor(Color.PINK);
-       g.drawRect(-1, -1, bsize*cols, bsize*rows);
+        g.drawRect(-1, -1, bsize * cols, bsize * rows);//draws pinkrectangle around game Jpanel
         drawShoot(g);
         drawTower(g);
         drawEnemy(g);

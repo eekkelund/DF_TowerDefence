@@ -27,18 +27,15 @@ import java.util.*;
 //THIS IS GAME ENGINE WOOOO
 public class GameEngineController {
 
-    //private ModelEnemy enemy2;
-    private ModelTower tower;
+  
     private ModelPlayer player;
     private final MapController arena;
-    private List enemies;
-//    private List towers = arena.getTowers();
     public final int up = 1, down = 2, right = 3, left = 4;//just for easier direction management
     private int direction;
     private int bsize;
     private boolean move = true;
     private boolean sold = false;
-    String[] upgrade = new String[2];
+    private String[] upgrade = new String[2];
 
     public GameEngineController(MapController a) {//TO MAKE THIS ENGINE WORK WE NEED ARENA AND PLAYER
         this.arena = a;
@@ -95,25 +92,18 @@ public class GameEngineController {
     }
     //THIS SHOOT METHOD IS FOR ROUNDTOWER. IT SHOOTS ALL ENEMIES ON ITS RANGE WHILE LAZER AND FREEZE ONLY SHOOOTS FIRST ENEMY 
     public boolean shootround(ModelTower tower, ModelEnemy enemy) {
-        //for (ModelTower tower : arena.getTowers()) {
-        //for (ModelEnemy enemy : arena.getEnemies()) {
         if (shootRoundPossible(tower, enemy)) {
             enemy.setHealt(tower.getDamage());
 
             if (isDead()) {
                 player.addMoney(enemy.getPrize());
-                //System.out.print(player.getMoney());
             }
-            //}
             return true;
-            //}
         }
         return false;
     }
     //THIS IS TO CHECK IF THERE IS ENEMIES ON THE RANGE ON ROUNDT
     public boolean shootRoundPossible(ModelTower tower, ModelEnemy enemy) {
-        //for (ModelTower tower : arena.getTowers()) {
-        //for (ModelEnemy enemy : arena.getEnemies()) {
         int range = tower.getRange();
         if (Math.abs(enemy.getX() - tower.getX()) <= range && Math.abs(enemy.getY() - tower.getY()) <= range) {
             return true;
@@ -128,8 +118,8 @@ public class GameEngineController {
         for (ModelTower tower: arena.getTowers()) {
             if (Math.abs(tower.getX() - boosttower.getX()) < range && Math.abs(tower.getY() - boosttower.getY()) < range && !"tower4".equals(tower.getid())) {
                 if (sell == null) {
-                    if(boosttower.isBoosted()==3){
-                        tower.setBoosted(3);
+                    if(boosttower.isBoosted()==3){//check boosttower.java for more comments
+                        tower.setBoosted(3);//check boosttower.java for more comments
                         tower.setBoost(boosttower.getImprove());
                         tower.setBoosted(1);
                     }else {
@@ -137,36 +127,35 @@ public class GameEngineController {
                         tower.setBoosted(1);
                     }
                 }
-                else if (sell == "sell") {
-                    tower.setBoosted(4);
+                else if ("sell".equals(sell)) {
+                    tower.setBoosted(4);//check boosttower.java for more comments
                     tower.setBoost(boosttower.getImprove());
                     tower.setBoosted(2);
                 }
-                //return false;
             }
         }
-        boosttower.setBoosted(1);
+        boosttower.setBoosted(1);//check boosttower.java for more comments
     }
  
     //if u have moneys one can update towers
     public String[] upgradeTower(ModelTower tower) {
-        if (player.getMoney() >= tower.getPrice()) {
+        if (player.getMoney() >= tower.getUpPrice()) {
             
             if (tower.getLevel() < tower.getMaxLvl()) {
-                player.reduceMoney(tower.getUpPrice());
+                player.reduceMoney(tower.getUpPrice());//if nuf money
                 tower.setLevel();
-                tower.setBoosted(2);
-                    if ("tower4".equals(tower.getid())) {
+                tower.setBoosted(2);//check boosttower.java for more comments
+                    if ("tower4".equals(tower.getid())) {//if upgraded tower is boosttower boost other around towers with new improve
                         tower.setBoosted(3);
                         shootImprove((BoostTower) tower, null);
                        
                     }
-                    for (ModelTower tower2: arena.getTowers()) {
+                    for (ModelTower tower2: arena.getTowers()) {//if near is boosttower, it should boost upgraded tower again.
                         if ("tower4".equals(tower2.getid())) {
                             shootImprove((BoostTower) tower2, null);
                         }
                     }
-                upgrade[0] = "Damage: " + Integer.toString(tower.getDamage());
+                upgrade[0] = "Damage: " + Integer.toString(tower.getDamage());//sends string to view
                 upgrade[1] = "Range: " + Integer.toString(tower.getRange());
             } else {
                 upgrade[0] = "Already";
@@ -203,7 +192,7 @@ public class GameEngineController {
     
     
     
-    void shootmoney() {
+    void shootmoney() {//shoot method for moneytower
         for (ModelTower tower : arena.getTowers()){
             if ("tower5".equals(tower.getid())){
                 player.addMoney(tower.getDamage());
@@ -264,7 +253,7 @@ public class GameEngineController {
             }
         }
 
-        for (double i = 0; i < enemy2.getSpeed(); i=i+0.5) {//BLAAAAAH
+        for (double i = 0; i < enemy2.getSpeed(); i=i+0.5) {//this is enemys speed
             if (!move) {
                 direction = enemy2.getDirection();
                 int movecounter = enemy2.getMCounter();

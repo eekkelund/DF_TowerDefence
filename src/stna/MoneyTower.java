@@ -40,7 +40,7 @@ public class MoneyTower extends ModelTower {
         update_price = 100;
         max_level =2;
         price = 50;
-        info = "<html>After each<br />round<br />...</html>";//MAKO KORJAA NÄÄ PLZ
+        info = "<html>After each<br />round adds<br />money equal<br />to damage</html>";//MAKO KORJAA NÄÄ PLZ
     }
 
     @Override
