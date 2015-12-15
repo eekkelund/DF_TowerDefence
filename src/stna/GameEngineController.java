@@ -1,5 +1,5 @@
 /* 
- * Copyright (C) 2015 eetz1
+ * Copyright (C) 2015 eetz1 <eetukah@metropolia.fi>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -153,7 +153,7 @@ public class GameEngineController {
         if (player.getMoney() >= tower.getPrice()) {
             
             if (tower.getLevel() < tower.getMaxLvl()) {
-                player.reduceMoney(tower.getPrice());
+                player.reduceMoney(tower.getUpPrice());
                 tower.setLevel();
                 tower.setBoosted(2);
                     if ("tower4".equals(tower.getid())) {
