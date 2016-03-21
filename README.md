@@ -36,7 +36,7 @@ Mutant ducks are attacking to your city. Build towers to defend and beat the duc
 
 ## Credits
 
-Developed by: eetz1 & M2ko & Taucci
+Developed by: eetz1 & M2ko
 Music by: OttoPatrik
 
 ## License
