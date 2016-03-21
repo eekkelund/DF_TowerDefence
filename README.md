@@ -11,19 +11,19 @@ Version: 1.0 ALPHA
 Mutant ducks are attacking to your city. Build towers to defend and beat the ducks!
 
 ## Screenshots
-![Alt text](https://github.com/eetz1/DF_TowerDefence/blob/master/screenshots/menu_screenshot.png?raw=true "Menu")
+![Alt text](https://github.com/eekkelund/DF_TowerDefence/blob/master/screenshots/menu_screenshot.png?raw=true "Menu")
 
-![Alt text](https://github.com/eetz1/DF_TowerDefence/blob/master/screenshots/newtower_screenshot.png?raw=true "New tower")
+![Alt text](https://github.com/eekkelund/DF_TowerDefence/blob/master/screenshots/newtower_screenshot.png?raw=true "New tower")
 
-![Alt text](https://github.com/eetz1/DF_TowerDefence/blob/master/screenshots/shoot_screenshot.png?raw=true "Shooting")
+![Alt text](https://github.com/eekkelund/DF_TowerDefence/blob/master/screenshots/shoot_screenshot.png?raw=true "Shooting")
 
-![Alt text](https://github.com/eetz1/DF_TowerDefence/blob/master/screenshots/pinkduck_screenshot.png?raw=true "PinkDucks")
+![Alt text](https://github.com/eekkelund/DF_TowerDefence/blob/master/screenshots/pinkduck_screenshot.png?raw=true "PinkDucks")
 
-![Alt text](https://github.com/eetz1/DF_TowerDefence/blob/master/screenshots/boosttower_screenshot.png?raw=true "BoostTower")
+![Alt text](https://github.com/eekkelund/DF_TowerDefence/blob/master/screenshots/boosttower_screenshot.png?raw=true "BoostTower")
 
-![Alt text](https://github.com/eetz1/DF_TowerDefence/blob/master/screenshots/blackduck_screenshot.png?raw=true "BlackDucks")
+![Alt text](https://github.com/eekkelund/DF_TowerDefence/blob/master/screenshots/blackduck_screenshot.png?raw=true "BlackDucks")
 
-![Alt text](https://github.com/eetz1/DF_TowerDefence/blob/master/screenshots/bigduck_screenshot.png?raw=true "BossDuck")
+![Alt text](https://github.com/eekkelund/DF_TowerDefence/blob/master/screenshots/bigduck_screenshot.png?raw=true "BossDuck")
 
 ## Contributing
 
