@@ -5,13 +5,25 @@ FIRST RELEASE!
 Version: 1.0 ALPHA
 ![Alt text](https://github.com/eetz1/stna/blob/master/images/bg.png?raw=true "Duckfuck")
 
-## Installation
 
-TODO: Describe the installation process
+## Game
 
-## Usage
+Mutant ducks are attacking to your city. Build towers to defend and beat the ducks!
 
-TODO: Write usage instructions
+## Screenshots
+![Alt text](https://github.com/eetz1/DF_TowerDefence/blob/master/screenshots/menu_screenshot.png?raw=true "Menu")
+
+![Alt text](https://github.com/eetz1/DF_TowerDefence/blob/master/screenshots/newtower_screenshot.png?raw=true "New tower")
+
+![Alt text](https://github.com/eetz1/DF_TowerDefence/blob/master/screenshots/shoot_screenshot.png?raw=true "Shooting")
+
+![Alt text](https://github.com/eetz1/DF_TowerDefence/blob/master/screenshots/pinkduck_screenshot.png?raw=true "PinkDucks")
+
+![Alt text](https://github.com/eetz1/DF_TowerDefence/blob/master/screenshots/boosttower_screenshot.png?raw=true "BoostTower")
+
+![Alt text](https://github.com/eetz1/DF_TowerDefence/blob/master/screenshots/blackduck_screenshot.png?raw=true "BlackDucks")
+
+![Alt text](https://github.com/eetz1/DF_TowerDefence/blob/master/screenshots/bigduck_screenshot.png?raw=true "BossDuck")
 
 ## Contributing
 
@@ -21,9 +33,6 @@ TODO: Write usage instructions
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request :D
 
-## History
-
-TODO: Write history
 
 ## Credits
 

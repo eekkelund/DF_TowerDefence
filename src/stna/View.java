@@ -517,7 +517,7 @@ public class View extends JPanel implements Runnable {
                 initGame();
             }
             if (e.getSource() == credits) {//when credits button clicked text changes to this
-                creditsLabel.setText("<html><div style=\'text-align: center;\'>" + "Developed by:M2ko, eetz1, Taucci" + "<br>" + "Music by:OttoPatrik" + "</html>");
+                creditsLabel.setText("<html><div style=\'text-align: center;\'>" + "Developed by:M2ko & eetz1" + "<br>" + "Music by:OttoPatrik" + "</html>");
             }
             if (e.getSource() == musicb) {
                 if (musicOn) {
