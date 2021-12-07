@@ -22,133 +22,135 @@ package stna;
  */
 public class ModelEnemy extends ModelBlock {
 
-    protected int x, MOVEx;
-    protected int y, MOVEy;
-    protected int damage;
-    protected String id;
-    protected String img;
-    protected int healt;
-    protected boolean alive = true;
-    protected int prize;
-    protected double speed;
-    protected int direction;
-    protected int movecounter;
-    protected boolean frozen = false;
-    protected double size =0;
+  protected int x, MOVEx;
+  protected int y, MOVEy;
+  protected int damage;
+  protected String id;
+  protected String img;
+  protected int healt;
+  protected boolean alive = true;
+  protected int prize;
+  protected double speed;
+  protected int direction;
+  protected int movecounter;
+  protected boolean frozen = false;
+  protected double size = 0;
 
-    public ModelEnemy(int y, int x, int MOVEy, int MOVEx, String id) {
-        this.x = x;
-        this.y = y;
-        this.MOVEx = MOVEx;
-        this.MOVEy = MOVEy;
-        this.id = id;
-        direction = 3;
-        
-    }
+  public ModelEnemy(int y, int x, int MOVEy, int MOVEx, String id) {
+    this.x = x;
+    this.y = y;
+    this.MOVEx = MOVEx;
+    this.MOVEy = MOVEy;
+    this.id = id;
+    direction = 3;
 
-    public int getX() {
-        return x;
-    }
+  }
 
-    public int getMoveX() {
-        return MOVEx;
-    }
+  public int getX() {
+    return x;
+  }
 
-    public void setX(int x) {
-        this.x = x;
-    }
+  public int getMoveX() {
+    return MOVEx;
+  }
 
-    public void setMoveX(int x) {
-        this.MOVEx = x;
-    }
+  public void setX(int x) {
+    this.x = x;
+  }
 
-    public int getY() {
-        return y;
-    }
+  public void setMoveX(int x) {
+    this.MOVEx = x;
+  }
 
-    public int getMoveY() {
-        return MOVEy;
-    }
+  public int getY() {
+    return y;
+  }
 
-    public void setY(int y) {
-        this.y = y;
-    }
+  public int getMoveY() {
+    return MOVEy;
+  }
 
-    public void setMoveY(int y) {
-        this.MOVEy = y;
-    }
+  public void setY(int y) {
+    this.y = y;
+  }
 
-    public int getDamage() {
-        return damage;
-    }
+  public void setMoveY(int y) {
+    this.MOVEy = y;
+  }
 
-    public void setDamage(int damage) {
-        this.damage = damage;
-    }
+  public int getDamage() {
+    return damage;
+  }
 
-    public String getid() {
-        return id;
-    }
+  public void setDamage(int damage) {
+    this.damage = damage;
+  }
 
-    public void setid(String id) {
-        this.id = id;
-    }
+  public String getid() {
+    return id;
+  }
 
-    public double getSpeed() {
-        return speed;
-    }
+  public void setid(String id) {
+    this.id = id;
+  }
 
-    public int getPrize() {
-        return prize;
-    }
+  public double getSpeed() {
+    return speed;
+  }
 
-    public void setSpeed(double speed) {
-        this.speed = speed;
-    }
+  public int getPrize() {
+    return prize;
+  }
 
-    public String getImg() {
-        return img;
-    }
+  public void setSpeed(double speed) {
+    this.speed = speed;
+  }
 
-    public int getHealt() {
-        return healt;
-    }
+  public String getImg() {
+    return img;
+  }
 
-    public boolean isAlive() {
-        return alive;
-    }
+  public int getHealt() {
+    return healt;
+  }
 
-    public void setHealt(int damage) {
-        healt = healt - damage;
-        if (healt <= 0) {
-            alive = false;
-        }
-    }
+  public boolean isAlive() {
+    return alive;
+  }
 
-    public int getDirection() {
-        return direction;
+  public void setHealt(int damage) {
+    healt = healt - damage;
+    if (healt <= 0) {
+      alive = false;
     }
+  }
 
-    public void setDirection(int direction) {
-        this.direction = direction;
-    }
+  public int getDirection() {
+    return direction;
+  }
 
-    public int getMCounter() {
-        return movecounter;
-    }
+  public void setDirection(int direction) {
+    this.direction = direction;
+  }
 
-    public void setMCounter(int movecounter) {
-        this.movecounter = movecounter;
-    }
-    
-    public boolean isFrzn() {
-        return frozen;
-    }
-    public void setFrzn(boolean frozen) {
-        this.frozen = frozen;
-    }
-    public double getSize() {
-        return size;
-    }
-    
+  public int getMCounter() {
+    return movecounter;
+  }
+
+  public void setMCounter(int movecounter) {
+    this.movecounter = movecounter;
+  }
+
+  public boolean isFrzn() {
+    return frozen;
+  }
+
+  public void setFrzn(boolean frozen) {
+    this.frozen = frozen;
+  }
+
+  public double getSize() {
+    return size;
+  }
+
 }
