@@ -10,6 +10,10 @@ Version: 1.0 ALPHA
 
 Mutant ducks are attacking to your city. Build towers to defend and beat the ducks!
 
+## Building & Running
+`javac -d classes -cp classes  src/stna/*.java`
+`java -cp classes stna.View`
+
 ## Screenshots
 ![Alt text](https://github.com/eekkelund/DF_TowerDefence/blob/master/screenshots/menu_screenshot.png?raw=true "Menu")
 
